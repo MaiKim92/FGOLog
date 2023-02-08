@@ -1,0 +1,41 @@
+{
+  "name": "Task",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "goal",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "progress",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TaskStatus",
+      "fieldValues": "IN_PROGRESS,COMPLETED"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "material",
+      "otherEntityRelationshipName": "task",
+      "relationshipName": "material",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "task",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20230208051205"
+}

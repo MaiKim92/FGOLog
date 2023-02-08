@@ -1,0 +1,28 @@
+{
+  "name": "WishItem",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "servant",
+      "otherEntityRelationshipName": "wishItem",
+      "relationshipName": "servant",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "wish_item",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20230208051204"
+}

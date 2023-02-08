@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="FGOLog-server/.mvn/wrapper"/>
+	<classpathentry kind="src" path="FGOLog-server/node_modules/generator-jhipster/generators/maven/templates/.mvn/wrapper"/>
+	<classpathentry kind="src" path="FGOLog-server/node_modules/generator-jhipster/generators/server/templates/.mvn/wrapper"/>
+	<classpathentry kind="src" path="FGOLog-server/src/main/java"/>
+	<classpathentry kind="src" path="FGOLog-server/target/generated-sources/annotations"/>
+	<classpathentry kind="lib" path="FGOLog-server/node_modules/generator-jhipster/generators/server/templates/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="FGOLog-server/target/fgo-log-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="FGOLog-server/target/classes"/>
+</classpath>
