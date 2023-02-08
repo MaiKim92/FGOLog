@@ -1,0 +1,65 @@
+enum TaskStatus {
+	IN_PROGRESS,
+	COMPLETED
+}
+
+entity Party {
+	id Long,
+	name String
+}
+
+entity Material {
+	id Long,
+	name String,
+	number Integer,
+	imageUrl String
+}
+
+entity Servant {
+	id Long,
+	name String,
+	level Integer,
+	imageUrl String,
+	thumbnailUrl String,
+	isHas Boolean
+}
+
+entity Skill {
+	id Long,
+	name String,
+	level Integer,
+	imageUrl String
+}
+
+entity WishItem {
+	id Long
+}
+
+entity Task {
+	id Long,
+	goal Integer,
+	progress Integer,
+	status TaskStatus
+}
+
+relationship OneToOne {
+ 	Task{material} to Material,
+ 	WishItem{servant} to Servant
+}
+
+relationship ManyToOne {
+	Skill{Servant} to Servant
+}
+
+relationship ManyToMany {
+	Servant{Party} to Party{Servant}
+}
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service * with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
