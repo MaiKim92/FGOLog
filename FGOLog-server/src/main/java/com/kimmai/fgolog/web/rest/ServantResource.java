@@ -154,6 +154,7 @@ public class ServantResource {
         return servantService.findAllOwned();
     }
 
+
     /**
      * {@code GET  /servants/:id} : get the "id" servant.
      *
