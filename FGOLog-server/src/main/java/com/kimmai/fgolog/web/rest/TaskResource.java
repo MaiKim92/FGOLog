@@ -41,13 +41,13 @@ public class TaskResource {
     }
 
     /**
-     * {@code POST  /tasks} : Create a new task.
+     * {@code POST  /admin/tasks} : Create a new task.
      *
      * @param taskDTO the taskDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new taskDTO, or with status {@code 400 (Bad Request)} if the task has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/tasks")
+    @PostMapping("/admin/tasks")
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) throws URISyntaxException {
         log.debug("REST request to save Task : {}", taskDTO);
         if (taskDTO.getId() != null) {
@@ -55,13 +55,13 @@ public class TaskResource {
         }
         TaskDTO result = taskService.save(taskDTO);
         return ResponseEntity
-            .created(new URI("/api/tasks/" + result.getId()))
+            .created(new URI("/api/admin/tasks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /tasks/:id} : Updates an existing task.
+     * {@code PUT  /admin/tasks/:id} : Updates an existing task.
      *
      * @param id the id of the taskDTO to save.
      * @param taskDTO the taskDTO to update.
@@ -70,7 +70,7 @@ public class TaskResource {
      * or with status {@code 500 (Internal Server Error)} if the taskDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/tasks/{id}")
+    @PutMapping("/admin/tasks/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id", required = false) final Long id, @RequestBody TaskDTO taskDTO)
         throws URISyntaxException {
         log.debug("REST request to update Task : {}, {}", id, taskDTO);
@@ -93,7 +93,7 @@ public class TaskResource {
     }
 
     /**
-     * {@code PATCH  /tasks/:id} : Partial updates given fields of an existing task, field will ignore if it is null
+     * {@code PATCH  /admin/tasks/:id} : Partial updates given fields of an existing task, field will ignore if it is null
      *
      * @param id the id of the taskDTO to save.
      * @param taskDTO the taskDTO to update.
@@ -103,7 +103,7 @@ public class TaskResource {
      * or with status {@code 500 (Internal Server Error)} if the taskDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/tasks/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/tasks/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<TaskDTO> partialUpdateTask(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody TaskDTO taskDTO
@@ -129,23 +129,23 @@ public class TaskResource {
     }
 
     /**
-     * {@code GET  /tasks} : get all the tasks.
+     * {@code GET  /admin/tasks} : get all the tasks.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
      */
-    @GetMapping("/tasks")
+    @GetMapping("/public/tasks")
     public List<TaskDTO> getAllTasks() {
         log.debug("REST request to get all Tasks");
         return taskService.findAll();
     }
 
     /**
-     * {@code GET  /tasks/:id} : get the "id" task.
+     * {@code GET  /admin/tasks/:id} : get the "id" task.
      *
      * @param id the id of the taskDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the taskDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/admin/tasks/{id}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long id) {
         log.debug("REST request to get Task : {}", id);
         Optional<TaskDTO> taskDTO = taskService.findOne(id);
@@ -153,12 +153,12 @@ public class TaskResource {
     }
 
     /**
-     * {@code DELETE  /tasks/:id} : delete the "id" task.
+     * {@code DELETE  /admin/tasks/:id} : delete the "id" task.
      *
      * @param id the id of the taskDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/tasks/{id}")
+    @DeleteMapping("/admin/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         log.debug("REST request to delete Task : {}", id);
         taskService.delete(id);

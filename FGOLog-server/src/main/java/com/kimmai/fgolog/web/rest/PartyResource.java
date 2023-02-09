@@ -1,8 +1,10 @@
 package com.kimmai.fgolog.web.rest;
 
+import com.kimmai.fgolog.business.PartyBusiness;
 import com.kimmai.fgolog.repository.PartyRepository;
 import com.kimmai.fgolog.service.PartyService;
 import com.kimmai.fgolog.service.dto.PartyDTO;
+import com.kimmai.fgolog.service.dto.PartyResponseDTO;
 import com.kimmai.fgolog.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,19 +37,22 @@ public class PartyResource {
 
     private final PartyRepository partyRepository;
 
-    public PartyResource(PartyService partyService, PartyRepository partyRepository) {
+    private final PartyBusiness partyBusiness;
+
+    public PartyResource(PartyService partyService, PartyRepository partyRepository, PartyBusiness partyBusiness) {
         this.partyService = partyService;
         this.partyRepository = partyRepository;
+        this.partyBusiness = partyBusiness;
     }
 
     /**
-     * {@code POST  /parties} : Create a new party.
+     * {@code POST  /admin/parties} : Create a new party.
      *
      * @param partyDTO the partyDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new partyDTO, or with status {@code 400 (Bad Request)} if the party has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/parties")
+    @PostMapping("/admin/parties")
     public ResponseEntity<PartyDTO> createParty(@RequestBody PartyDTO partyDTO) throws URISyntaxException {
         log.debug("REST request to save Party : {}", partyDTO);
         if (partyDTO.getId() != null) {
@@ -55,13 +60,13 @@ public class PartyResource {
         }
         PartyDTO result = partyService.save(partyDTO);
         return ResponseEntity
-            .created(new URI("/api/parties/" + result.getId()))
+            .created(new URI("/api/admin/parties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /parties/:id} : Updates an existing party.
+     * {@code PUT  /admin/parties/:id} : Updates an existing party.
      *
      * @param id the id of the partyDTO to save.
      * @param partyDTO the partyDTO to update.
@@ -70,7 +75,7 @@ public class PartyResource {
      * or with status {@code 500 (Internal Server Error)} if the partyDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/parties/{id}")
+    @PutMapping("/admin/parties/{id}")
     public ResponseEntity<PartyDTO> updateParty(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody PartyDTO partyDTO
@@ -95,7 +100,7 @@ public class PartyResource {
     }
 
     /**
-     * {@code PATCH  /parties/:id} : Partial updates given fields of an existing party, field will ignore if it is null
+     * {@code PATCH  /admin/parties/:id} : Partial updates given fields of an existing party, field will ignore if it is null
      *
      * @param id the id of the partyDTO to save.
      * @param partyDTO the partyDTO to update.
@@ -105,7 +110,7 @@ public class PartyResource {
      * or with status {@code 500 (Internal Server Error)} if the partyDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/parties/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/parties/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<PartyDTO> partialUpdateParty(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody PartyDTO partyDTO
@@ -131,23 +136,23 @@ public class PartyResource {
     }
 
     /**
-     * {@code GET  /parties} : get all the parties.
+     * {@code GET  /admin/parties} : get all the parties.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of parties in body.
      */
-    @GetMapping("/parties")
-    public List<PartyDTO> getAllParties() {
+    @GetMapping("/public/parties")
+    public List<PartyResponseDTO> getAllParties() {
         log.debug("REST request to get all Parties");
-        return partyService.findAll();
+        return partyBusiness.getAllParties();
     }
 
     /**
-     * {@code GET  /parties/:id} : get the "id" party.
+     * {@code GET  /admin/parties/:id} : get the "id" party.
      *
      * @param id the id of the partyDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the partyDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/parties/{id}")
+    @GetMapping("/admin/parties/{id}")
     public ResponseEntity<PartyDTO> getParty(@PathVariable Long id) {
         log.debug("REST request to get Party : {}", id);
         Optional<PartyDTO> partyDTO = partyService.findOne(id);
@@ -155,12 +160,12 @@ public class PartyResource {
     }
 
     /**
-     * {@code DELETE  /parties/:id} : delete the "id" party.
+     * {@code DELETE  /admin/parties/:id} : delete the "id" party.
      *
      * @param id the id of the partyDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/parties/{id}")
+    @DeleteMapping("/admin/parties/{id}")
     public ResponseEntity<Void> deleteParty(@PathVariable Long id) {
         log.debug("REST request to delete Party : {}", id);
         partyService.delete(id);

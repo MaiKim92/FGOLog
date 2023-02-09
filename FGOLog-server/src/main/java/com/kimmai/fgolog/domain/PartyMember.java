@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * A WishItem.
+ * A PartyMember.
  */
 @Entity
-@Table(name = "wish_item")
-public class WishItem implements Serializable {
+@Table(name = "party_member")
+public class PartyMember implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +17,14 @@ public class WishItem implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "seq")
+    private Integer seq;
+
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn(unique = false)
+    private Party party;
+
+    @ManyToOne
     private Servant servant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -27,13 +33,39 @@ public class WishItem implements Serializable {
         return this.id;
     }
 
-    public WishItem id(Long id) {
+    public PartyMember id(Long id) {
         this.setId(id);
         return this;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getSeq() {
+        return this.seq;
+    }
+
+    public PartyMember seq(Integer seq) {
+        this.setSeq(seq);
+        return this;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
+
+    public Party getParty() {
+        return this.party;
+    }
+
+    public void setParty(Party party) {
+        this.party = party;
+    }
+
+    public PartyMember party(Party party) {
+        this.setParty(party);
+        return this;
     }
 
     public Servant getServant() {
@@ -44,7 +76,7 @@ public class WishItem implements Serializable {
         this.servant = servant;
     }
 
-    public WishItem servant(Servant servant) {
+    public PartyMember servant(Servant servant) {
         this.setServant(servant);
         return this;
     }
@@ -56,10 +88,10 @@ public class WishItem implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof WishItem)) {
+        if (!(o instanceof PartyMember)) {
             return false;
         }
-        return id != null && id.equals(((WishItem) o).id);
+        return id != null && id.equals(((PartyMember) o).id);
     }
 
     @Override
@@ -71,8 +103,9 @@ public class WishItem implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "WishItem{" +
+        return "PartyMember{" +
             "id=" + getId() +
+            ", seq=" + getSeq() +
             "}";
     }
 }

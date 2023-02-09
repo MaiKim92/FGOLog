@@ -1,6 +1,5 @@
 package com.kimmai.fgolog.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -27,8 +26,10 @@ public class Skill implements Serializable {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "seq")
+    private Integer seq;
+
     @ManyToOne
-    @JsonIgnoreProperties(value = { "parties" }, allowSetters = true)
     private Servant servant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -85,6 +86,19 @@ public class Skill implements Serializable {
         this.imageUrl = imageUrl;
     }
 
+    public Integer getSeq() {
+        return this.seq;
+    }
+
+    public Skill seq(Integer seq) {
+        this.setSeq(seq);
+        return this;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
+
     public Servant getServant() {
         return this.servant;
     }
@@ -125,6 +139,7 @@ public class Skill implements Serializable {
             ", name='" + getName() + "'" +
             ", level=" + getLevel() +
             ", imageUrl='" + getImageUrl() + "'" +
+            ", seq=" + getSeq() +
             "}";
     }
 }

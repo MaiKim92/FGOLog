@@ -1,5 +1,6 @@
 package com.kimmai.fgolog.service.impl;
 
+import com.kimmai.fgolog.domain.Servant;
 import com.kimmai.fgolog.domain.WishItem;
 import com.kimmai.fgolog.repository.WishItemRepository;
 import com.kimmai.fgolog.service.WishItemService;

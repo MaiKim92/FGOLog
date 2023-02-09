@@ -4,19 +4,15 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.kimmai.fgolog.domain.Skill} entity.
+ * A DTO for the {@link com.kimmai.fgolog.domain.PartyMember} entity.
  */
-public class SkillDTO implements Serializable {
+public class PartyMemberDTO implements Serializable {
 
     private Long id;
 
-    private String name;
-
-    private Integer level;
-
-    private String imageUrl;
-
     private Integer seq;
+
+    private PartyDTO party;
 
     private ServantDTO servant;
 
@@ -28,36 +24,20 @@ public class SkillDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public Integer getSeq() {
         return seq;
     }
 
     public void setSeq(Integer seq) {
         this.seq = seq;
+    }
+
+    public PartyDTO getParty() {
+        return party;
+    }
+
+    public void setParty(PartyDTO party) {
+        this.party = party;
     }
 
     public ServantDTO getServant() {
@@ -73,15 +53,15 @@ public class SkillDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SkillDTO)) {
+        if (!(o instanceof PartyMemberDTO)) {
             return false;
         }
 
-        SkillDTO skillDTO = (SkillDTO) o;
+        PartyMemberDTO partyMemberDTO = (PartyMemberDTO) o;
         if (this.id == null) {
             return false;
         }
-        return Objects.equals(this.id, skillDTO.id);
+        return Objects.equals(this.id, partyMemberDTO.id);
     }
 
     @Override
@@ -92,12 +72,10 @@ public class SkillDTO implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "SkillDTO{" +
+        return "PartyMemberDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", level=" + getLevel() +
-            ", imageUrl='" + getImageUrl() + "'" +
             ", seq=" + getSeq() +
+            ", party=" + getParty() +
             ", servant=" + getServant() +
             "}";
     }

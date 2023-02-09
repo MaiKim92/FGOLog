@@ -32,6 +32,13 @@ public interface SkillService {
     List<SkillDTO> findAll();
 
     /**
+     * Get all the skills of a servant.
+     *
+     * @return the list of entities.
+     */
+    List<SkillDTO> getByServantId(Long servantId);
+
+    /**
      * Get the "id" skill.
      *
      * @param id the id of the entity.

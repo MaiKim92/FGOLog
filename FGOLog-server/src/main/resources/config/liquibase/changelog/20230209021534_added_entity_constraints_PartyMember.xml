@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity PartyMember.
+    -->
+    <changeSet id="20230209021534-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="party_id"
+                                 baseTableName="party_member"
+                                 constraintName="fk_party_member__party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"/>
+
+        <addForeignKeyConstraint baseColumnNames="servant_id"
+                                 baseTableName="party_member"
+                                 constraintName="fk_party_member__servant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="servant"/>
+    </changeSet>
+</databaseChangeLog>

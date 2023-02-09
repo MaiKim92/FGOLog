@@ -26,15 +26,7 @@
       "fieldType": "Boolean"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "party",
-      "otherEntityRelationshipName": "servant",
-      "relationshipName": "party",
-      "ownerSide": true
-    }
-  ],
+  "relationships": [],
   "entityTableName": "servant",
   "dto": "mapstruct",
   "pagination": "no",

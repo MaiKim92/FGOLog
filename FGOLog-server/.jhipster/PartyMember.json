@@ -1,21 +1,9 @@
 {
-  "name": "Skill",
+  "name": "PartyMember",
   "fields": [
     {
       "fieldName": "id",
       "fieldType": "Long"
-    },
-    {
-      "fieldName": "name",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "level",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "imageUrl",
-      "fieldType": "String"
     },
     {
       "fieldName": "seq",
@@ -24,13 +12,20 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "party",
+      "otherEntityRelationshipName": "partyMember",
+      "relationshipName": "party",
+      "ownerSide": true
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "servant",
-      "otherEntityRelationshipName": "skill",
+      "otherEntityRelationshipName": "partyMember",
       "relationshipName": "servant"
     }
   ],
-  "entityTableName": "skill",
+  "entityTableName": "party_member",
   "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
@@ -39,5 +34,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20230208051203"
+  "changelogDate": "20230209021534"
 }

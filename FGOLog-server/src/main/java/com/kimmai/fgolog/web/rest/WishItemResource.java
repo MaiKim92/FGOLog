@@ -1,5 +1,6 @@
 package com.kimmai.fgolog.web.rest;
 
+import com.kimmai.fgolog.business.WishItemBusiness;
 import com.kimmai.fgolog.repository.WishItemRepository;
 import com.kimmai.fgolog.service.WishItemService;
 import com.kimmai.fgolog.service.dto.WishItemDTO;
@@ -35,19 +36,22 @@ public class WishItemResource {
 
     private final WishItemRepository wishItemRepository;
 
-    public WishItemResource(WishItemService wishItemService, WishItemRepository wishItemRepository) {
+    private final WishItemBusiness wishItemBusiness;
+
+    public WishItemResource(WishItemService wishItemService, WishItemRepository wishItemRepository, WishItemBusiness wishItemBusiness) {
         this.wishItemService = wishItemService;
         this.wishItemRepository = wishItemRepository;
+        this.wishItemBusiness = wishItemBusiness;
     }
 
     /**
-     * {@code POST  /wish-items} : Create a new wishItem.
+     * {@code POST  /admin/wish-items} : Create a new wishItem.
      *
      * @param wishItemDTO the wishItemDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wishItemDTO, or with status {@code 400 (Bad Request)} if the wishItem has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/wish-items")
+    @PostMapping("/admin/wish-items")
     public ResponseEntity<WishItemDTO> createWishItem(@RequestBody WishItemDTO wishItemDTO) throws URISyntaxException {
         log.debug("REST request to save WishItem : {}", wishItemDTO);
         if (wishItemDTO.getId() != null) {
@@ -55,13 +59,13 @@ public class WishItemResource {
         }
         WishItemDTO result = wishItemService.save(wishItemDTO);
         return ResponseEntity
-            .created(new URI("/api/wish-items/" + result.getId()))
+            .created(new URI("/api/admin/wish-items/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /wish-items/:id} : Updates an existing wishItem.
+     * {@code PUT  /admin/wish-items/:id} : Updates an existing wishItem.
      *
      * @param id the id of the wishItemDTO to save.
      * @param wishItemDTO the wishItemDTO to update.
@@ -70,7 +74,7 @@ public class WishItemResource {
      * or with status {@code 500 (Internal Server Error)} if the wishItemDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/wish-items/{id}")
+    @PutMapping("/admin/wish-items/{id}")
     public ResponseEntity<WishItemDTO> updateWishItem(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody WishItemDTO wishItemDTO
@@ -95,7 +99,7 @@ public class WishItemResource {
     }
 
     /**
-     * {@code PATCH  /wish-items/:id} : Partial updates given fields of an existing wishItem, field will ignore if it is null
+     * {@code PATCH  /admin/wish-items/:id} : Partial updates given fields of an existing wishItem, field will ignore if it is null
      *
      * @param id the id of the wishItemDTO to save.
      * @param wishItemDTO the wishItemDTO to update.
@@ -105,7 +109,7 @@ public class WishItemResource {
      * or with status {@code 500 (Internal Server Error)} if the wishItemDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/wish-items/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/wish-items/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<WishItemDTO> partialUpdateWishItem(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody WishItemDTO wishItemDTO
@@ -131,23 +135,23 @@ public class WishItemResource {
     }
 
     /**
-     * {@code GET  /wish-items} : get all the wishItems.
+     * {@code GET  /public/wish-items} : get all the wishItems.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wishItems in body.
      */
-    @GetMapping("/wish-items")
+    @GetMapping("/public/wish-items")
     public List<WishItemDTO> getAllWishItems() {
         log.debug("REST request to get all WishItems");
-        return wishItemService.findAll();
+        return wishItemBusiness.getAllWishItemsForWishList();
     }
 
     /**
-     * {@code GET  /wish-items/:id} : get the "id" wishItem.
+     * {@code GET  /admin/wish-items/:id} : get the "id" wishItem.
      *
      * @param id the id of the wishItemDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wishItemDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/wish-items/{id}")
+    @GetMapping("/admin/wish-items/{id}")
     public ResponseEntity<WishItemDTO> getWishItem(@PathVariable Long id) {
         log.debug("REST request to get WishItem : {}", id);
         Optional<WishItemDTO> wishItemDTO = wishItemService.findOne(id);
@@ -155,12 +159,12 @@ public class WishItemResource {
     }
 
     /**
-     * {@code DELETE  /wish-items/:id} : delete the "id" wishItem.
+     * {@code DELETE  /admin/wish-items/:id} : delete the "id" wishItem.
      *
      * @param id the id of the wishItemDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/wish-items/{id}")
+    @DeleteMapping("/admin/wish-items/{id}")
     public ResponseEntity<Void> deleteWishItem(@PathVariable Long id) {
         log.debug("REST request to delete WishItem : {}", id);
         wishItemService.delete(id);

@@ -1,9 +1,6 @@
 package com.kimmai.fgolog.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -22,10 +19,6 @@ public class Party implements Serializable {
 
     @Column(name = "name")
     private String name;
-
-    @ManyToMany(mappedBy = "parties")
-    @JsonIgnoreProperties(value = { "parties" }, allowSetters = true)
-    private Set<Servant> servants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -53,37 +46,6 @@ public class Party implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Servant> getServants() {
-        return this.servants;
-    }
-
-    public void setServants(Set<Servant> servants) {
-        if (this.servants != null) {
-            this.servants.forEach(i -> i.removeParty(this));
-        }
-        if (servants != null) {
-            servants.forEach(i -> i.addParty(this));
-        }
-        this.servants = servants;
-    }
-
-    public Party servants(Set<Servant> servants) {
-        this.setServants(servants);
-        return this;
-    }
-
-    public Party addServant(Servant servant) {
-        this.servants.add(servant);
-        servant.getParties().add(this);
-        return this;
-    }
-
-    public Party removeServant(Servant servant) {
-        this.servants.remove(servant);
-        servant.getParties().remove(this);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

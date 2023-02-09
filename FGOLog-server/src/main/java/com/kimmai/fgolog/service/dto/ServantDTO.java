@@ -1,9 +1,7 @@
 package com.kimmai.fgolog.service.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A DTO for the {@link com.kimmai.fgolog.domain.Servant} entity.
@@ -21,8 +19,6 @@ public class ServantDTO implements Serializable {
     private String thumbnailUrl;
 
     private Boolean isHas;
-
-    private Set<PartyDTO> parties = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -72,14 +68,6 @@ public class ServantDTO implements Serializable {
         this.isHas = isHas;
     }
 
-    public Set<PartyDTO> getParties() {
-        return parties;
-    }
-
-    public void setParties(Set<PartyDTO> parties) {
-        this.parties = parties;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -111,7 +99,6 @@ public class ServantDTO implements Serializable {
             ", imageUrl='" + getImageUrl() + "'" +
             ", thumbnailUrl='" + getThumbnailUrl() + "'" +
             ", isHas='" + getIsHas() + "'" +
-            ", parties=" + getParties() +
             "}";
     }
 }

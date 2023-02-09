@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,33 +59,21 @@ public class ServantServiceImpl implements ServantService {
     @Transactional(readOnly = true)
     public List<ServantDTO> findAll() {
         log.debug("Request to get all Servants");
-        return servantRepository
-            .findAllWithEagerRelationships()
-            .stream()
-            .map(servantMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return servantRepository.findAll().stream().map(servantMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<ServantDTO> findAllOwned() {
-        log.debug("Request to get all Servants");
-        return servantRepository
-            .findAllByIsHasWithEagerRelationships(true)
-            .stream()
-            .map(servantMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
-    public Page<ServantDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return servantRepository.findAllWithEagerRelationships(pageable).map(servantMapper::toDto);
+        log.debug("Request to get all owned Servants");
+        return servantRepository.findAllByIsHas(true).stream().map(servantMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<ServantDTO> findOne(Long id) {
         log.debug("Request to get Servant : {}", id);
-        return servantRepository.findOneWithEagerRelationships(id).map(servantMapper::toDto);
+        return servantRepository.findById(id).map(servantMapper::toDto);
     }
 
     @Override

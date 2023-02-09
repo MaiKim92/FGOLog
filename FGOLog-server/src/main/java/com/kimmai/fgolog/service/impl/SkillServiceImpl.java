@@ -5,6 +5,8 @@ import com.kimmai.fgolog.repository.SkillRepository;
 import com.kimmai.fgolog.service.SkillService;
 import com.kimmai.fgolog.service.dto.SkillDTO;
 import com.kimmai.fgolog.service.mapper.SkillMapper;
+
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +62,15 @@ public class SkillServiceImpl implements SkillService {
     public List<SkillDTO> findAll() {
         log.debug("Request to get all Skills");
         return skillRepository.findAll().stream().map(skillMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SkillDTO> getByServantId(Long servantId) {
+        log.debug("Request to get all Skills of servant: {}", servantId);
+        List<SkillDTO> result = skillRepository.findAllByServantId(servantId).stream().map(skillMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        result.sort(Comparator.comparing(SkillDTO::getSeq));
+        return result;
     }
 
     @Override

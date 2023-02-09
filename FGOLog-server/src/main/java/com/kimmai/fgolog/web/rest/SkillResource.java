@@ -41,13 +41,13 @@ public class SkillResource {
     }
 
     /**
-     * {@code POST  /skills} : Create a new skill.
+     * {@code POST  /admin/admin/skills} : Create a new skill.
      *
      * @param skillDTO the skillDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new skillDTO, or with status {@code 400 (Bad Request)} if the skill has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/skills")
+    @PostMapping("/admin/skills")
     public ResponseEntity<SkillDTO> createSkill(@RequestBody SkillDTO skillDTO) throws URISyntaxException {
         log.debug("REST request to save Skill : {}", skillDTO);
         if (skillDTO.getId() != null) {
@@ -55,13 +55,13 @@ public class SkillResource {
         }
         SkillDTO result = skillService.save(skillDTO);
         return ResponseEntity
-            .created(new URI("/api/skills/" + result.getId()))
+            .created(new URI("/api/admin/skills/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /skills/:id} : Updates an existing skill.
+     * {@code PUT  /admin/skills/:id} : Updates an existing skill.
      *
      * @param id the id of the skillDTO to save.
      * @param skillDTO the skillDTO to update.
@@ -70,7 +70,7 @@ public class SkillResource {
      * or with status {@code 500 (Internal Server Error)} if the skillDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/skills/{id}")
+    @PutMapping("/admin/skills/{id}")
     public ResponseEntity<SkillDTO> updateSkill(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody SkillDTO skillDTO
@@ -95,7 +95,7 @@ public class SkillResource {
     }
 
     /**
-     * {@code PATCH  /skills/:id} : Partial updates given fields of an existing skill, field will ignore if it is null
+     * {@code PATCH  /admin/skills/:id} : Partial updates given fields of an existing skill, field will ignore if it is null
      *
      * @param id the id of the skillDTO to save.
      * @param skillDTO the skillDTO to update.
@@ -105,7 +105,7 @@ public class SkillResource {
      * or with status {@code 500 (Internal Server Error)} if the skillDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/skills/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/skills/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<SkillDTO> partialUpdateSkill(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody SkillDTO skillDTO
@@ -131,23 +131,34 @@ public class SkillResource {
     }
 
     /**
-     * {@code GET  /skills} : get all the skills.
+     * {@code GET  /public/skills} : get all the skills.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of skills in body.
      */
-    @GetMapping("/skills")
+    @GetMapping("/public/skills")
     public List<SkillDTO> getAllSkills() {
         log.debug("REST request to get all Skills");
         return skillService.findAll();
     }
 
     /**
-     * {@code GET  /skills/:id} : get the "id" skill.
+     * {@code GET  /public/servant-skills/:id} : get all the skills of a servant.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of skills in body.
+     */
+    @GetMapping("/public/servant-skills/{id}")
+    public List<SkillDTO> getSkillsByServantId(@PathVariable Long id) {
+        log.debug("REST request to get all Skills");
+        return skillService.getByServantId(id);
+    }
+
+    /**
+     * {@code GET  /admin/skills/:id} : get the "id" skill.
      *
      * @param id the id of the skillDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the skillDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/skills/{id}")
+    @GetMapping("/admin/skills/{id}")
     public ResponseEntity<SkillDTO> getSkill(@PathVariable Long id) {
         log.debug("REST request to get Skill : {}", id);
         Optional<SkillDTO> skillDTO = skillService.findOne(id);
@@ -155,12 +166,12 @@ public class SkillResource {
     }
 
     /**
-     * {@code DELETE  /skills/:id} : delete the "id" skill.
+     * {@code DELETE  /admin/skills/:id} : delete the "id" skill.
      *
      * @param id the id of the skillDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/skills/{id}")
+    @DeleteMapping("/admin/skills/{id}")
     public ResponseEntity<Void> deleteSkill(@PathVariable Long id) {
         log.debug("REST request to delete Skill : {}", id);
         skillService.delete(id);

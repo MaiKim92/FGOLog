@@ -8,6 +8,11 @@ entity Party {
 	name String
 }
 
+entity PartyMember {
+    id Long,
+    seq Integer
+}
+
 entity Material {
 	id Long,
 	name String,
@@ -28,7 +33,8 @@ entity Skill {
 	id Long,
 	name String,
 	level Integer,
-	imageUrl String
+	imageUrl String,
+	seq Integer
 }
 
 entity WishItem {
@@ -44,22 +50,17 @@ entity Task {
 
 relationship OneToOne {
  	Task{material} to Material,
- 	WishItem{servant} to Servant
+ 	WishItem{servant} to Servant,
+ 	PartyMember{party} to Party
 }
 
 relationship ManyToOne {
 	Skill{Servant} to Servant
-}
-
-relationship ManyToMany {
-	Servant{Party} to Party{Servant}
+    PartyMember{Servant} to Servant
 }
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
-// Set service options to all except few
+// Set service options
 service * with serviceImpl
-
-// Set an angular suffix
-// angularSuffix * with mySuffix

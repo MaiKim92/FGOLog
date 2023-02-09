@@ -72,6 +72,12 @@ body{
     margin: 0px;
 }
 
+#heading {
+    text-align: center;
+    font-family: 'EB Garamond', 'serif';
+    text-shadow: -2px 0 8px rgb(196, 201, 255), 0 2px 8px rgb(196, 201, 255), 2px 0 8px rgb(196, 201, 255), 0 -2px 8px rgb(196, 201, 255);
+}
+
 #main {
     padding: 3px;
 }
@@ -81,56 +87,130 @@ body{
     background-image: url("../assets/img/bg.png");
     background-position: center;
     background-repeat: no-repeat;
+    text-align: center;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
+.servant img,
+.servant .level{
+    cursor: pointer;
 }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: auto;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
+.list {
+    text-align: center;
+    display: flex;
+    margin: 20px;
+    text-align: center;
 }
 
-.servant:hover .tooltiptext {
-  visibility: visible;
-}
-
-#servant-list .servant {
+.list .servant {
     position: relative;
+    width: fit-content;
+    left: 0.75%;
+    z-index: 0;
 }
 
-#servant-list .servant img.portrait {
+.list .servant img.portrait {
     width: 150px;
     height: auto;
-    left: 0px;
+    z-index: 1;
 }
 
-#servant-list .servant .level{
-    text-align: center;
+.list .servant .level{
+    text-align: right;
     position: absolute;
-    width: 48px;
-    top: 100px;
-    left: 100px;
+    width: auto;
+    top: 110px;
+    left: 55%;
     padding: 5px;
 }
 
-#servant-list .servant .level .level-number {
+.list .servant .level .level-number{
     text-align: right;
     width: auto;
-    font-width: bold;
+    font-weight: bold;
+    font-size: 120%;
+    text-shadow: -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
 }
 
-#servant-lít .servant .level .level-number .small {
-    font-size: 50%;
+.list .servant .level .level-number .small {
+    font-size: 50% !important;
+}
+
+#servant-dialog.modal .modal-dialog {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.modal-content {
+	background: linear-gradient(0deg, rgba(27,33,154,1) 0%, rgba(59,125,235,1) 35%, rgba(23,129,177,1) 65%, rgba(27,33,154,1) 100%);
+}
+
+.modal-footer {
+    border: none;
+}
+
+.servant-img {
+    width: 100%;
+}
+
+.servant-img,
+.servant-details {
+    padding: 20px;
+}
+
+.servant-details {
+    font-size: 100%;
+    background-color: rgb(38,41,47);
+}
+
+.servant-details-container {
+    padding: 20px;
+}
+
+img.has-false {
+    filter: grayscale(100%);
+}
+
+.stat-name {
+    font-weight: bold;
+}
+
+.stat {
+    font-weight: 400;
+}
+
+.skill-img {
+    width: 64px;
+    height: 64px;
+}
+
+#servant-dialog .btn {
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 0px;
+    background: linear-gradient(0deg, rgba(40,50,200,1) 0%, rgba(60,150,255,1) 35%, rgba(40,50,200,1) 65%, rgba(40,50,150,1) 100%);
+    text-shadow: -2px 0 8px rgb(196, 201, 255), 0 2px 8px rgb(196, 201, 255), 2px 0 8px rgb(196, 201, 255), 0 -2px 8px rgb(196, 201, 255);
+    font-size: 120%;
+}
+
+#servant-dialog .btn:hover {
+    background: linear-gradient(0deg, rgba(255,214,110,1) 0%, rgba(255,145,0,1) 35%, rgba(255,214,110,1) 65%, rgba(255,55,0,1) 100%);
+    text-shadow: -2px 0 8px rgb(255, 191, 128), 0 2px 8px rgb(255, 191, 128), 2px 0 8px rgb(255, 191, 128), 0 -2px 8px rgb(255, 191, 128);
+}
+
+#servant-name,
+.party-name {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(200,200,200,1) 30%, rgba(150, 150, 150, 1) 40%, rgba(200,200,200,1) 50%, rgba(200,200,200,1) 100%);
+    -webkit-background-clip: text;
+    font-family: 'EB Garamond', 'serif';
+    font-weight: bold;
+}
+
+.stat-name,
+.stat,
+.skill-name {
+    text-shadow: -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
+    font-size: 120%;
 }
 
 @media only screen and (min-width: 992px) {
@@ -155,7 +235,12 @@ body{
     }
 
     .menu-item:hover h5 {
-        background: linear-gradient(0deg, rgba(250,250,250,1) 0%, rgba(150, 150, 150, 1) 50%, rgba(200,200,200,1) 100%);
+        background: linear-gradient(0deg, rgba(255,214,110,1) 0%, rgba(255,145,0,1) 35%, rgba(255,55,0,1) 100%);
         margin: 0px;
     }
+
+    #heading h1 {
+        font-size: 500%;
+    }
+
 }

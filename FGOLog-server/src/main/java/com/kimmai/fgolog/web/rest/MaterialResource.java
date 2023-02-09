@@ -41,13 +41,13 @@ public class MaterialResource {
     }
 
     /**
-     * {@code POST  /materials} : Create a new material.
+     * {@code POST  /admin/materials} : Create a new material.
      *
      * @param materialDTO the materialDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new materialDTO, or with status {@code 400 (Bad Request)} if the material has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/materials")
+    @PostMapping("/admin/materials")
     public ResponseEntity<MaterialDTO> createMaterial(@RequestBody MaterialDTO materialDTO) throws URISyntaxException {
         log.debug("REST request to save Material : {}", materialDTO);
         if (materialDTO.getId() != null) {
@@ -55,13 +55,13 @@ public class MaterialResource {
         }
         MaterialDTO result = materialService.save(materialDTO);
         return ResponseEntity
-            .created(new URI("/api/materials/" + result.getId()))
+            .created(new URI("/api/admin/materials/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * {@code PUT  /materials/:id} : Updates an existing material.
+     * {@code PUT  /admin/materials/:id} : Updates an existing material.
      *
      * @param id the id of the materialDTO to save.
      * @param materialDTO the materialDTO to update.
@@ -70,7 +70,7 @@ public class MaterialResource {
      * or with status {@code 500 (Internal Server Error)} if the materialDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/materials/{id}")
+    @PutMapping("/admin/materials/{id}")
     public ResponseEntity<MaterialDTO> updateMaterial(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody MaterialDTO materialDTO
@@ -95,7 +95,7 @@ public class MaterialResource {
     }
 
     /**
-     * {@code PATCH  /materials/:id} : Partial updates given fields of an existing material, field will ignore if it is null
+     * {@code PATCH  /admin/materials/:id} : Partial updates given fields of an existing material, field will ignore if it is null
      *
      * @param id the id of the materialDTO to save.
      * @param materialDTO the materialDTO to update.
@@ -105,7 +105,7 @@ public class MaterialResource {
      * or with status {@code 500 (Internal Server Error)} if the materialDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/materials/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/materials/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<MaterialDTO> partialUpdateMaterial(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody MaterialDTO materialDTO
@@ -131,23 +131,23 @@ public class MaterialResource {
     }
 
     /**
-     * {@code GET  /materials} : get all the materials.
+     * {@code GET  /public/materials} : get all the materials.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of materials in body.
      */
-    @GetMapping("/materials")
+    @GetMapping("/public/materials")
     public List<MaterialDTO> getAllMaterials() {
         log.debug("REST request to get all Materials");
         return materialService.findAll();
     }
 
     /**
-     * {@code GET  /materials/:id} : get the "id" material.
+     * {@code GET  /admin/materials/:id} : get the "id" material.
      *
      * @param id the id of the materialDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the materialDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/materials/{id}")
+    @GetMapping("/public/materials/{id}")
     public ResponseEntity<MaterialDTO> getMaterial(@PathVariable Long id) {
         log.debug("REST request to get Material : {}", id);
         Optional<MaterialDTO> materialDTO = materialService.findOne(id);
@@ -155,12 +155,12 @@ public class MaterialResource {
     }
 
     /**
-     * {@code DELETE  /materials/:id} : delete the "id" material.
+     * {@code DELETE  /admin/materials/:id} : delete the "id" material.
      *
      * @param id the id of the materialDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/materials/{id}")
+    @DeleteMapping("/admin/materials/{id}")
     public ResponseEntity<Void> deleteMaterial(@PathVariable Long id) {
         log.debug("REST request to delete Material : {}", id);
         materialService.delete(id);
@@ -168,56 +168,5 @@ public class MaterialResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
-    }
-
-    /**
-     * {@code PATCH  /materials/increment/:id} : Increment material by one
-     *
-     * @param id the id of the materialDTO to save.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated materialDTO,
-     * or with status {@code 404 (Not Found)} if the materialDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the materialDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/materials/increment/{id}")
-    public ResponseEntity<MaterialDTO> incrementMaterial(@PathVariable(value = "id", required = true) final Long id) throws Exception {
-        log.debug("REST request to partial update Material partially : {}", id);
-        MaterialDTO materialDTO = new MaterialDTO();
-
-        MaterialDTO existingMaterial = materialService.findOne(id).orElseThrow();
-        materialDTO.setNumber(existingMaterial.getNumber() + 1);
-        materialDTO.setId(id);
-        Optional<MaterialDTO> result = materialService.partialUpdate(materialDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, materialDTO.getId().toString())
-        );
-    }
-
-    /**
-     * {@code PATCH  /materials/decrement/:id} : Decrement material by one
-     *
-     * @param id the id of the materialDTO to save.
-     * @param materialDTO the materialDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated materialDTO,
-     * or with status {@code 404 (Not Found)} if the materialDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the materialDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/materials/decrement/{id}")
-    public ResponseEntity<MaterialDTO> decrementMaterial(@PathVariable(value = "id", required = true) final Long id) throws Exception {
-        log.debug("REST request to partial update Material partially : {}", id);
-        MaterialDTO materialDTO = new MaterialDTO();
-
-        MaterialDTO existingMaterial = materialService.findOne(id).orElseThrow();
-        materialDTO.setNumber(existingMaterial.getNumber() - 1);
-        materialDTO.setId(id);
-        Optional<MaterialDTO> result = materialService.partialUpdate(materialDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, materialDTO.getId().toString())
-        );
     }
 }

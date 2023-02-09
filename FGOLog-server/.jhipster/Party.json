@@ -10,15 +10,7 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "servant",
-      "otherEntityRelationshipName": "party",
-      "relationshipName": "servant",
-      "ownerSide": false
-    }
-  ],
+  "relationships": [],
   "entityTableName": "party",
   "dto": "mapstruct",
   "pagination": "no",

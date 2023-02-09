@@ -41,13 +41,13 @@ public class ServantResource {
     }
 
     /**
-     * {@code POST  /servants} : Create a new servant.
+     * {@code POST  /admin/servants} : Create a new servant.
      *
      * @param servantDTO the servantDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new servantDTO, or with status {@code 400 (Bad Request)} if the servant has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/servants")
+    @PostMapping("/admin/servants")
     public ResponseEntity<ServantDTO> createServant(@RequestBody ServantDTO servantDTO) throws URISyntaxException {
         log.debug("REST request to save Servant : {}", servantDTO);
         if (servantDTO.getId() != null) {
@@ -61,7 +61,7 @@ public class ServantResource {
     }
 
     /**
-     * {@code PUT  /servants/:id} : Updates an existing servant.
+     * {@code PUT  /admin/servants/:id} : Updates an existing servant.
      *
      * @param id the id of the servantDTO to save.
      * @param servantDTO the servantDTO to update.
@@ -70,7 +70,7 @@ public class ServantResource {
      * or with status {@code 500 (Internal Server Error)} if the servantDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/servants/{id}")
+    @PutMapping("/admin/servants/{id}")
     public ResponseEntity<ServantDTO> updateServant(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody ServantDTO servantDTO
@@ -95,7 +95,7 @@ public class ServantResource {
     }
 
     /**
-     * {@code PATCH  /servants/:id} : Partial updates given fields of an existing servant, field will ignore if it is null
+     * {@code PATCH  /admin/servants/:id} : Partial updates given fields of an existing servant, field will ignore if it is null
      *
      * @param id the id of the servantDTO to save.
      * @param servantDTO the servantDTO to update.
@@ -105,7 +105,7 @@ public class ServantResource {
      * or with status {@code 500 (Internal Server Error)} if the servantDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/servants/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/servants/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ServantDTO> partialUpdateServant(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody ServantDTO servantDTO
@@ -131,37 +131,34 @@ public class ServantResource {
     }
 
     /**
-     * {@code GET  /servants} : get all the servants.
+     * {@code GET  /admin/servants} : get all the servants.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of servants in body.
      */
     @GetMapping("/servants")
-    public List<ServantDTO> getAllServants(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<ServantDTO> getAllServants() {
         log.debug("REST request to get all Servants");
         return servantService.findAll();
     }
 
     /**
-     * {@code GET  /servants-owned} : get all the owned servants.
+     * {@code GET  /public/servants-owned} : get all the servants I own.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of servants in body.
      */
-    @GetMapping("/servants-owned")
-    public List<ServantDTO> getAllOwnedServants(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get all Servants");
+    @GetMapping("/public/servants-owned")
+    public List<ServantDTO> getAllOwnedServants() {
+        log.debug("REST request to get all Servants owned");
         return servantService.findAllOwned();
     }
 
-
     /**
-     * {@code GET  /servants/:id} : get the "id" servant.
+     * {@code GET  /admin/servants/:id} : get the "id" servant.
      *
      * @param id the id of the servantDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the servantDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/servants/{id}")
+    @GetMapping("/public/servants/{id}")
     public ResponseEntity<ServantDTO> getServant(@PathVariable Long id) {
         log.debug("REST request to get Servant : {}", id);
         Optional<ServantDTO> servantDTO = servantService.findOne(id);
@@ -169,12 +166,12 @@ public class ServantResource {
     }
 
     /**
-     * {@code DELETE  /servants/:id} : delete the "id" servant.
+     * {@code DELETE  /admin/servants/:id} : delete the "id" servant.
      *
      * @param id the id of the servantDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/servants/{id}")
+    @DeleteMapping("/admin/servants/{id}")
     public ResponseEntity<Void> deleteServant(@PathVariable Long id) {
         log.debug("REST request to delete Servant : {}", id);
         servantService.delete(id);

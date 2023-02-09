@@ -42,7 +42,7 @@
     "withAdminUi": true,
     "enableGradleEnterprise": false,
     "languages": ["en", "fr"],
-    "entities": ["Party", "Material", "Servant", "Skill", "WishItem", "Task"],
-    "lastLiquibaseTimestamp": 1675833125000
+    "entities": ["Party", "Material", "Servant", "Skill", "WishItem", "Task", "PartyMember"],
+    "lastLiquibaseTimestamp": 1675908934000
   }
 }
