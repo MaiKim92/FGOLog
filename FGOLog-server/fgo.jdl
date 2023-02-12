@@ -3,6 +3,12 @@ enum TaskStatus {
 	COMPLETED
 }
 
+enum CardType {
+    BUSTER,
+    ARTS,
+    QUICK
+}
+
 entity Party {
 	id Long,
 	name String
@@ -48,15 +54,28 @@ entity Task {
 	status TaskStatus
 }
 
+entity CommandCode {
+    id Long,
+    name String
+}
+
+entity CommandCard {
+    id Long,
+    type CardType,
+    seq Integer
+}
+
 relationship OneToOne {
  	Task{material} to Material,
  	WishItem{servant} to Servant,
- 	PartyMember{party} to Party
+ 	PartyMember{party} to Party,
+ 	CommandCard{commandCode} to CommandCode
 }
 
 relationship ManyToOne {
-	Skill{Servant} to Servant
-    PartyMember{Servant} to Servant
+	Skill{Servant} to Servant,
+    PartyMember{Servant} to Servant,
+    CommandCard{Servant} to Servant
 }
 
 // Use Data Transfer Objects (DTO)

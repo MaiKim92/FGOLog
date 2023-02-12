@@ -1,5 +1,9 @@
 {
-  "name": "Material",
+  "applications": "*",
+  "changelogDate": "20230208051201",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "material",
   "fields": [
     {
       "fieldName": "id",
@@ -18,15 +22,11 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
-  "entityTableName": "material",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Material",
+  "pagination": "no",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230208051201"
+  "relationships": [],
+  "service": "serviceImpl"
 }

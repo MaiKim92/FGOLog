@@ -1,5 +1,9 @@
 {
-  "name": "PartyMember",
+  "applications": "*",
+  "changelogDate": "20230209021534",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "party_member",
   "fields": [
     {
       "fieldName": "id",
@@ -10,29 +14,25 @@
       "fieldType": "Integer"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PartyMember",
+  "pagination": "no",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-one",
       "otherEntityName": "party",
       "otherEntityRelationshipName": "partyMember",
+      "ownerSide": true,
       "relationshipName": "party",
-      "ownerSide": true
+      "relationshipType": "one-to-one"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "servant",
       "otherEntityRelationshipName": "partyMember",
-      "relationshipName": "servant"
+      "relationshipName": "servant",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "party_member",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230209021534"
+  "service": "serviceImpl"
 }

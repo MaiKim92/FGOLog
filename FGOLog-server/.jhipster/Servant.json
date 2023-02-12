@@ -1,5 +1,9 @@
 {
-  "name": "Servant",
+  "applications": "*",
+  "changelogDate": "20230208051202",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "servant",
   "fields": [
     {
       "fieldName": "id",
@@ -26,15 +30,11 @@
       "fieldType": "Boolean"
     }
   ],
-  "relationships": [],
-  "entityTableName": "servant",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Servant",
+  "pagination": "no",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230208051202"
+  "relationships": [],
+  "service": "serviceImpl"
 }

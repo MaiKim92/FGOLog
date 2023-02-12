@@ -48,14 +48,14 @@ body{
 
 #stats #sq img,
 #stats #ticket img{
-    width: 48px;
-    height: auto;
+    height: 48px;
+    width: auto;
 }
 
 #stats #sq .sq-number,
 #stats #ticket .ticket-number{
     position: absolute;
-    left: 48px;
+    left: 64px;
     margin: 5px;
     top: 0px;
     background-color: rgb(30, 30, 30);
@@ -141,6 +141,18 @@ body{
     max-width: 1200px;
 }
 
+#servant-dialog .card-img {
+    max-width: 96px;
+}
+
+#servant-dialog .section-name {
+    font-family: 'EB Garamond', 'serif';
+    font-weight: bold;
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(200,200,200,1) 30%, rgba(150, 150, 150, 1) 40%, rgba(200,200,200,1) 50%, rgba(200,200,200,1) 100%);
+    -webkit-background-clip: text;
+}
+
 .modal-content {
 	background: linear-gradient(0deg, rgba(27,33,154,1) 0%, rgba(59,125,235,1) 35%, rgba(23,129,177,1) 65%, rgba(27,33,154,1) 100%);
 }
@@ -180,8 +192,19 @@ img.has-false {
 }
 
 .skill-img {
-    width: 64px;
-    height: 64px;
+    max-width: 64px;
+}
+
+.task-in_progress {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(200,200,200,1) 30%, rgba(150, 150, 150, 1) 40%, rgba(200,200,200,1) 50%, rgba(200,200,200,1) 100%);
+    -webkit-background-clip: text;
+}
+
+.task-completed {
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(200,200,200,1) 30%, rgba(150, 150, 150, 1) 40%, rgba(200,200,200,1) 50%, rgba(200,200,200,1) 100%);
+    -webkit-background-clip: text;
 }
 
 #servant-dialog .btn {
@@ -197,8 +220,11 @@ img.has-false {
     text-shadow: -2px 0 8px rgb(255, 191, 128), 0 2px 8px rgb(255, 191, 128), 2px 0 8px rgb(255, 191, 128), 0 -2px 8px rgb(255, 191, 128);
 }
 
-#servant-name,
 .party-name {
+    color: black;
+}
+
+#servant-name {
     -webkit-text-fill-color: transparent;
     background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(200,200,200,1) 30%, rgba(150, 150, 150, 1) 40%, rgba(200,200,200,1) 50%, rgba(200,200,200,1) 100%);
     -webkit-background-clip: text;
@@ -211,6 +237,59 @@ img.has-false {
 .skill-name {
     text-shadow: -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
     font-size: 120%;
+}
+
+.team-front .container,
+.team-back .container {
+    background-color: rgba(53, 87, 138, 0.5);
+    width: fit-content;
+    padding: 10px 10px 10px 33px;
+    border-radius: 10px;
+}
+
+.team-front .party-name,
+.team-back .party-name {
+    margin-top: 20px;
+}
+
+#party-list .portrait {
+    padding: 15px;
+}
+
+img.item {
+    width: 90%;
+    max-width: 96px;
+}
+
+.task-item .progress {
+    background: linear-gradient(0deg, rgba(10, 10, 10, 1) 0%, rgba(50, 50, 50, 1) 1%, rgba(100, 100, 100, 1) 100%);
+    border-radius: 0px;
+    height: 50%;
+}
+
+.task-item .progress-bar {
+    background: linear-gradient(0deg, rgba(114,235,88, 1) 0%, rgba(114,235,88, 1) 30%, rgba(50,180,42, 1) 50%, rgba(50,180,42, 1) 100%);
+}
+
+.task-item .progress-number {
+    transform: translateX(10%);
+}
+
+.task-item {
+    padding: 10px 50px 10px 10px;
+}
+
+.task-item-container {
+    padding: 10px;
+    background-color: rgba(53, 87, 138, 0.5);
+    border-radius: 10px;
+}
+
+.task-name {
+    font-family: 'EB Garamond', 'serif';
+    font-weight: bold;
+    text-align: left;
+    color: black;
 }
 
 @media only screen and (min-width: 992px) {

@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20230212103418",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "command_code",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "CommandCode",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

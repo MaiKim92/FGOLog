@@ -1,11 +1,13 @@
-package com.kimmai.fgolog.service.dto;
+package com.kimmai.fgolog.web.rest.dto;
+
+import com.kimmai.fgolog.web.rest.dto.ServantResponseDTO;
 
 import java.util.List;
 
 public class PartyResponseDTO {
 
     private String name;
-    private List<ServantDTO> servants;
+    private List<ServantResponseDTO> servants;
 
     public String getName() {
         return this.name;
@@ -15,11 +17,11 @@ public class PartyResponseDTO {
         this.name = name;
     }
 
-    public List<ServantDTO> getServants() {
+    public List<ServantResponseDTO> getServants() {
         return this.servants;
     }
 
-    public void setServants(List<ServantDTO> servants) {
+    public void setServants(List<ServantResponseDTO> servants) {
         this.servants = servants;
     }
 

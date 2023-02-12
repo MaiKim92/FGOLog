@@ -20,6 +20,7 @@
       <sourceFolder url="file://$MODULE_DIR$/FGOLog-server/node_modules/generator-jhipster/generators/server/templates/.mvn/wrapper" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGOLog-server/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGOLog-server/target/generated-sources/annotations" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/FGOLog-client/src/main/java" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

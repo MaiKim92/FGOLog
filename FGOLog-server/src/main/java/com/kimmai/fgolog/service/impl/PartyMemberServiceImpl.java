@@ -79,6 +79,6 @@ public class PartyMemberServiceImpl implements PartyMemberService {
     @Transactional(readOnly = true)
     public List<Long> findAllServantIdsByPartyId(Long partyId) {
         log.debug("Request to get all Servant Ids by Party Id");
-        return partyMemberRepository.getAllServantIdsByPartyId(partyId);
+        return partyMemberRepository.findAllByPartyId(partyId).stream().map(pm -> pm.getServant().getId()).collect(Collectors.toList());
     }
 }

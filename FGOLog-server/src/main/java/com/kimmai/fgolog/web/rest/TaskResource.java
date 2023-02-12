@@ -1,5 +1,6 @@
 package com.kimmai.fgolog.web.rest;
 
+import com.kimmai.fgolog.business.TaskBusiness;
 import com.kimmai.fgolog.repository.TaskRepository;
 import com.kimmai.fgolog.service.TaskService;
 import com.kimmai.fgolog.service.dto.TaskDTO;
@@ -35,9 +36,12 @@ public class TaskResource {
 
     private final TaskRepository taskRepository;
 
-    public TaskResource(TaskService taskService, TaskRepository taskRepository) {
+    private final TaskBusiness taskBusiness;
+
+    public TaskResource(TaskService taskService, TaskRepository taskRepository, TaskBusiness taskBusiness) {
         this.taskService = taskService;
         this.taskRepository = taskRepository;
+        this.taskBusiness = taskBusiness;
     }
 
     /**
@@ -136,7 +140,7 @@ public class TaskResource {
     @GetMapping("/public/tasks")
     public List<TaskDTO> getAllTasks() {
         log.debug("REST request to get all Tasks");
-        return taskService.findAll();
+        return taskBusiness.getAllTasks();
     }
 
     /**

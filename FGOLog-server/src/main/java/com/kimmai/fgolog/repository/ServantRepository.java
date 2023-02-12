@@ -16,4 +16,5 @@ public interface ServantRepository extends JpaRepository<Servant, Long> {
 
     @Query("select distinct servant from Servant servant where servant.isHas = :isHas")
     List<Servant> findAllByIsHas(@Param("isHas") Boolean isHas);
+
 }

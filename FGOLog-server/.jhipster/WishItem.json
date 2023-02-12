@@ -1,28 +1,28 @@
 {
-  "name": "WishItem",
+  "applications": "*",
+  "changelogDate": "20230208051204",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "wish_item",
   "fields": [
     {
       "fieldName": "id",
       "fieldType": "Long"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "WishItem",
+  "pagination": "no",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-one",
       "otherEntityName": "servant",
       "otherEntityRelationshipName": "wishItem",
+      "ownerSide": true,
       "relationshipName": "servant",
-      "ownerSide": true
+      "relationshipType": "one-to-one"
     }
   ],
-  "entityTableName": "wish_item",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230208051204"
+  "service": "serviceImpl"
 }

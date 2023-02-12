@@ -1,5 +1,9 @@
 {
-  "name": "Task",
+  "applications": "*",
+  "changelogDate": "20230208051205",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "task",
   "fields": [
     {
       "fieldName": "id",
@@ -19,23 +23,19 @@
       "fieldValues": "IN_PROGRESS,COMPLETED"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Task",
+  "pagination": "no",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-one",
       "otherEntityName": "material",
       "otherEntityRelationshipName": "task",
+      "ownerSide": true,
       "relationshipName": "material",
-      "ownerSide": true
+      "relationshipType": "one-to-one"
     }
   ],
-  "entityTableName": "task",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230208051205"
+  "service": "serviceImpl"
 }

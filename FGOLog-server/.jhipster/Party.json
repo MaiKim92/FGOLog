@@ -1,5 +1,9 @@
 {
-  "name": "Party",
+  "applications": "*",
+  "changelogDate": "20230208051200",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "party",
   "fields": [
     {
       "fieldName": "id",
@@ -10,15 +14,11 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
-  "entityTableName": "party",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Party",
+  "pagination": "no",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230208051200"
+  "relationships": [],
+  "service": "serviceImpl"
 }

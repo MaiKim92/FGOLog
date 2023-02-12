@@ -1,0 +1,43 @@
+{
+  "applications": "*",
+  "changelogDate": "20230212103419",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "command_card",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "CardType",
+      "fieldValues": "BUSTER,ARTS,QUICK"
+    },
+    {
+      "fieldName": "seq",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "CommandCard",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "commandCode",
+      "otherEntityRelationshipName": "commandCard",
+      "ownerSide": true,
+      "relationshipName": "commandCode",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "servant",
+      "otherEntityRelationshipName": "commandCard",
+      "relationshipName": "servant",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

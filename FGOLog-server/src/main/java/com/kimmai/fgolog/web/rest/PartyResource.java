@@ -4,7 +4,7 @@ import com.kimmai.fgolog.business.PartyBusiness;
 import com.kimmai.fgolog.repository.PartyRepository;
 import com.kimmai.fgolog.service.PartyService;
 import com.kimmai.fgolog.service.dto.PartyDTO;
-import com.kimmai.fgolog.service.dto.PartyResponseDTO;
+import com.kimmai.fgolog.web.rest.dto.PartyResponseDTO;
 import com.kimmai.fgolog.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;

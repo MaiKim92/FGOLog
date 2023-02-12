@@ -1,5 +1,9 @@
 {
-  "name": "Skill",
+  "applications": "*",
+  "changelogDate": "20230208051203",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "skill",
   "fields": [
     {
       "fieldName": "id",
@@ -22,22 +26,18 @@
       "fieldType": "Integer"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Skill",
+  "pagination": "no",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "servant",
       "otherEntityRelationshipName": "skill",
-      "relationshipName": "servant"
+      "relationshipName": "servant",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "skill",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20230208051203"
+  "service": "serviceImpl"
 }

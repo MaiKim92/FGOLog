@@ -1,8 +1,10 @@
 package com.kimmai.fgolog.web.rest;
 
+import com.kimmai.fgolog.business.ServantBusiness;
 import com.kimmai.fgolog.repository.ServantRepository;
 import com.kimmai.fgolog.service.ServantService;
 import com.kimmai.fgolog.service.dto.ServantDTO;
+import com.kimmai.fgolog.web.rest.dto.ServantResponseDTO;
 import com.kimmai.fgolog.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,9 +37,12 @@ public class ServantResource {
 
     private final ServantRepository servantRepository;
 
-    public ServantResource(ServantService servantService, ServantRepository servantRepository) {
+    private final ServantBusiness servantBusiness;
+
+    public ServantResource(ServantService servantService, ServantRepository servantRepository, ServantBusiness servantBusiness) {
         this.servantService = servantService;
         this.servantRepository = servantRepository;
+        this.servantBusiness = servantBusiness;
     }
 
     /**
@@ -147,9 +152,9 @@ public class ServantResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of servants in body.
      */
     @GetMapping("/public/servants-owned")
-    public List<ServantDTO> getAllOwnedServants() {
+    public List<ServantResponseDTO> getAllOwnedServants() {
         log.debug("REST request to get all Servants owned");
-        return servantService.findAllOwned();
+        return servantBusiness.getAllOwnedServants();
     }
 
     /**
@@ -159,10 +164,9 @@ public class ServantResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the servantDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/public/servants/{id}")
-    public ResponseEntity<ServantDTO> getServant(@PathVariable Long id) {
+    public ServantResponseDTO getServant(@PathVariable Long id) {
         log.debug("REST request to get Servant : {}", id);
-        Optional<ServantDTO> servantDTO = servantService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(servantDTO);
+        return servantBusiness.findOne(id);
     }
 
     /**
