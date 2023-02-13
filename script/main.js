@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#servant-list').show();
     $('#party-list').hide();
     $('#wish-list').hide();
+    $('#master-profile').hide();
     $.ajax({
          type: "GET",
          url: "http://localhost:8080/api/public/materials/1",
@@ -36,7 +37,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#party-list').hide();
         $('#wish-list').hide();
-        $('#test-list').hide();
+        $('#master-profile').hide();
         $('#menu-item-2').removeClass("selected");
         $('#menu-item-3').removeClass("selected");
         $('#menu-item-4').removeClass("selected");
@@ -55,7 +56,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#party-list').show();
         $('#wish-list').hide();
-        $('#test-list').hide();
+        $('#master-profile').hide();
         $('#menu-item-1').removeClass("selected");
         $('#menu-item-3').removeClass("selected");
         $('#menu-item-4').removeClass("selected");
@@ -73,7 +74,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#party-list').hide();
         $('#wish-list').hide();
-        $('#test-list').hide();
+        $('#master-profile').hide();
         $('#menu-item-1').removeClass("selected");
         $('#menu-item-2').removeClass("selected");
         $('#menu-item-4').removeClass("selected");
@@ -92,7 +93,7 @@ $(document).ready(function() {
         $('#task-list').show();
         $('#party-list').hide();
         $('#wish-list').hide();
-        $('#test-list').hide();
+        $('#master-profile').hide();
         $('#menu-item-1').removeClass("selected");
         $('#menu-item-2').removeClass("selected");
         $('#menu-item-3').removeClass("selected");
@@ -111,7 +112,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#party-list').hide();
         $('#wish-list').show();
-        $('#test-list').hide();
+        $('#master-profile').hide();
         $('#menu-item-1').removeClass("selected");
         $('#menu-item-2').removeClass("selected");
         $('#menu-item-3').removeClass("selected");
@@ -129,7 +130,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#party-list').hide();
         $('#wish-list').hide();
-        $('#test-list').show();
+        $('#master-profile').show();
         $('#menu-item-1').removeClass("selected");
         $('#menu-item-2').removeClass("selected");
         $('#menu-item-3').removeClass("selected");
@@ -149,7 +150,7 @@ $(document).ready(function() {
                 var content = "";
                 result.forEach(function(data) {
                     content += "<div data-toggle=\"modal\" id = \"servant--" + data.servant.id + "\" data-target = \"#servant-dialog\" data-servant = \"" + data.servant.id + "\" class = \"servant col-6 col-md-4 col-lg-3 col-xxl-2\">";
-                    content +=      "<img class = \"portrait\" src=\"./" + data.servant.thumbnailUrl + "\" title = \'" + data.servant.name + "\'>";
+                    content +=      "<img class = \"portrait\" src=\"./" + data.servant.thumbnailUrl + "\" title = \"" + data.servant.name + "\">";
                     content +=      "<div class = \"level\">";
                     content +=          "<div class = \"level-number\">";
                     content +=              "<span class = \"small\">LV.</span><span>" + data.servant.level + "</span>";
@@ -175,7 +176,7 @@ $(document).ready(function() {
                 var servant;
                 result.forEach(function(data) {
                     content += "<div data-toggle=\"modal\" id = \"wishlist--" + data.servant.id + "\" data-target = \"#servant-dialog\" data-servant = \"" + data.servant.id + "\" class = \"servant col-6 col-md-4 col-lg-3 col-xxl-2\">";
-                    content +=      "<img class = \"portrait\" src=\"" + data.servant.thumbnailUrl + "\" title = \'" + data.servant.name + "\'>";
+                    content +=      "<img class = \"portrait\" src=\"" + data.servant.thumbnailUrl + "\" title = \"" + data.servant.name + "\">";
                     content += "</div>";
                 });
                 $("#wish-list").html(content);
@@ -203,10 +204,10 @@ $(document).ready(function() {
                     var i = 0;
                     servants.forEach(function(ser) {
                         if (i == 0) {
-                            content += "<div class = \"col-12 col-lg-6 team-front row\"><div class = \"container col-12 row\"><h4 class = \"party-name\">Front</h4>";
+                            content += "<div class = \"col-6 team-front row\"><div class = \"container col-12 row\"><h4 class = \"party-name\">Front</h4>";
                         }
                         if (i == 3) {
-                            content += "<div class = \"col-12 col-lg-6 team-back row\"><div class = \"container col-12 row\"><h4 class = \"party-name\">Back</h4>";
+                            content += "<div class = \"col-6 team-back row\"><div class = \"container col-12 row\"><h4 class = \"party-name\">Back</h4>";
                         }
                         var data = "data-toggle = \"modal\"";
                         // If servant doesn't have an ID, then disable popup modal on click
@@ -263,7 +264,7 @@ $(document).ready(function() {
                     content +=              "</div>";
                     content +=              "<div>";
                     content +=                  "<div class = \"task-name task-" + data.status.toLowerCase() + " progress-number col-4\">";
-                    content +=                      "<div>" + data.status.replaceAll("_", " ") + "</div>";
+                    content +=                      "<h5>" + data.status.replaceAll("_", " ") + "</h5>";
                     content +=                  "</div>";
                     content +=              "</div>";
                     content +=          "</div>";
@@ -279,8 +280,11 @@ $(document).ready(function() {
     }
 
     $('#servant-list').on('click', '[id^=servant--]', function() {
+        var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
+        elements.forEach(
+            function(element){element.html("")
+        });
         var id = $(this).data('servant');
-        $('#skill-title').show();
         $("#servant-name").html("");
         $('#servant-img').html("");
         $('.section-name').html("");
@@ -289,46 +293,36 @@ $(document).ready(function() {
         $('#card-3').html("");
         $('#card-4').html("");
         $('#card-5').html("");
+        $("#servant-level").html("");
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/api/public/servants/" + id,
             dataType: 'json',
             success: function (result, status, xhr) {
                 var level = "";
-                if (result.isHas == true) {
-                    level += "<h5><span class =\"stat-name\">Level:</span><span class = \"stat\"> " + result.servant.level + "</span></h5>";
+                if (result.servant.isHas == true) {
+                    var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
+                    let i = 0;
+                    elements.forEach(function(element) {
+                        var content = "";
+                        content += "<img class = \"skill-img\" src = \"" + result.skills[i].imageUrl +"\"></img>";
+                        content += "<div class = \"skill-name row\">" + result.skills[i].name + "</div>";
+                        content += "<div class = \"skill-level\"><span class = \"stat-name\">Level: </span><span class = \"stat\">" + result.skills[i].level + "</span></div>";
+                        elements[i].html(content);
+                        i++;
+                    });
+                    level += "<h4><span class =\"stat-name\">Level:</span><span class = \"stat\"> " + result.servant.level + "</span></h4>";
+                    $("#servant-level").html(level);
+                    $("#section-name-skill").html("Skills");
+                    $("#section-name-card").html("Command Cards");
                 }
                 $("#servant-name").html(result.servant.name);
                 $("#servant-img").html("<img class = \"servant-img has-" + result.servant.isHas + "\" src = \"" + result.servant.imageUrl + "\">");
-                $("#servant-level").html(level);
-                $("#section-name-skill").html("Skills");
-                $("#section-name-card").html("Command Cards");
                 $("#card-1").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[0].type + ".png\">");
                 $("#card-2").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[1].type + ".png\">");
                 $("#card-3").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[2].type + ".png\">");
                 $("#card-4").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[3].type + ".png\">");
                 $("#card-5").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[4].type + ".png\">");
-            },
-            error: function (xhr, status, error) {
-                 console.log(error);
-            }
-        });
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/api/public/servant-skills/" + id,
-            dataType: 'json',
-            success: function (result, status, xhr) {
-                $('[id^=skill-]').html("");
-                var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
-                var i = 0;
-                result.forEach(function(data) {
-                    var content = "";
-                    content += "<img class = \"skill-img\" src = \"" + data.imageUrl +"\"></img>";
-                    content += "<div class = \"skill-name row\">" + data.name + "</div>";
-                    content += "<div class = \"skill-level\"><span class = \"stat-name\">Level: </span><span class = \"stat\">" + data.level + "</span></div>";
-                    elements[i].html(content);
-                    i++;
-                });
             },
             error: function (xhr, status, error) {
                  console.log(error);
@@ -337,8 +331,11 @@ $(document).ready(function() {
     });
 
     $('#wish-list').on('click', '[id^=wishlist--]', function() {
+        var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
+        elements.forEach(
+            function(element){element.html("")
+        });
         var id = $(this).data('servant');
-        $('#skill-title').hide();
         $("#servant-name").html("");
         $('#servant-img').html("");
         $('.section-name').html("");
@@ -347,41 +344,31 @@ $(document).ready(function() {
         $('#card-3').html("");
         $('#card-4').html("");
         $('#card-5').html("");
+        $("#servant-level").html("");
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/api/public/servants/" + id,
             dataType: 'json',
             success: function (result, status, xhr) {
                 var level = "";
-                if (result.isHas == true) {
-                    level += "<h5><span class =\"stat-name\">Level:</span><span class = \"stat\"> " + result.level + "</span></h5>";
+                if (result.servant.isHas == true) {
+                    var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
+                    let i = 0;
+                    elements.forEach(function(element) {
+                        var content = "";
+                        content += "<img class = \"skill-img\" src = \"" + result.skills[i].imageUrl +"\"></img>";
+                        content += "<div class = \"skill-name row\">" + result.skills[i].name + "</div>";
+                        content += "<div class = \"skill-level\"><span class = \"stat-name\">Level: </span><span class = \"stat\">" + result.skills[i].level + "</span></div>";
+                        elements[i].html(content);
+                        i++;
+                    });
+                    level += "<h4><span class =\"stat-name\">Level:</span><span class = \"stat\"> " + result.servant.level + "</span></h4>";
+                    $("#section-name-skill").html("Skills");
+                    $("#section-name-card").html("Command Cards");
+                    $("#servant-level").html(level);
                 }
-                $("#section-name-skill").html("Skills");
-                $("#section-name-card").html("Command Cards");
-                $("#servant-name").html(result.name);
-                $("#servant-img").html("<img class = \"servant-img has-" + result.isHas + "\" src = \"" + result.imageUrl + "\">");
-                $("#servant-stats").html(level);
-            },
-            error: function (xhr, status, error) {
-                 console.log(error);
-            }
-        });
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/api/public/servant-skills/" + id,
-            dataType: 'json',
-            success: function (result, status, xhr) {
-                $('[id^=skill-]').html("");
-                var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
-                var i = 0;
-                result.forEach(function(data) {
-                    var content = "";
-                    content += "<img class = \"skill-img\" src = \"" + data.imageUrl +"\"></img>";
-                    content += "<div class = \"skill-name row\">" + data.name + "</div>";
-                    content += "<div class = \"skill-level\"><span class = \"stat-name\">Level: </span><span class = \"stat\">" + data.level + "</span></div>";
-                    elements[i].html(content);
-                    i++;
-                });
+                $("#servant-name").html(result.servant.name);
+                $("#servant-img").html("<img class = \"servant-img has-" + result.servant.isHas + "\" src = \"" + result.servant.imageUrl + "\">");
             },
             error: function (xhr, status, error) {
                  console.log(error);
@@ -390,8 +377,14 @@ $(document).ready(function() {
     });
 
     $('#party-list').on('click', '[id^=party-servant--]', function() {
+        var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
+        elements.forEach(
+            function(element){element.html("")
+        });
         var id = $(this).data('servant');
-        $('#skill-title').hide();
+        if (id == null) {
+            return;
+        }
         $("#servant-name").html("");
         $('#servant-img').html("");
         $('.section-name').html("");
@@ -400,46 +393,36 @@ $(document).ready(function() {
         $('#card-3').html("");
         $('#card-4').html("");
         $('#card-5').html("");
+        $("#servant-level").html("");
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/api/public/servants/" + id,
             dataType: 'json',
             success: function (result, status, xhr) {
                 var level = "";
-                if (result.isHas == true) {
-                    level += "<h5><span class =\"stat-name\">Level:</span><span class = \"stat\"> " + result.servant.level + "</span></h5>";
+                if (result.servant.isHas == true) {
+                    $("#servant-level").html(level);
+                    $("#section-name-skill").html("Skills");
+                    $("#section-name-card").html("Command Cards");
+                    $("#card-1").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[0].type + ".png\">");
+                    $("#card-2").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[1].type + ".png\">");
+                    $("#card-3").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[2].type + ".png\">");
+                    $("#card-4").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[3].type + ".png\">");
+                    $("#card-5").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[4].type + ".png\">");
+                    level += "<h4><span class =\"stat-name\">Level:</span><span class = \"stat\"> " + result.servant.level + "</span></h4>";
+                    var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
+                    let i = 0;
+                    elements.forEach(function(element) {
+                        var content = "";
+                        content += "<img class = \"skill-img\" src = \"" + result.skills[i].imageUrl +"\"></img>";
+                        content += "<div class = \"skill-name row\">" + result.skills[i].name + "</div>";
+                        content += "<div class = \"skill-level\"><span class = \"stat-name\">Level: </span><span class = \"stat\">" + result.skills[i].level + "</span></div>";
+                        elements[i].html(content);
+                        i++;
+                    });
                 }
-                $("#section-name-skill").html("Skills");
-                $("#section-name-card").html("Command Cards");
                 $("#servant-name").html(result.servant.name);
                 $("#servant-img").html("<img class = \"servant-img has-" + result.servant.isHas + "\" src = \"" + result.servant.imageUrl + "\">");
-                $("#servant-stats").html(level);
-                $("#card-1").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[0].type + ".png\">");
-                $("#card-2").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[1].type + ".png\">");
-                $("#card-3").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[2].type + ".png\">");
-                $("#card-4").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[3].type + ".png\">");
-                $("#card-5").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[4].type + ".png\">");
-            },
-            error: function (xhr, status, error) {
-                 console.log(error);
-            }
-        });
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/api/public/servant-skills/" + id,
-            dataType: 'json',
-            success: function (result, status, xhr) {
-                $('[id^=skill-]').html("");
-                var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
-                var i = 0;
-                result.forEach(function(data) {
-                    var content = "";
-                    content += "<img class = \"skill-img\" src = \"" + data.imageUrl +"\"></img>";
-                    content += "<div class = \"skill-name row\">" + data.name + "</div>";
-                    content += "<div class = \"skill-level\"><span class = \"stat-name\">Level: </span><span class = \"stat\">" + data.level + "</span></div>";
-                    elements[i].html(content);
-                    i++;
-                });
             },
             error: function (xhr, status, error) {
                  console.log(error);

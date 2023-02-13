@@ -41,13 +41,13 @@ public class CommandCardResource {
     }
 
     /**
-     * {@code POST  /command-cards} : Create a new commandCard.
+     * {@code POST  /admin/command-cards} : Create a new commandCard.
      *
      * @param commandCardDTO the commandCardDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new commandCardDTO, or with status {@code 400 (Bad Request)} if the commandCard has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/command-cards")
+    @PostMapping("/admin/command-cards")
     public ResponseEntity<CommandCardDTO> createCommandCard(@RequestBody CommandCardDTO commandCardDTO) throws URISyntaxException {
         log.debug("REST request to save CommandCard : {}", commandCardDTO);
         if (commandCardDTO.getId() != null) {
@@ -61,7 +61,7 @@ public class CommandCardResource {
     }
 
     /**
-     * {@code PUT  /command-cards/:id} : Updates an existing commandCard.
+     * {@code PUT  /admin/command-cards/:id} : Updates an existing commandCard.
      *
      * @param id the id of the commandCardDTO to save.
      * @param commandCardDTO the commandCardDTO to update.
@@ -70,7 +70,7 @@ public class CommandCardResource {
      * or with status {@code 500 (Internal Server Error)} if the commandCardDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/command-cards/{id}")
+    @PutMapping("/admin/command-cards/{id}")
     public ResponseEntity<CommandCardDTO> updateCommandCard(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody CommandCardDTO commandCardDTO
@@ -95,7 +95,7 @@ public class CommandCardResource {
     }
 
     /**
-     * {@code PATCH  /command-cards/:id} : Partial updates given fields of an existing commandCard, field will ignore if it is null
+     * {@code PATCH  /admin/command-cards/:id} : Partial updates given fields of an existing commandCard, field will ignore if it is null
      *
      * @param id the id of the commandCardDTO to save.
      * @param commandCardDTO the commandCardDTO to update.
@@ -105,7 +105,7 @@ public class CommandCardResource {
      * or with status {@code 500 (Internal Server Error)} if the commandCardDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/command-cards/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/command-cards/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<CommandCardDTO> partialUpdateCommandCard(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody CommandCardDTO commandCardDTO
@@ -131,23 +131,23 @@ public class CommandCardResource {
     }
 
     /**
-     * {@code GET  /command-cards} : get all the commandCards.
+     * {@code GET  /public/command-cards} : get all the commandCards.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of commandCards in body.
      */
-    @GetMapping("/command-cards")
+    @GetMapping("/public/command-cards")
     public List<CommandCardDTO> getAllCommandCards() {
         log.debug("REST request to get all CommandCards");
         return commandCardService.findAll();
     }
 
     /**
-     * {@code GET  /command-cards/:id} : get the "id" commandCard.
+     * {@code GET  /public/command-cards/:id} : get the "id" commandCard.
      *
      * @param id the id of the commandCardDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the commandCardDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/command-cards/{id}")
+    @GetMapping("/public/command-cards/{id}")
     public ResponseEntity<CommandCardDTO> getCommandCard(@PathVariable Long id) {
         log.debug("REST request to get CommandCard : {}", id);
         Optional<CommandCardDTO> commandCardDTO = commandCardService.findOne(id);
@@ -155,12 +155,12 @@ public class CommandCardResource {
     }
 
     /**
-     * {@code DELETE  /command-cards/:id} : delete the "id" commandCard.
+     * {@code DELETE  /admin/command-cards/:id} : delete the "id" commandCard.
      *
      * @param id the id of the commandCardDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/command-cards/{id}")
+    @DeleteMapping("/admin/command-cards/{id}")
     public ResponseEntity<Void> deleteCommandCard(@PathVariable Long id) {
         log.debug("REST request to delete CommandCard : {}", id);
         commandCardService.delete(id);

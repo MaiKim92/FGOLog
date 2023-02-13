@@ -2,13 +2,12 @@ package com.kimmai.fgolog.business.impl;
 
 import com.kimmai.fgolog.business.CommandCardBusiness;
 import com.kimmai.fgolog.business.ServantBusiness;
-import com.kimmai.fgolog.service.CommandCardService;
 import com.kimmai.fgolog.service.ServantService;
-import com.kimmai.fgolog.service.WishItemService;
+import com.kimmai.fgolog.service.SkillService;
 import com.kimmai.fgolog.service.dto.CommandCardDTO;
 import com.kimmai.fgolog.service.dto.ServantDTO;
+import com.kimmai.fgolog.service.dto.SkillDTO;
 import com.kimmai.fgolog.web.rest.dto.ServantResponseDTO;
-import com.kimmai.fgolog.service.mapper.ServantMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,9 +25,27 @@ public class ServantBusinessImpl implements ServantBusiness {
 
     private final CommandCardBusiness commandCardBusiness;
 
-    public ServantBusinessImpl(ServantService servantService, CommandCardBusiness commandCardBusiness) {
+    private final SkillService skillService;
+
+    public ServantBusinessImpl(ServantService servantService, CommandCardBusiness commandCardBusiness, SkillService skillService) {
         this.servantService = servantService;
         this.commandCardBusiness = commandCardBusiness;
+        this.skillService = skillService;
+    }
+    @Override
+    public List<ServantResponseDTO> findAll() {
+        List<ServantResponseDTO> response = new ArrayList<>();
+        List<ServantDTO> servants = servantService.findAll();
+        servants.forEach(servant -> {
+            List<CommandCardDTO> commandCards = commandCardBusiness.getByServantId(servant.getId());
+            List<SkillDTO> skills = skillService.getByServantId(servant.getId());
+            ServantResponseDTO resp = new ServantResponseDTO();
+            resp.setServant(servant);
+            resp.setCommandCards(commandCards);
+            resp.setSkills(skills);
+            response.add(resp);
+        });
+        return response;
     }
     @Override
     public List<ServantResponseDTO> getAllOwnedServants() {
@@ -36,9 +53,11 @@ public class ServantBusinessImpl implements ServantBusiness {
         List<ServantDTO> servants = servantService.findAllOwned();
         servants.forEach(servant -> {
             List<CommandCardDTO> commandCards = commandCardBusiness.getByServantId(servant.getId());
+            List<SkillDTO> skills = skillService.getByServantId(servant.getId());
             ServantResponseDTO resp = new ServantResponseDTO();
             resp.setServant(servant);
             resp.setCommandCards(commandCards);
+            resp.setSkills(skills);
             response.add(resp);
         });
         return response;
@@ -50,6 +69,7 @@ public class ServantBusinessImpl implements ServantBusiness {
         ServantResponseDTO resp = new ServantResponseDTO();
         resp.setServant(servant);
         resp.setCommandCards(commandCardBusiness.getByServantId(servant.getId()));
+        resp.setSkills(skillService.getByServantId(servant.getId()));
         return resp;
     }
 }

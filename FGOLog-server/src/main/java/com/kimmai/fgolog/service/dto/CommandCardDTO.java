@@ -3,10 +3,12 @@ package com.kimmai.fgolog.service.dto;
 import com.kimmai.fgolog.domain.enumeration.CardType;
 import java.io.Serializable;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * A DTO for the {@link com.kimmai.fgolog.domain.CommandCard} entity.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommandCardDTO implements Serializable {
 
     private Long id;

@@ -41,13 +41,13 @@ public class CommandCodeResource {
     }
 
     /**
-     * {@code POST  /command-codes} : Create a new commandCode.
+     * {@code POST  /admin/command-codes} : Create a new commandCode.
      *
      * @param commandCodeDTO the commandCodeDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new commandCodeDTO, or with status {@code 400 (Bad Request)} if the commandCode has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/command-codes")
+    @PostMapping("/admin/command-codes")
     public ResponseEntity<CommandCodeDTO> createCommandCode(@RequestBody CommandCodeDTO commandCodeDTO) throws URISyntaxException {
         log.debug("REST request to save CommandCode : {}", commandCodeDTO);
         if (commandCodeDTO.getId() != null) {
@@ -61,7 +61,7 @@ public class CommandCodeResource {
     }
 
     /**
-     * {@code PUT  /command-codes/:id} : Updates an existing commandCode.
+     * {@code PUT  /admin/command-codes/:id} : Updates an existing commandCode.
      *
      * @param id the id of the commandCodeDTO to save.
      * @param commandCodeDTO the commandCodeDTO to update.
@@ -70,7 +70,7 @@ public class CommandCodeResource {
      * or with status {@code 500 (Internal Server Error)} if the commandCodeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/command-codes/{id}")
+    @PutMapping("/admin/command-codes/{id}")
     public ResponseEntity<CommandCodeDTO> updateCommandCode(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody CommandCodeDTO commandCodeDTO
@@ -95,7 +95,7 @@ public class CommandCodeResource {
     }
 
     /**
-     * {@code PATCH  /command-codes/:id} : Partial updates given fields of an existing commandCode, field will ignore if it is null
+     * {@code PATCH  /admin/command-codes/:id} : Partial updates given fields of an existing commandCode, field will ignore if it is null
      *
      * @param id the id of the commandCodeDTO to save.
      * @param commandCodeDTO the commandCodeDTO to update.
@@ -105,7 +105,7 @@ public class CommandCodeResource {
      * or with status {@code 500 (Internal Server Error)} if the commandCodeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/command-codes/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/admin/command-codes/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<CommandCodeDTO> partialUpdateCommandCode(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody CommandCodeDTO commandCodeDTO
@@ -131,23 +131,23 @@ public class CommandCodeResource {
     }
 
     /**
-     * {@code GET  /command-codes} : get all the commandCodes.
+     * {@code GET  /public/command-codes} : get all the commandCodes.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of commandCodes in body.
      */
-    @GetMapping("/command-codes")
+    @GetMapping("/public/command-codes")
     public List<CommandCodeDTO> getAllCommandCodes() {
         log.debug("REST request to get all CommandCodes");
         return commandCodeService.findAll();
     }
 
     /**
-     * {@code GET  /command-codes/:id} : get the "id" commandCode.
+     * {@code GET  /public/command-codes/:id} : get the "id" commandCode.
      *
      * @param id the id of the commandCodeDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the commandCodeDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/command-codes/{id}")
+    @GetMapping("/public/command-codes/{id}")
     public ResponseEntity<CommandCodeDTO> getCommandCode(@PathVariable Long id) {
         log.debug("REST request to get CommandCode : {}", id);
         Optional<CommandCodeDTO> commandCodeDTO = commandCodeService.findOne(id);
@@ -155,12 +155,12 @@ public class CommandCodeResource {
     }
 
     /**
-     * {@code DELETE  /command-codes/:id} : delete the "id" commandCode.
+     * {@code DELETE  /admin/command-codes/:id} : delete the "id" commandCode.
      *
      * @param id the id of the commandCodeDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/command-codes/{id}")
+    @DeleteMapping("/admin/command-codes/{id}")
     public ResponseEntity<Void> deleteCommandCode(@PathVariable Long id) {
         log.debug("REST request to delete CommandCode : {}", id);
         commandCodeService.delete(id);

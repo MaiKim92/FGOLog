@@ -2,10 +2,12 @@ package com.kimmai.fgolog.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * A DTO for the {@link com.kimmai.fgolog.domain.Servant} entity.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServantDTO implements Serializable {
 
     private Long id;

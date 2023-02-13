@@ -140,10 +140,10 @@ public class ServantResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of servants in body.
      */
-    @GetMapping("/servants")
-    public List<ServantDTO> getAllServants() {
+    @GetMapping("/public/servants")
+    public List<ServantResponseDTO> getAllServants() {
         log.debug("REST request to get all Servants");
-        return servantService.findAll();
+        return servantBusiness.findAll();
     }
 
     /**
