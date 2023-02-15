@@ -23,6 +23,6 @@ public interface EntityMapper<D, E> {
     List<D> toDto(List<E> entityList);
 
     @Named("partialUpdate")
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
     void partialUpdate(@MappingTarget E entity, D dto);
 }

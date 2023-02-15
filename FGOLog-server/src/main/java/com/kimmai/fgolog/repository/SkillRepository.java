@@ -15,4 +15,10 @@ import java.util.List;
 public interface SkillRepository extends JpaRepository<Skill, Long> {
     @Query("select distinct skill from Skill skill where skill.servant.id = :servantId")
     List<Skill> findAllByServantId(@Param("servantId") Long servantId);
+
+    @Query("select distinct skill from Skill skill where id in (:ids) order by id")
+    List<Skill> findAllById(@Param("ids") List<Long> ids);
+
+    @Query("select distinct skill from Skill skill where skill.servant is null")
+    List<Skill> findAllWithoutServantId();
 }

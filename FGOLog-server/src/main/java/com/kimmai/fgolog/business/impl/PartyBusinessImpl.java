@@ -2,17 +2,16 @@ package com.kimmai.fgolog.business.impl;
 
 import com.kimmai.fgolog.business.PartyBusiness;
 import com.kimmai.fgolog.business.ServantBusiness;
-import com.kimmai.fgolog.domain.PartyMember;
 import com.kimmai.fgolog.service.PartyMemberService;
 import com.kimmai.fgolog.service.PartyService;
-import com.kimmai.fgolog.business.ServantBusiness;
+import com.kimmai.fgolog.service.ServantService;
 import com.kimmai.fgolog.service.dto.PartyDTO;
 import com.kimmai.fgolog.service.dto.PartyMemberDTO;
+import com.kimmai.fgolog.web.rest.dto.PartyRequestDTO;
 import com.kimmai.fgolog.web.rest.dto.PartyResponseDTO;
 import com.kimmai.fgolog.service.dto.ServantDTO;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Optional;
+
+import java.util.*;
 
 import com.kimmai.fgolog.web.rest.dto.ServantResponseDTO;
 import org.slf4j.Logger;
@@ -35,11 +34,13 @@ public class PartyBusinessImpl implements PartyBusiness {
 
     private final ServantBusiness servantBusiness;
 
+    private final ServantService servantService;
 
-    public PartyBusinessImpl(PartyService partyService, PartyMemberService partyMemberService, ServantBusiness servantBusiness) {
+    public PartyBusinessImpl(PartyService partyService, PartyMemberService partyMemberService, ServantBusiness servantBusiness, ServantService servantService) {
         this.partyService = partyService;
         this.partyMemberService = partyMemberService;
         this.servantBusiness = servantBusiness;
+        this.servantService = servantService;
     }
 
     @Override
@@ -55,8 +56,9 @@ public class PartyBusinessImpl implements PartyBusiness {
                     servantsInParty.add(servant);
                 });
                 PartyResponseDTO resp = new PartyResponseDTO();
+                resp.setId(party.getId());
                 resp.setName(party.getName());
-                resp.setServants(PadParty(servantsInParty));
+                resp.setServants(servantsInParty);
                 result.add(resp);
             });
             return result;
@@ -66,20 +68,55 @@ public class PartyBusinessImpl implements PartyBusiness {
         }
     }
 
-    private static List<ServantResponseDTO> PadParty(List<ServantResponseDTO> party) {
-        if (party.size() > 6) {
-            return party;
+    @Override
+    public PartyResponseDTO create(PartyRequestDTO req) {
+        PartyDTO party = new PartyDTO();
+        party.setName(req.getName());
+        List<Long> servantIds = req.getServantIds();
+        List<PartyMemberDTO> partyMembers = new ArrayList<>();
+        for(int i = 0; i < servantIds.size(); i++) {
+            ServantDTO servant = servantService.findOne(servantIds.get(i)).orElseThrow();
+            PartyMemberDTO member = new PartyMemberDTO();
+            member.setServant(servant);
+            member.setSeq(i + 1);
+            partyMembers.add(member);
         }
-        ServantDTO newServant = new ServantDTO();
-        newServant.setName("No data");
-        newServant.setImageUrl("view/assets/img/servant/No_Data.png");
-        newServant.setThumbnailUrl("view/assets/img/servant/thumb/No_Data.png");
-        ServantResponseDTO resp = new ServantResponseDTO();
-        resp.setServant(newServant);
-        while (party.size() < 6) {
-            party.add(resp);
+        PartyDTO saved = partyService.save(party);
+        partyMembers.forEach(member -> {
+            member.setParty(saved);
+            partyMemberService.save(member);
+        });
+        PartyResponseDTO resp = new PartyResponseDTO();
+        resp.setId(saved.getId());
+        resp.setName(saved.getName());
+        return resp;
+    }
+
+    @Override
+    public PartyResponseDTO update(Long id, PartyRequestDTO req) {
+        PartyDTO party = new PartyDTO();
+        party.setId(id);
+        party.setName(req.getName());
+        List<Long> servantIds = req.getServantIds();
+        List<PartyMemberDTO> partyMembers = new ArrayList<>();
+        List<Long> existingPartyMemberIds = partyMemberService.findAll().stream().filter(partyMember -> partyMember.getParty().getId() == id).map(PartyMemberDTO::getId).collect(Collectors.toList());
+        existingPartyMemberIds.forEach(pm -> partyMemberService.delete(pm));
+        for(int i = 0; i < servantIds.size(); i++) {
+            ServantDTO servant = servantService.findOne(servantIds.get(i)).orElseThrow();
+            PartyMemberDTO member = new PartyMemberDTO();
+            member.setServant(servant);
+            member.setSeq(i + 1);
+            partyMembers.add(member);
         }
-        return party;
+        PartyDTO saved = partyService.save(party);
+        partyMembers.forEach(member -> {
+            member.setParty(saved);
+            partyMemberService.save(member);
+        });
+        PartyResponseDTO resp = new PartyResponseDTO();
+        resp.setId(saved.getId());
+        resp.setName(saved.getName());
+        return resp;
     }
 
 }

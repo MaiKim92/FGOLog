@@ -142,6 +142,17 @@ public class SkillResource {
     }
 
     /**
+     * {@code GET  /public/skills-without-servant} : get all the skills that don't belong to a servant
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of skills in body.
+     */
+    @GetMapping("/public/skills-without-servant")
+    public List<SkillDTO> getAllSkillsWithoutServants() {
+        log.debug("REST request to get all Skills");
+        return skillService.findAllWithoutServantId();
+    }
+
+    /**
      * {@code GET  /public/servant-skills/:id} : get all the skills of a servant.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of skills in body.
