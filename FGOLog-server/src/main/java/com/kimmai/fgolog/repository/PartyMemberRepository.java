@@ -13,7 +13,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface PartyMemberRepository extends JpaRepository<PartyMember, Long> {
-
     @Query(value = "select distinct pm from PartyMember pm where pm.party.id = :pid order by pm.seq asc")
     List<PartyMember> findAllByPartyId(@Param("pid") Long id);
 }

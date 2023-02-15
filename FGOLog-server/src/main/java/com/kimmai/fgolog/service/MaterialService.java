@@ -45,4 +45,20 @@ public interface MaterialService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Increment the "id" material.
+     *
+     * @param id the id of the entity.
+     * @return
+     */
+    Optional<MaterialDTO> increment(Long id);
+
+    /**
+     * Decrement the "id" material.
+     *
+     * @param id the id of the entity.
+     * @return
+     */
+    Optional<MaterialDTO> decrement(Long id);
 }

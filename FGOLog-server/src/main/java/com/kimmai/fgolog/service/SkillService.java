@@ -52,4 +52,19 @@ public interface SkillService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the "id" skills.
+     *
+     * @param ids the ids of the entity.
+     * @return the entity.
+     */
+    List<SkillDTO> findById(List<Long> ids);
+
+    /**
+     * Get all the skills without a servant ID.
+     *
+     * @return the list of entities.
+     */
+    List<SkillDTO> findAllWithoutServantId();
 }

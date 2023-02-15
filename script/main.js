@@ -219,7 +219,7 @@ $(document).ready(function() {
                         content +=              "<img class = \"portrait\" src=\"" + ser.servant.thumbnailUrl + "\" title = \'" + ser.servant.name + "\'>";
                         content +=          "</div>";
                         content +=      "</div>";
-                        if (i == 2 || i == 5) {
+                        if (i == 2 || i == servants.length - 1) {
                             content += "</div></div>";
                         }
                         i++;

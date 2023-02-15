@@ -131,6 +131,36 @@ public class MaterialResource {
     }
 
     /**
+     * {@code PATCH  /admin/materials/increment/:id} : Decrement a material
+     *
+     * @param id the id of the materialDTO to save.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated materialDTO,
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/admin/materials/increment/{id}")
+    public ResponseEntity<MaterialDTO> incrementMaterial(
+        @PathVariable(value = "id", required = false) final Long id) throws URISyntaxException {
+        log.debug("REST request to decrement Material : {}", id);
+        Optional<MaterialDTO> result = materialService.increment(id);
+        return ResponseUtil.wrapOrNotFound(result);
+    }
+
+    /**
+     * {@code PATCH  /admin/materials/decrement/:id} : Decrement a material
+     *
+     * @param id the id of the materialDTO to save.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated materialDTO,
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/admin/materials/decrement/{id}")
+    public ResponseEntity<MaterialDTO> decrementMaterial(
+        @PathVariable(value = "id", required = false) final Long id) throws URISyntaxException {
+        log.debug("REST request to decrement Material : {}", id);
+        Optional<MaterialDTO> result = materialService.decrement(id);
+        return ResponseUtil.wrapOrNotFound(result);
+    }
+
+    /**
      * {@code GET  /public/materials} : get all the materials.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of materials in body.

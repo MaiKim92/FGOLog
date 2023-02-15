@@ -74,4 +74,20 @@ public class MaterialServiceImpl implements MaterialService {
         log.debug("Request to delete Material : {}", id);
         materialRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<MaterialDTO> increment(Long id) {
+        log.debug("Request to increment Material : {}", id);
+        MaterialDTO existingMaterial = findOne(id).orElseThrow();
+        existingMaterial.setNumber(existingMaterial.getNumber() + 1);
+        return partialUpdate(existingMaterial);
+    }
+
+    @Override
+    public Optional<MaterialDTO> decrement(Long id) {
+        log.debug("Request to decrement Material : {}", id);
+        MaterialDTO existingMaterial = findOne(id).orElseThrow();
+        existingMaterial.setNumber(existingMaterial.getNumber() - 1);
+        return partialUpdate(existingMaterial);
+    }
 }

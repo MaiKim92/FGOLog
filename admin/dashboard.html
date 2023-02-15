@@ -12,26 +12,31 @@
      <!--Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../view/css/admin.css"/>
     <!--Font-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--jQuery-->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <script src="../script/paginathing.min.js"></script>
+    <script src="../script/notify.min.js"></script>
     <!--Custom js-->
     <script src="../script/admin.js"></script>
 </head>
 <body>
     <header class = "row">
         <nav id = "menu" class = "row d-none d-lg-flex">
-            <ul class = "main-menu">
+            <ul class = "main-menu col-9">
                 <a href = "#/"><li id = "menu-item-1" class = "menu-item">Servants</li></a>
-                <a href = "#/"><li id = "menu-item-2" class = "menu-item">Materials</li></a>
-                <a href = "#/"> <li id = "menu-item-3" class = "menu-item">Command Codes</li></a>
-                <a href = "#/"><li id = "menu-item-4" class = "menu-item">Tasks</li></a>
-                <a href = "#/"><li id = "menu-item-5" class = "menu-item">Wishlist</li></a>
+                <a href = "#/"><li id = "menu-item-2" class = "menu-item">Parties</li></a>
+                <a href = "#/"><li id = "menu-item-3" class = "menu-item">Materials</li></a>
+                <a href = "#/"> <li id = "menu-item-4" class = "menu-item">Command Codes</li></a>
+                <a href = "#/"><li id = "menu-item-5" class = "menu-item">Tasks</li></a>
+                <a href = "#/"><li id = "menu-item-6" class = "menu-item">Wishlist</li></a>
+                <a href = "#/"><li id = "menu-item-7" class = "menu-item">Skills</li></a>
+            </ul>
+            <ul class = "main-menu col-3">
+                <a href = "login.html" id = "login-menu"><li id = "login-menu-item" class = "menu-item">Log in</li></a>
+                <a href = "#/" id = "logout-menu"><li id = "logout-menu-item" class = "menu-item">Log out</li></a>
             </ul>
         </nav>
     </header>
@@ -55,6 +60,13 @@
                 <div class = "table-name"><h2>Servant List</h2></div>
                 <div class = "row">
                     <table id = "servant-table">
+                    </table>
+                </div>
+            </div>
+            <div id = "party-list">
+                <div class = "table-name"><h2>Party List</h2></div>
+                <div class = "row">
+                    <table id = "party-table">
                     </table>
                 </div>
             </div>
@@ -86,9 +98,504 @@
                     </table>
                 </div>
             </div>
+            <div id = "skill-list">
+                <div class = "table-name"><h2>Skill List</h2></div>
+                <div class = "row">
+                    <table id = "skill-table">
+                    </table>
+                </div>
+            </div>
         </div>
         <div class = "col-2 d-none d-xl-block">
             <p></p>
+        </div>
+    </div>
+
+    <div id = "add-servant-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-servant-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new servant</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-servant-name">Name</label>
+                            <input id = "add-servant-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-servant-image-url">Image URL</label>
+                            <input id = "add-servant-image-url" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-servant-thumbnail-url">Icon URL</label>
+                            <input id = "add-servant-thumbnail-url" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-servant-skill-2">Skills</label>
+                            <div class = "col-6 p-10">
+                                <select multiple id="add-servant-skill-2" class = "col-12 row m-10"></select>
+                                <button id = "_remove-skill-button" class = "btn btn-primary col-12 row m-10">Remove</button>
+                            </div>
+                            <div class = "col-6 p-10">
+                                <select multiple id="add-servant-skill" class = "col-12 row m-10">
+
+                                </select>
+                                <button id = "_add-skill-button" class = "btn btn-primary col-12 row m-10">Add</button>
+                            </div>
+                        </div>
+                        <div class ="row">
+                            <div class = "col-4 p-10">
+                                Owned?
+                            </div>
+                            <div class = "col-4 p-10">
+                                <input id = "add-servant-is-has-true" type = "radio" name = "is-has">
+                                <label for = "add-servant-is-has-true">Yes</label>
+                            </div>
+                            <div class = "col-4 p-10">
+                                <input id = "add-servant-is-has-false" type = "radio" name = "is-has" checked>
+                                <label for = "add-servant-is-has-false">No</label>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "p-10">
+                                <label for = "add-servant-level">Level</label>
+                                <input id = "add-servant-level" type = "number" min = 0 max = 120 disabled>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "p-10">
+                                <label for = "add-servant-cards">Command Cards</label>
+                                <input id = "add-servant-cards" type = "text">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-servant-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-servant-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id = "edit-servant-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-servant-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit servant</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-servant-name">Name</label>
+                            <input id = "edit-servant-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-servant-image-url">Image URL</label>
+                            <input id = "edit-servant-image-url" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-servant-thumbnail-url">Icon URL</label>
+                            <input id = "edit-servant-thumbnail-url" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-servant-skill-2">Skills</label>
+                            <div class = "col-6 p-10">
+                                <select multiple id="edit-servant-skill-2" class = "col-12 row m-10"></select>
+                                <button id = "_edit-remove-skill-button" class = "btn btn-primary col-12 row m-10">Remove</button>
+                            </div>
+                            <div class = "col-6 p-10">
+                                <select multiple id="edit-servant-skill" class = "col-12 row m-10">
+
+                                </select>
+                                <button id = "_edit-add-skill-button" class = "btn btn-primary col-12 row m-10">Add</button>
+                            </div>
+                        </div>
+                        <div class ="row">
+                            <div class = "col-4 p-10">
+                                Owned?
+                            </div>
+                            <div class = "col-4 p-10">
+                                <input id = "edit-servant-is-has-true" type = "radio" name = "is-has">
+                                <label for = "edit-servant-is-has-true">Yes</label>
+                            </div>
+                            <div class = "col-4 p-10">
+                                <input id = "edit-servant-is-has-false" type = "radio" name = "is-has" checked>
+                                <label for = "edit-servant-is-has-false">No</label>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "p-10">
+                                <label for = "edit-servant-level">Level</label>
+                                <input id = "edit-servant-level" type = "number" min = 0 max = 120 disabled>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "p-10">
+                                <label for = "edit-servant-cards">Command Cards</label>
+                                <input id = "edit-servant-cards" type = "text">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-servant-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-servant-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id = "add-party-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-party-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new party</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-party-name">Name</label>
+                            <input id = "add-party-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-party-member-2">Party members</label>
+                            <div class = "col-6 p-10">
+                                <select multiple id="add-party-member-2" class = "col-12 row m-10"></select>
+                                <button id = "_remove-member-button" class = "btn btn-primary col-12 row m-10" disabled>Remove</button>
+                            </div>
+                            <div class = "col-6 p-10">
+                                <select multiple id="add-party-member" class = "col-12 row m-10">
+
+                                </select>
+                                <button id = "_add-member-button" class = "btn btn-primary col-12 row m-10">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-party-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-party-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-party-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-party-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit party</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-party-name">Name</label>
+                            <input id = "edit-party-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-party-member-2">Party members</label>
+                            <div class = "col-6 p-10">
+                                <select multiple id="edit-party-member-2" class = "col-12 row m-10"></select>
+                                <button id = "_edit-remove-member-button" class = "btn btn-primary col-12 row m-10" disabled>Remove</button>
+                            </div>
+                            <div class = "col-6 p-10">
+                                <select multiple id="edit-party-member" class = "col-12 row m-10">
+
+                                </select>
+                                <button id = "_edit-add-member-button" class = "btn btn-primary col-12 row m-10">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-party-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-party-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-material-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-material-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new material</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-material-name">Name</label>
+                            <input id = "add-material-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-material-image-url">Image URL</label>
+                            <input id = "add-material-image-url" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label class = "col-4" for = "add-material-number">Number held</label>
+                            <input class = "col-8" id = "add-material-number" type = "number">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-material-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-material-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-material-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-material-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new material</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-material-name">Name</label>
+                            <input id = "edit-material-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-material-image-url">Image URL</label>
+                            <input id = "edit-material-image-url" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label class = "col-4" for = "edit-material-number">Number held</label>
+                            <input class = "col-8" id = "edit-material-number" type = "number">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-material-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-material-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-cc-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-cc-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new Command Code</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-cc-name">Name</label>
+                            <input id = "add-cc-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-cc-image-url">Image URL</label>
+                            <input id = "add-cc-image-url" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-cc-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-cc-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-cc-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-cc-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit Command Code</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-cc-name">Name</label>
+                            <input id = "edit-cc-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-cc-image-url">Image URL</label>
+                            <input id = "edit-cc-image-url" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-cc-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-cc-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-task-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-task-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new Task</h3>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-8">
+                                <label for = "add-task-name">Material</label>
+                                <select id = "add-task-name"></select>
+                            </div>
+                            <div class = "col-4">
+                                <img id = "add-task-image">
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-6 p-10 row">
+                                <label for = "add-task-progress">Progress</label>
+                                <input id = "add-task-progress" type = "number">
+                            </div>
+                            <div class = "col-6 p-10 row">
+                                <label for = "add-task-goal">Goal</label>
+                                <input id = "add-task-goal" type = "number">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-task-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-task-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-task-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-task-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit Task</h3>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-8">
+                                <label for = "edit-task-name">Material</label>
+                                <select id = "edit-task-name"></select>
+                            </div>
+                            <div class = "col-4">
+                                <img id = "edit-task-image">
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-6 p-10 row">
+                                <label for = "edit-task-progress">Progress</label>
+                                <input id = "edit-task-progress" type = "number">
+                            </div>
+                            <div class = "col-6 p-10 row">
+                                <label for = "edit-task-goal">Goal</label>
+                                <input id = "edit-task-goal" type = "number">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-task-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-task-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-wish-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-wish-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new Servant to Wishlist</h3>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-8">
+                                <label for = "add-wish-name">Servant</label>
+                                <select id = "add-wish-name"></select>
+                            </div>
+                            <div class = "col-4">
+                                <img id = "add-wish-image">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-wish-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-wish-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-wish-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-wish-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit Servant in Wishlist</h3>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-8">
+                                <label for = "edit-wish-name">Servant</label>
+                                <select id = "edit-wish-name"></select>
+                            </div>
+                            <div class = "col-4">
+                                <img id = "edit-wish-image">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-wish-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-wish-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-skill-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-skill-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new Skill</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-skill-name">Skill name</label>
+                            <input id = "add-skill-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "add-skill-image-url">Image URL</label>
+                            <input id = "add-skill-image-url" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-skill-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-skill-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id = "edit-skill-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-skill-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit Skill</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-skill-name">Skill name</label>
+                            <input id = "edit-skill-name" type = "text">
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-skill-image-url">Image URL</label>
+                            <input id = "edit-skill-image-url" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-skill-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-skill-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

@@ -85,4 +85,18 @@ public class SkillServiceImpl implements SkillService {
         log.debug("Request to delete Skill : {}", id);
         skillRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SkillDTO> findById(List<Long> ids) {
+        log.debug("Request to get Skill : {}", ids);
+        return skillRepository.findAllById(ids).stream().map(skillMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SkillDTO> findAllWithoutServantId() {
+        log.debug("Request to get all Skills without Servant ID");
+        return skillRepository.findAllWithoutServantId().stream().map(skillMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
 }
