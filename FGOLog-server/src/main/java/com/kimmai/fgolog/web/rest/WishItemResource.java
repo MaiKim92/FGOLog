@@ -68,34 +68,43 @@ public class WishItemResource {
      * {@code PUT  /admin/wish-items/:id} : Updates an existing wishItem.
      *
      * @param id the id of the wishItemDTO to save.
-     * @param wishItemDTO the wishItemDTO to update.
+     * @param servantId the id of the servant to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wishItemDTO,
      * or with status {@code 400 (Bad Request)} if the wishItemDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the wishItemDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/admin/wish-items/{id}")
+    @PutMapping("/admin/wish-items/{id}/{servantId}")
     public ResponseEntity<WishItemDTO> updateWishItem(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody WishItemDTO wishItemDTO
+        @PathVariable(value = "id") final Long id,
+        @PathVariable(value = "servantId") Long servantId
     ) throws URISyntaxException {
-        log.debug("REST request to update WishItem : {}, {}", id, wishItemDTO);
-        if (wishItemDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, wishItemDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
+        log.debug("REST request to update WishItem : {}, {}", id, servantId);
+        Optional<WishItemDTO> result = wishItemBusiness.update(id, servantId);
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
+        );
+    }
 
-        if (!wishItemRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        WishItemDTO result = wishItemService.save(wishItemDTO);
-        return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, wishItemDTO.getId().toString()))
-            .body(result);
+    /**
+     * {@code PUT  /admin/wish-items/toggle-obtained/:id} : Toggle whether a servant is obtained or not.
+     *
+     * @param id the id of the wishItemDTO to save.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wishItemDTO,
+     * or with status {@code 400 (Bad Request)} if the wishItemDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the wishItemDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/admin/wish-items/toggle-obtained/{id}")
+    public ResponseEntity<WishItemDTO> updateWishItem(
+        @PathVariable(value = "id") final Long id) throws URISyntaxException {
+        log.debug("REST request to update WishItem : {}", id);
+        Optional<WishItemDTO> result = wishItemBusiness.toggleObtained(id);
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString())
+        );
     }
 
     /**

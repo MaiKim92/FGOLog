@@ -4,12 +4,13 @@ $(document).ready(function() {
     $('#party-list').hide();
     $('#wish-list').hide();
     $('#master-profile').hide();
+    $('#material-list').hide();
     $.ajax({
          type: "GET",
          url: "http://localhost:8080/api/public/materials/1",
          dataType: 'json',
          success: function (result, status, xhr) {
-               $('#sq-number').html(result.number);
+               $('#sq-number').html(result.number.toLocaleString('en-US'));
          },
          error: function (xhr, status, error) {
               console.log(error);
@@ -21,7 +22,19 @@ $(document).ready(function() {
          url: "http://localhost:8080/api/public/materials/2",
          dataType: 'json',
          success: function (result, status, xhr) {
-               $('#ticket-number').html(result.number);
+               $('#ticket-number').html(result.number.toLocaleString('en-US'));
+         },
+         error: function (xhr, status, error) {
+              console.log(error);
+              return null;
+         }
+     });
+    $.ajax({
+         type: "GET",
+         url: "http://localhost:8080/api/public/materials/20",
+         dataType: 'json',
+         success: function (result, status, xhr) {
+               $('#qp-number').html(result.number.toLocaleString('en-US'));
          },
          error: function (xhr, status, error) {
               console.log(error);
@@ -68,6 +81,7 @@ $(document).ready(function() {
      });
 
      $('#menu-item-3').click(function() {
+        getMaterials();
         $('#heading h1').html("MATERIAL");
         $('#servant-list').hide();
         $('#material-list').show();
@@ -159,6 +173,33 @@ $(document).ready(function() {
                     content += "</div>";
                 });
                 $("#servant-list").html(content);
+            },
+            error: function (xhr, status, error) {
+                 console.log(error);
+            }
+        });
+    }
+
+    function getMaterials() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/public/materials",
+            dataType: 'json',
+            success: function (result, status, xhr) {
+                var content = "";
+                result.forEach(function(data) {
+                    if (data.id != 1 && data.id != 20) { // Saint Quartz and QP
+                        content += "<div data-toggle=\"modal\" id = \"material--" + data.id + "\" class = \"item col-6 col-md-4 col-lg-3 col-xxl-2\">";
+                        content +=      "<img class = \"portrait\" src=\"./" + data.imageUrl + "\" title = \"" + data.name + "\">";
+                        content +=      "<div class = \"number\">";
+                        content +=          "<div class = \"item-number\">";
+                        content +=              "<span>" + data.number.toLocaleString('en-US') + "</span>";
+                        content +=          "</div>";
+                        content +=      "</div>";
+                        content += "</div>";
+                    }
+                });
+                $("#material-list").html(content);
             },
             error: function (xhr, status, error) {
                  console.log(error);

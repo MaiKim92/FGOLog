@@ -41,4 +41,28 @@ public class WishItemBusinessImpl implements WishItemBusiness {
             throw e;
         }
     }
+
+    @Override
+    public Optional<WishItemDTO> update(Long id, Long servantId) {
+        ServantDTO servant = servantService.findOne(servantId).orElseThrow();
+        WishItemDTO wishItemDTO = new WishItemDTO();
+        wishItemDTO.setServant(servant);
+        wishItemDTO.setId(id);
+        return wishItemService.partialUpdate(wishItemDTO);
+    }
+
+    @Override
+    public Optional<WishItemDTO> toggleObtained(Long id) {
+        Optional<WishItemDTO> existingItem = wishItemService.findOne(id);
+        if (existingItem.isEmpty()) {
+            throw new RuntimeException();
+        }
+        ServantDTO servant = servantService.findOne(existingItem.get().getServant().getId()).orElseThrow();
+        servant.setIsHas(!servant.getIsHas());
+        if (servant.getIsHas() && servant.getLevel() == null) {
+            servant.setLevel(1);
+        }
+        servantService.partialUpdate(servant);
+        return existingItem;
+    }
 }

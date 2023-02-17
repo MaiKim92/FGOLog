@@ -42,18 +42,21 @@ body{
 }
 
 #stats #sq,
-#stats #ticket {
+#stats #ticket,
+#stats #qp {
     position: relative;
 }
 
 #stats #sq img,
-#stats #ticket img{
+#stats #ticket img,
+#stats #qp img {
     height: 48px;
     width: auto;
 }
 
 #stats #sq .sq-number,
-#stats #ticket .ticket-number{
+#stats #ticket .ticket-number,
+#stats #qp .qp-number {
     position: absolute;
     left: 64px;
     margin: 5px;
@@ -68,7 +71,8 @@ body{
 }
 
 #stats #sq .sq-number h5
-#stats #ticket .ticket-number h5 {
+#stats #ticket .ticket-number h5
+#stats #qp .qp-number h5 {
     margin: 0px;
 }
 
@@ -92,7 +96,9 @@ body{
 }
 
 .servant img,
-.servant .level{
+.item img,
+.servant .level,
+.item .number{
     cursor: pointer;
 }
 
@@ -103,29 +109,41 @@ body{
     text-align: center;
 }
 
-.list .servant {
+.list .servant,
+.list .item {
     position: relative;
     width: fit-content;
     left: 0.75%;
     z-index: 0;
 }
 
-.list .servant img.portrait {
+.list .servant img.portrait,
+.list .item img.portrait {
     width: 150px;
     height: auto;
     z-index: 1;
 }
 
-.list .servant .level{
+.list .servant .level {
     text-align: right;
     position: absolute;
     width: auto;
     top: 110px;
-    left: 55%;
+    right: 5%;
     padding: 5px;
 }
 
-.list .servant .level .level-number{
+.list .item .number{
+    text-align: right;
+    position: absolute;
+    width: auto;
+    top: 110px;
+    right: 5%;
+    padding: 5px;
+}
+
+.list .servant .level .level-number,
+.list .item .number .item-number {
     text-align: right;
     width: auto;
     font-weight: bold;

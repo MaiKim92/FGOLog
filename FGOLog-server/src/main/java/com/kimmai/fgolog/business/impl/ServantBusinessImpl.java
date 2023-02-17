@@ -116,10 +116,11 @@ public class ServantBusinessImpl implements ServantBusiness {
             cardDTO.setType(getCardType(commandCards.get(i)));
             cards.add(commandCardService.save(cardDTO));
         }
-        skills.forEach(skillDTO -> {
-            skillDTO.setServant(saved);
-            skillService.partialUpdate(skillDTO);
-        });
+        for (int i = 0; i < skills.size(); i++) {
+            skills.get(i).setServant(saved);
+            skills.get(i).setSeq(i + 1);
+            skillService.partialUpdate(skills.get(i));
+        }
         ServantResponseDTO resp = new ServantResponseDTO();
         resp.setServant(saved);
         resp.setSkills(skills);

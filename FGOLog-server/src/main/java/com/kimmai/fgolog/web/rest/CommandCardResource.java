@@ -142,6 +142,17 @@ public class CommandCardResource {
     }
 
     /**
+     * {@code GET  /public/command-cards/servant/:servantId} : get all the commandCards of a servant.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of commandCards in body.
+     */
+    @GetMapping("/public/command-cards/servant/{servantId}")
+    public List<CommandCardDTO> getAllCommandCards(@PathVariable(value = "servantId") Long servantId) {
+        log.debug("REST request to get all CommandCards");
+        return commandCardService.getAllByServantId(servantId);
+    }
+
+    /**
      * {@code GET  /public/command-cards/:id} : get the "id" commandCard.
      *
      * @param id the id of the commandCardDTO to retrieve.

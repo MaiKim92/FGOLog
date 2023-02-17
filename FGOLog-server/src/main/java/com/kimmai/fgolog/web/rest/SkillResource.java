@@ -169,7 +169,7 @@ public class SkillResource {
      * @param id the id of the skillDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the skillDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/admin/skills/{id}")
+    @GetMapping("/public/skills/{id}")
     public ResponseEntity<SkillDTO> getSkill(@PathVariable Long id) {
         log.debug("REST request to get Skill : {}", id);
         Optional<SkillDTO> skillDTO = skillService.findOne(id);

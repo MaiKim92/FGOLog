@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var BASE_URL = "http://localhost:8080/api/";
+
     pageLoad();
     $('#party-list').hide();
     $('#material-list').hide();
@@ -91,7 +93,7 @@ $(document).ready(function() {
         $("#servant-table").html("");
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/servants",
+            url: BASE_URL + "public/servants",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
@@ -131,7 +133,6 @@ $(document).ready(function() {
                     content +=    "<td id = \"servant-actions-" + data.id + "\">";
                     content +=        "<a id = \"servant-add-" + data.servant.id + "\" data-toggle=\"modal\" data-target = \"#add-servant-dialog\" data-servant = \"" + data.servant.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
                     content +=        "<a id = \"servant-edit-" + data.servant.id + "\" data-toggle=\"modal\" data-target = \"#edit-servant-dialog\" data-servant = \"" + data.servant.id + "\"  href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
-                    content +=        "<a id = \"command-card-edit-" + data.servant.id + "\" data-toggle=\"modal\" data-target = \"#edit-command-card-dialog\" data-servant = \"" + data.servant.id + "\"  href = \"#/\" title = \"Edit Command Cards\"><i class=\"fa-solid fa-terminal\"></i></a>";
                     content +=    "</td>";
                     content += "</tr>";
                 });
@@ -149,7 +150,7 @@ $(document).ready(function() {
         $("#party-table").html("");
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/parties",
+            url: BASE_URL + "public/parties",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
@@ -189,7 +190,7 @@ $(document).ready(function() {
         $("#material-table").html("");
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/materials",
+            url: BASE_URL + "public/materials",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
@@ -211,7 +212,7 @@ $(document).ready(function() {
                     content +=      "<a id = \"material-increment-" + data.id + "\" data-material = \"" + data.id + "\" href = \"#/\" title = \"Increment\"><i class=\"fa-solid fa-caret-up\"></i></a>";
                     content +=    "</td>";
                     content +=    "<td id = \"material-actions-" + data.id + "\">";
-                    content +=        "<a data-toggle=\"modal\" data-target = \"#add-material-dialog\" data-material = \"" + data.id + "\" id = \"material-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
+                    content +=        "<a data-toggle=\"modal\" data-target = \"#add-material-dialog\" id = \"material-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
                     content +=        "<a data-toggle=\"modal\" data-target = \"#edit-material-dialog\" data-material = \"" + data.id + "\" id = \"material-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
                     content +=    "</td>";
                     content += "</tr>";
@@ -230,7 +231,7 @@ $(document).ready(function() {
         $("#command-code-table").html("");
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/command-codes",
+            url: BASE_URL + "public/command-codes",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
@@ -265,7 +266,7 @@ $(document).ready(function() {
         $("#task-table").html("");
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/tasks",
+            url: BASE_URL + "public/tasks",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
@@ -286,8 +287,8 @@ $(document).ready(function() {
                     content +=    "<td><span class = \"status-" + data.status.toLowerCase() + "\">" + data.status.replaceAll("_", " ") + "</span></td>";
                     content +=    "<td id = \"task-actions-" + data.id + "\">";
                     content +=        "<a data-task = \"" + data.id + "\" id = \"task-increment-" + data.id + "\" href = \"#/\" title = \"Increment\"><i class=\"fa-solid fa-caret-up\"></i></a>";
-                    content +=        "<a data-toggle = \"modal\" data-target = \"#add-task-dialog\" data-task = \"" + data.id + "\" id = \"task-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
-                    content +=        "<a data-toggle = \"modal\" data-target = \"#edit-task-dialog\" data-task = \"" + data.id + "\" id = \"task-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
+                    content +=        "<a data-toggle = \"modal\" data-target = \"#add-task-dialog\" id = \"task-edit-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
+                    content +=        "<a data-toggle = \"modal\" data-target = \"#add-task-dialog\" data-task = \"" + data.id + "\" data-material = \"" + data.material.id + "\" id = \"task-edit-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
                     if (data.status.toLowerCase() == "in_progress") {
                         content +=        "<a data-task = \"" + data.id + "\" id = \"task-mark-as-completed-" + data.id + "\" href = \"#/\" title = \"Mark as completed\"><i class=\"fa-solid fa-check\"></i></a>";
                     } else {
@@ -310,7 +311,7 @@ $(document).ready(function() {
          $("#wish-table").html("");
          $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/wish-items",
+             url: BASE_URL + "public/wish-items",
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -332,10 +333,12 @@ $(document).ready(function() {
                      content +=    "<td>" + data.servant.name + "</td>";
                      content +=    "<td><span class = \"status-" + status.toLowerCase() + "\">" + status.replaceAll("_", " ") + "</span></td>";
                      content +=    "<td id = \"wish-actions-" + data.id + "\">";
-                     content +=        "<a data-toggle = \"modal\" data-target = \"#add-wish-dialog\" data-wish = \"" + data.id + "\" id = \"wish-item-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
-                     content +=        "<a data-toggle = \"modal\" data-target = \"#edit-wish-dialog\" data-wish = \"" + data.id + "\" id = \"wish-item-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
+                     content +=        "<a data-toggle = \"modal\" data-target = \"#add-wish-dialog\" id = \"wishlist-edit-add-item-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
+                     content +=        "<a data-toggle = \"modal\" data-target = \"#add-wish-dialog\" data-wish = \"" + data.id + "\" data-servant = \"" + data.servant.id + "\" id = \"wishlist-edit-edit-item-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
                      if (status == "NOT_OBTAINED") {
-                        content +=     "<a data-wish = \"" + data.id + "\" id = \"wish-item-mark-as-obtained-" + data.id + "\" href = \"#/\" title = \"Mark as obtained\"><i class=\"fa-solid fa-check\"></i></i></a>";
+                        content +=     "<a data-wish = \"" + data.id + "\" id = \"wish-item-mark-as-obtained-" + data.id + "\" href = \"#/\" title = \"Mark as obtained\"><i class=\"fa-solid fa-check\"></i></a>";
+                     } else {
+                        content +=     "<a data-wish = \"" + data.id + "\" id = \"wish-item-mark-as-not-obtained-" + data.id + "\" href = \"#/\" title = \"Mark as not obtained\"><i class=\"fa-solid fa-list-check\"></i></a>";
                      }
                      content +=    "</td>";
                      content += "</tr>";
@@ -354,7 +357,7 @@ $(document).ready(function() {
          $("#skill-table").html("");
          $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/skills",
+             url: BASE_URL + "public/skills",
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -522,7 +525,7 @@ $(document).ready(function() {
         };
         $.ajax({
              type: "POST",
-             url: "http://localhost:8080/api/admin/servants",
+             url: BASE_URL + "admin/servants",
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -543,7 +546,7 @@ $(document).ready(function() {
     }
 
     function getAllSkillForServantSkills(selector) {
-        var url = "http://localhost:8080/api/public/skills-without-servant";
+        var url = BASE_URL + "public/skills-without-servant";
         $.ajax({
              type: "GET",
              url: url,
@@ -563,7 +566,7 @@ $(document).ready(function() {
     function getAllSkillForEditServantSkills() {
         $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/skills-without-servant",
+             url: BASE_URL + "public/skills-without-servant",
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -578,7 +581,7 @@ $(document).ready(function() {
         });
         $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/servant-skills/" + $('#edit-servant-dialog').data('servant'),
+             url: BASE_URL + "public/servant-skills/" + $('#edit-servant-dialog').data('servant'),
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -626,7 +629,7 @@ $(document).ready(function() {
         getAllSkillForEditServantSkills();
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/servants/" + servantId,
+            url: BASE_URL + "public/servants/" + servantId,
             dataType: 'json',
             success: function (result, status, xhr) {
                 $('#edit-servant-name').val(result.servant.name);
@@ -742,7 +745,7 @@ $(document).ready(function() {
         };
         $.ajax({
              type: "PATCH",
-             url: "http://localhost:8080/api/admin/servants/" + $('#edit-servant-dialog').data('servant'),
+             url: BASE_URL + "admin/servants/" + $('#edit-servant-dialog').data('servant'),
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -786,7 +789,7 @@ $(document).ready(function() {
     });
 
     function getAllServantsForPartyMembers() {
-        var url = "http://localhost:8080/api/public/servants";
+        var url = BASE_URL + "public/servants";
         $.ajax({
              type: "GET",
              url: url,
@@ -840,7 +843,7 @@ $(document).ready(function() {
         console.log(JSON.stringify(data));
         $.ajax({
              type: "POST",
-             url: "http://localhost:8080/api/admin/parties",
+             url: BASE_URL + "admin/parties",
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -853,7 +856,7 @@ $(document).ready(function() {
              success: function (result, status, xhr) {
                 $('#add-party-dialog #add-party-cancel').click();
                 $.notify("Party created successfully", "success");
-                getServants();
+                getParties();
              },
              error: function (xhr, status, error) {
                  console.log(error);
@@ -891,7 +894,7 @@ $(document).ready(function() {
     function getAllServantsForPartyMembers() {
         $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/servants",
+             url: BASE_URL + "public/servants",
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -942,7 +945,7 @@ $(document).ready(function() {
         var partyId = $('#edit-party-dialog').data('party');
         $.ajax({
              type: "PATCH",
-             url: "http://localhost:8080/api/admin/parties/" + partyId,
+             url: BASE_URL + "admin/parties/" + partyId,
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -967,7 +970,7 @@ $(document).ready(function() {
         var partyId = $('#edit-party-dialog').data('party');
         $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/parties/" + partyId,
+             url: BASE_URL + "public/parties/" + partyId,
              dataType: 'json',
              success: function (result, status, xhr) {
                  $('#edit-party-name').val(result.name);
@@ -978,7 +981,7 @@ $(document).ready(function() {
         });
         $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/servants-exclude-party/" + $('#edit-party-dialog').data('party'),
+             url: BASE_URL + "public/servants-exclude-party/" + $('#edit-party-dialog').data('party'),
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -993,7 +996,7 @@ $(document).ready(function() {
         });
         $.ajax({
              type: "GET",
-             url: "http://localhost:8080/api/public/servants-in-party/" + $('#edit-party-dialog').data('party'),
+             url: BASE_URL + "public/servants-in-party/" + $('#edit-party-dialog').data('party'),
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
@@ -1013,7 +1016,6 @@ $(document).ready(function() {
              }
         });
     }
-
 
     // Handle the add material dialog
     $('#add-material-accept').on('click', function() {
@@ -1048,7 +1050,7 @@ $(document).ready(function() {
         }
         $.ajax({
              type: "POST",
-             url: "http://localhost:8080/api/admin/materials",
+             url: BASE_URL + "admin/materials",
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -1075,7 +1077,7 @@ $(document).ready(function() {
         var materialId = $(this).data('material');
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/public/materials/" + materialId,
+            url: BASE_URL + "public/materials/" + materialId,
             dataType: 'json',
             success: function (result, status, xhr) {
                 $('#edit-material-name').val(result.name);
@@ -1103,12 +1105,12 @@ $(document).ready(function() {
             });
             return;
         }
-        saveMaterial();
+        updateMaterial();
         $('#edit-material-dialog #edit-material-cancel').click();
         $.notify("Material saved successfully","success");
     });
 
-    function saveMaterial() {
+    function updateMaterial() {
         var materialId = $('#edit-material-dialog').data('material');
         var number = 0;
         if ($('#edit-material-number').val() != null && $('#edit-material-number').val() > 0 && !isNaN($('#edit-material-number').val())) {
@@ -1122,7 +1124,7 @@ $(document).ready(function() {
         }
         $.ajax({
              type: "PATCH",
-             url: "http://localhost:8080/api/admin/materials/" + materialId,
+             url: BASE_URL + "admin/materials/" + materialId,
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -1146,7 +1148,7 @@ $(document).ready(function() {
         var materialId = $(this).data('material');
         $.ajax({
              type: "PATCH",
-             url: "http://localhost:8080/api/admin/materials/decrement/" + materialId,
+             url: BASE_URL + "admin/materials/decrement/" + materialId,
              dataType: 'json',
              beforeSend: function (xhr) {
                  xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
@@ -1168,7 +1170,7 @@ $(document).ready(function() {
         var materialId = $(this).data('material');
         $.ajax({
              type: "PATCH",
-             url: "http://localhost:8080/api/admin/materials/increment/" + materialId,
+             url: BASE_URL + "admin/materials/increment/" + materialId,
              dataType: 'json',
              beforeSend: function (xhr) {
                  xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
@@ -1185,4 +1187,508 @@ $(document).ready(function() {
              },
          });
     });
+
+    // Handle the add command code dialog
+    $('#add-cc-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#add-cc-name').val())) {
+            $('#add-cc-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        saveCommandCode();
+        $('#add-cc-dialog #add-cc-cancel').click();
+        $.notify("Command Code saved successfully","success");
+    });
+
+    function saveCommandCode() {
+        var data = {
+            name: $('#add-cc-name').val()
+        }
+        $.ajax({
+             type: "POST",
+             url: BASE_URL + "admin/command-codes",
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getCommandCodes();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the edit command code dialog
+    $('#command-code-list').on("click", '[id^=command-code-edit-]', function(){
+        $('#edit-cc-dialog').data('cc', $(this).data('cc'));
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/command-codes/" + $(this).data('cc'),
+             dataType: 'json',
+             success: function (result, status, xhr) {
+                 $('#edit-cc-name').val(result.name);
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        });
+    });
+    $('#edit-cc-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#edit-cc-name').val())) {
+            $('#edit-cc-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        updateCommandCodes();
+        $('#edit-cc-dialog #edit-cc-cancel').click();
+        $.notify("Command Code saved successfully","success");
+    });
+
+    function updateCommandCodes() {
+        var ccid = $('#edit-cc-dialog').data('cc');
+        var data = {
+            id: ccid,
+            name: $('#edit-cc-name').val(),
+            imageUrl: $('#edit-cc-image-url').val()
+        }
+        $.ajax({
+             type: "PATCH",
+             url: BASE_URL + "admin/command-codes/" + ccid,
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getCommandCodes();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the add and edit wish item dialog
+    $('#wish-list').on('click', '[id^=wishlist-edit-]', function(event) {
+        var servantId = $(this).data('servant');
+        $('#add-wish-dialog').data('wish', $(this).data('wish'));
+        if (servantId != null) {
+            $('#add-wish-dialog').data('servant', servantId);
+        }
+        $.ajax({
+            type: "GET",
+            url: BASE_URL + "public/servants",
+            dataType: 'json',
+            success: function (result, status, xhr) {
+                content = "";
+                result.forEach(function(data) {
+                    content += "<option value = \"" + data.servant.id + "\">" + data.servant.name + "</option>";
+                });
+                $('#add-wish-name').html(content);
+                $('#add-wish-image').attr('src', '../' + result[0].servant.thumbnailUrl);
+                $('#add-wish-name').val(servantId).trigger('change');
+            },
+            error: function (xhr, status, error) {
+                 console.log(error);
+            }
+        });
+    });
+
+    $('#add-wish-name').on('change', function() {
+        if ($('#add-wish-name').val() != null) {
+            $.ajax({
+                type: "GET",
+                url: BASE_URL + "public/servants/" + $('#add-wish-name').val(),
+                dataType: 'json',
+                success: function (result, status, xhr) {
+                    content = "";
+                    $('#add-wish-image').attr('src', '../' + result.servant.thumbnailUrl);
+                },
+                error: function (xhr, status, error) {
+                     console.log(error);
+                }
+            });
+        }
+    });
+
+    $('#add-wish-accept').on('click', function() {
+        event.preventDefault();
+        if($('#add-wish-dialog').data('wish') == null) {
+            saveWishList();
+        } else {
+            updateWishList();
+        }
+        $('#add-wish-dialog #add-wish-cancel').click();
+        $.notify("Servant saved to wishlist successfully","success");
+    });
+
+    function saveWishList() {
+        var data = {
+            servant:
+            {
+                id: $('#add-wish-name').val()
+            }
+        }
+        $.ajax({
+             type: "POST",
+             url: BASE_URL + "admin/wish-items",
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getWishlist();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    function updateWishList() {
+        $.ajax({
+             type: "PUT",
+             url: BASE_URL + "admin/wish-items/" + $('#add-wish-dialog').data('wish') + "/" + $('#add-wish-name').val(),
+             dataType: 'json',
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getWishlist();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the mark as obtained and not obtained button
+    $('#wish-list').on('click', '[id^=wish-item-mark-as-]', function() {
+        $.ajax({
+             type: "PUT",
+             url: BASE_URL + "admin/wish-items/toggle-obtained/" + $(this).data('wish'),
+             dataType: 'json',
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getWishlist();
+                 $.notify("Wishlist updated successfully","success");
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    });
+
+    // Handle the add skill dialog
+    $('#add-skill-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#add-skill-name').val())) {
+            $('#add-skill-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        if (!/\S/.test($('#add-skill-image-url').val())) {
+            $('#add-skill-image-url').notify("Image URL is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        saveSkill();
+        $('#add-skill-dialog #add-skill-cancel').click();
+        $.notify("Skill saved successfully","success");
+    });
+
+    function saveSkill() {
+        var data = {
+            name: $('#add-skill-name').val(),
+            imageUrl: $('#add-skill-image-url').val(),
+        }
+        $.ajax({
+             type: "POST",
+             url: BASE_URL + "admin/skills",
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                getSkills();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the edit material dialog
+    $('#skill-list').on("click", '[id^=skill-edit-]', function(){
+        $('#edit-skill-dialog').data('skill', $(this).data('skill'));
+    });
+    $('#edit-skill-dialog').on("show.bs.modal", function() {
+        var skillId = $(this).data('skill');
+        $.ajax({
+            type: "GET",
+            url: BASE_URL + "public/skills/" + skillId,
+            dataType: 'json',
+            success: function (result, status, xhr) {
+                $('#edit-skill-name').val(result.name);
+                $('#edit-skill-image-url').val(result.imageUrl);
+            },
+            error: function (xhr, status, error) {
+                 console.log(error);
+            }
+        });
+    });
+
+    $('#edit-skill-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#edit-skill-name').val())) {
+            $('#edit-skill-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        if (!/\S/.test($('#edit-skill-image-url').val())) {
+            $('#edit-skill-image-url').notify("Image URL is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        updateSkill();
+        $('#edit-skill-dialog #edit-skill-cancel').click();
+        $.notify("Skill saved successfully","success");
+    });
+
+    function updateSkill() {
+        var skillId = $('#edit-skill-dialog').data('skill');
+        var data = {
+            id: skillId,
+            name: $('#edit-skill-name').val(),
+            imageUrl: $('#edit-skill-image-url').val()
+        }
+        $.ajax({
+             type: "PATCH",
+             url: BASE_URL + "admin/skills/" + skillId,
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getSkills();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the add and edit task dialog
+    $('#task-list').on('click', '[id^=task-edit-]', function(event) {
+        $('#add-task-progress').val(0);
+        $('#add-task-goal').val(0);
+        var materialId = $(this).data('material');
+        $('#add-task-dialog').data('task', $(this).data('task'));
+        if (materialId != null) {
+            $('#add-task-dialog').data('material', materialId);
+        }
+        $.ajax({
+            type: "GET",
+            url: BASE_URL + "public/materials",
+            dataType: 'json',
+            success: function (result, status, xhr) {
+                content = "";
+                result.forEach(function(data) {
+                    content += "<option value = \"" + data.id + "\">" + data.name + "</option>";
+                });
+                $('#add-task-name').html(content);
+                if (materialId != null) {
+                    $('#add-task-name').val(materialId);
+                }
+            },
+            error: function (xhr, status, error) {
+                 console.log(error);
+            }
+        });
+
+        if (materialId != null) {
+            $.ajax({
+                type: "GET",
+                url: BASE_URL + "public/tasks/" + $(this).data('task'),
+                dataType: 'json',
+                success: function (result, status, xhr) {
+                    $('#add-task-progress').val(result.progress);
+                    $('#add-task-goal').val(result.goal);
+                },
+                error: function (xh4, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    $('#add-task-accept').on('click', function() {
+        event.preventDefault();
+        if($('#add-task-dialog').data('material') == null) {
+            saveTask();
+        } else {
+            updateTask();
+        }
+        $('#add-task-dialog #add-task-cancel').click();
+        $.notify("Task saved successfully","success");
+    });
+
+    function saveTask() {
+        var data = {
+            material:
+            {
+                id: $('#add-task-name').val()
+            },
+            progress: $('#add-task-progress').val(),
+            goal: $('#add-task-goal').val(),
+            status: 'IN_PROGRESS'
+        }
+        $.ajax({
+             type: "POST",
+             url: BASE_URL + "admin/tasks",
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getTasks();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    function updateTask() {
+        var data = {
+            id: $('#add-task-dialog').data('task'),
+            status: 'IN_PROGRESS',
+            material:
+            {
+                id: $('#add-task-name').val()
+            },
+            progress: $('#add-task-progress').val(),
+            goal: $('#add-task-goal').val()
+        }
+        $.ajax({
+             type: "PUT",
+             url: BASE_URL + "admin/tasks/" + $('#add-task-dialog').data('task'),
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getTasks();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the mark as completed and in progress button
+    $('#task-list').on('click', '[id^=task-mark-as-]', function() {
+        $.ajax({
+             type: "PUT",
+             url: BASE_URL + "admin/tasks/toggle-completed/" + $(this).data('task'),
+             dataType: 'json',
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getTasks();
+                 $.notify("Task updated successfully","success");
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    });
+
+    // Handle the increment button
+    $('#task-list').on('click', '[id^=task-increment-]', function() {
+        $.ajax({
+             type: "PATCH",
+             url: BASE_URL + "admin/tasks/increment/" + $(this).data('task'),
+             dataType: 'json',
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getTasks();
+                 $.notify("Task updated successfully","success");
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    });
+
+
 });

@@ -75,24 +75,53 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/admin/tasks/{id}")
-    public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id", required = false) final Long id, @RequestBody TaskDTO taskDTO)
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id") final Long id, @RequestBody TaskDTO taskDTO)
         throws URISyntaxException {
-        log.debug("REST request to update Task : {}, {}", id, taskDTO);
-        if (taskDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, taskDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!taskRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        TaskDTO result = taskService.save(taskDTO);
+        TaskDTO result = taskBusiness.update(taskDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, taskDTO.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PUT  /admin/tasks/toggle-completed/:id} : Updates an existing task to completed or in progress
+     *
+     * @param id the id of the taskDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated taskDTO,
+     * or with status {@code 400 (Bad Request)} if the taskDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the taskDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/admin/tasks/toggle-completed/{id}")
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id") final Long id)
+        throws URISyntaxException {
+
+        TaskDTO result = taskBusiness.toggleComplete(id);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PATCH  /admin/tasks/increment/:id} : Updates an existing task to completed or in progress
+     *
+     * @param id the id of the taskDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated taskDTO,
+     * or with status {@code 400 (Bad Request)} if the taskDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the taskDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping("/admin/tasks/increment/{id}")
+    public ResponseEntity<TaskDTO> increment(@PathVariable(value = "id") final Long id)
+        throws URISyntaxException {
+
+        TaskDTO result = taskBusiness.increment(id);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .body(result);
     }
 
@@ -149,7 +178,7 @@ public class TaskResource {
      * @param id the id of the taskDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the taskDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/admin/tasks/{id}")
+    @GetMapping("/public/tasks/{id}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long id) {
         log.debug("REST request to get Task : {}", id);
         Optional<TaskDTO> taskDTO = taskService.findOne(id);

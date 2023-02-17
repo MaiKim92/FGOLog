@@ -385,10 +385,6 @@
                             <label for = "add-cc-name">Name</label>
                             <input id = "add-cc-name" type = "text">
                         </div>
-                        <div class = "row">
-                            <label for = "add-cc-image-url">Image URL</label>
-                            <input id = "add-cc-image-url" type = "text">
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -409,10 +405,6 @@
                         <div class = "row">
                             <label for = "edit-cc-name">Name</label>
                             <input id = "edit-cc-name" type = "text">
-                        </div>
-                        <div class = "row">
-                            <label for = "edit-cc-image-url">Image URL</label>
-                            <input id = "edit-cc-image-url" type = "text">
                         </div>
                     </form>
                 </div>
@@ -459,42 +451,6 @@
             </div>
         </div>
     </div>
-    <div id = "edit-task-dialog" class="modal row" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered row" role="document">
-            <div class="modal-content row">
-                <div class="modal-body row">
-                    <form id = "edit-task-form" class = "form-control input-form">
-                        <div class = "row">
-                            <h3>Edit Task</h3>
-                        </div>
-                        <div class = "row">
-                            <div class = "col-8">
-                                <label for = "edit-task-name">Material</label>
-                                <select id = "edit-task-name"></select>
-                            </div>
-                            <div class = "col-4">
-                                <img id = "edit-task-image">
-                            </div>
-                        </div>
-                        <div class = "row">
-                            <div class = "col-6 p-10 row">
-                                <label for = "edit-task-progress">Progress</label>
-                                <input id = "edit-task-progress" type = "number">
-                            </div>
-                            <div class = "col-6 p-10 row">
-                                <label for = "edit-task-goal">Goal</label>
-                                <input id = "edit-task-goal" type = "number">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id = "edit-task-accept" type="button" class="btn btn-primary">Save</button>
-                    <button id = "edit-task-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id = "add-wish-dialog" class="modal row" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered row" role="document">
             <div class="modal-content row">
@@ -509,7 +465,7 @@
                                 <select id = "add-wish-name"></select>
                             </div>
                             <div class = "col-4">
-                                <img id = "add-wish-image">
+                                <img id = "add-wish-image" class = "servant-portrait">
                             </div>
                         </div>
                     </form>
@@ -517,32 +473,6 @@
                 <div class="modal-footer">
                     <button id = "add-wish-accept" type="button" class="btn btn-primary">Save</button>
                     <button id = "add-wish-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id = "edit-wish-dialog" class="modal row" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered row" role="document">
-            <div class="modal-content row">
-                <div class="modal-body row">
-                    <form id = "edit-wish-form" class = "form-control input-form">
-                        <div class = "row">
-                            <h3>Edit Servant in Wishlist</h3>
-                        </div>
-                        <div class = "row">
-                            <div class = "col-8">
-                                <label for = "edit-wish-name">Servant</label>
-                                <select id = "edit-wish-name"></select>
-                            </div>
-                            <div class = "col-4">
-                                <img id = "edit-wish-image">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id = "edit-wish-accept" type="button" class="btn btn-primary">Save</button>
-                    <button id = "edit-wish-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -572,7 +502,6 @@
             </div>
         </div>
     </div>
-
     <div id = "edit-skill-dialog" class="modal row" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered row" role="document">
             <div class="modal-content row">
