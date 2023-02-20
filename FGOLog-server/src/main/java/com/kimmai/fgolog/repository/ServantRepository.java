@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ServantRepository extends JpaRepository<Servant, Long> {
 
-    @Query("select distinct servant from Servant servant where servant.isHas = :isHas")
-    List<Servant> findAllByIsHas(@Param("isHas") Boolean isHas);
+    @Query("select distinct servant from Servant servant where servant.npLevel > 0")
+    List<Servant> findAllOwned();
 
 }

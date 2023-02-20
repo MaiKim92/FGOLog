@@ -66,7 +66,7 @@ public class ServantServiceImpl implements ServantService {
     @Transactional(readOnly = true)
     public List<ServantDTO> findAllOwned() {
         log.debug("Request to get all owned Servants");
-        return servantRepository.findAllByIsHas(true).stream().map(servantMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return servantRepository.findAllOwned().stream().map(servantMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

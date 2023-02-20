@@ -16,6 +16,8 @@ public class PartyMemberDTO implements Serializable {
 
     private ServantDTO servant;
 
+    private CraftEssenceDTO craftEssence;
+
     public Long getId() {
         return id;
     }
@@ -48,6 +50,14 @@ public class PartyMemberDTO implements Serializable {
         this.servant = servant;
     }
 
+    public CraftEssenceDTO getCraftEssence() {
+        return craftEssence;
+    }
+
+    public void setCraftEssence(CraftEssenceDTO craftEssence) {
+        this.craftEssence = craftEssence;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -77,6 +87,7 @@ public class PartyMemberDTO implements Serializable {
             ", seq=" + getSeq() +
             ", party=" + getParty() +
             ", servant=" + getServant() +
+            ", craftEssence=" + getCraftEssence() +
             "}";
     }
 }

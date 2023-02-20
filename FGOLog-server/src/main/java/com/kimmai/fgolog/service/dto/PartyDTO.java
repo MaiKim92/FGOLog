@@ -1,5 +1,7 @@
 package com.kimmai.fgolog.service.dto;
 
+import com.kimmai.fgolog.domain.MysticCode;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,6 +13,8 @@ public class PartyDTO implements Serializable {
     private Long id;
 
     private String name;
+
+    private MysticCodeDTO mysticCode;
 
     public Long getId() {
         return id;
@@ -26,6 +30,14 @@ public class PartyDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public MysticCodeDTO getMysticCode() {
+        return mysticCode;
+    }
+
+    public void setMysticCode(MysticCodeDTO mysticCode) {
+        this.mysticCode = mysticCode;
     }
 
     @Override

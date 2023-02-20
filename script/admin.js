@@ -8,6 +8,7 @@ $(document).ready(function() {
     $('#task-list').hide();
     $('#wish-list').hide();
     $('#skill-list').hide();
+    $('#craft-essence-list').hide();
     $('#_remove-skill-button').prop('disabled', true);
     getServants();
 
@@ -20,6 +21,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#wish-list').hide();
         $('#skill-list').hide();
+        $('#craft-essence-list').hide();
     });
 
     $('#menu-item-2').click(function() {
@@ -31,6 +33,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#wish-list').hide();
         $('#skill-list').hide();
+        $('#craft-essence-list').hide();
     });
 
     $('#menu-item-3').click(function() {
@@ -42,6 +45,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#wish-list').hide();
         $('#skill-list').hide();
+        $('#craft-essence-list').hide();
     });
 
     $('#menu-item-4').click(function() {
@@ -53,6 +57,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#wish-list').hide();
         $('#skill-list').hide();
+        $('#craft-essence-list').hide();
     });
 
     $('#menu-item-5').click(function() {
@@ -64,6 +69,7 @@ $(document).ready(function() {
         $('#task-list').show();
         $('#wish-list').hide();
         $('#skill-list').hide();
+        $('#craft-essence-list').hide();
     });
 
     $('#menu-item-6').click(function() {
@@ -75,6 +81,7 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#wish-list').show();
         $('#skill-list').hide();
+        $('#craft-essence-list').hide();
     });
 
     $('#menu-item-7').click(function() {
@@ -86,6 +93,19 @@ $(document).ready(function() {
         $('#task-list').hide();
         $('#wish-list').hide();
         $('#skill-list').show();
+        $('#craft-essence-list').hide();
+    });
+
+    $('#menu-item-8').click(function() {
+        getCraftEssences();
+        $('#servant-list').hide();
+        $('#party-list').hide();
+        $('#material-list').hide();
+        $('#command-code-list').hide();
+        $('#task-list').hide();
+        $('#wish-list').hide();
+        $('#skill-list').hide();
+        $('#craft-essence-list').show();
     });
 
     function getServants() {
@@ -101,6 +121,7 @@ $(document).ready(function() {
                 content +=     "<th>ID</th>";
                 content +=     "<th>Image</th>";
                 content +=     "<th>Servant name</th>";
+                content +=     "<th>NP Level</th>";
                 content +=     "<th>Level</th>";
                 content +=     "<th>Skills</th>";
                 content +=    " <th>Command Cards</th>";
@@ -111,6 +132,7 @@ $(document).ready(function() {
                     content +=    "<td>" + data.servant.id + "</td>";
                     content +=    "<td><img src = \"../" + data.servant.thumbnailUrl + "\" class = \"servant-portrait\"></td>";
                     content +=    "<td>" + data.servant.name + "</td>";
+                    content +=    "<td>" + data.servant.npLevel + "</td>";
                     content +=    "<td>" + data.servant.level + "</td>";
                     content +=    "<td id = \"servant-skill-list\">";
                     if (data.skills[0] != null) {
@@ -158,6 +180,7 @@ $(document).ready(function() {
                 content +=     "<th>ID</th>";
                 content +=    " <th>Party name</th>";
                 content +=     "<th>Servants</th>";
+                content +=     "<th>Mystic Code</th>";
                 content +=     "<th>Action</th>";
                 content += "</tr>";
                 result.forEach(function(data) {
@@ -170,6 +193,7 @@ $(document).ready(function() {
                         content += "<img src = \"../" + ser.servant.thumbnailUrl + "\" class = \"servant-portrait\">";
                     });
                     content +=    "</td>";
+                    content +=    "<td><img src = \"../view/assets/img/mystic-codes/" + data.mysticCode.name + ".png\" title = \"" + data.mysticCode.name + "\" class = \"mc-image\"></td>";
                     content +=    "<td id = \"party-actions-" + data.id + "\">";
                     content +=        "<a data-party = \"" + data.id + "\" id = \"party-edit-" + data.id + "\" data-toggle=\"modal\" data-target = \"#add-party-dialog\" data-party = \"" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
                     content +=        "<a data-party = \"" + data.id + "\" id = \"party-edit-" + data.id + "\" data-toggle=\"modal\" data-target = \"#edit-party-dialog\" data-party = \"" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
@@ -324,7 +348,7 @@ $(document).ready(function() {
                  content += "</tr>";
                  result.forEach(function(data) {
                      var status = "NOT_OBTAINED";
-                     if (data.servant.isHas == true) {
+                     if (data.servant.npLevel > 0) {
                         status = "OBTAINED";
                      }
                      content += "<tr id = \"wish-item-" + data.id + "\">";
@@ -391,6 +415,41 @@ $(document).ready(function() {
              }
          });
      }
+
+     function getCraftEssences() {
+             $("#craft-essence-list .pagination-container").remove();
+             $("#craft-essence-table").html("");
+             $.ajax({
+                 type: "GET",
+                 url: BASE_URL + "public/craft-essences",
+                 dataType: 'json',
+                 success: function (result, status, xhr) {
+                     content = "";
+                     content += "<tr>"
+                     content +=     "<th>ID</th>";
+                     content +=    " <th>Image</th>";
+                     content +=     "<th>Craft Essence name</th>";
+                     content +=     "<th>Action</th>";
+                     content += "</tr>";
+                     result.forEach(function(data) {
+                         content += "<tr id = \"command-code-" + data.id + "\">";
+                         content +=    "<td>" + data.id + "</td>";
+                         content +=    "<td><img src = \"../view/assets/img/craft-essences/" + data.name + ".png\" class = \"servant-portrait\"></td>";
+                         content +=    "<td>" + data.name + "</td>";
+                         content +=    "<td id = \"ce-actions-" + data.id + "\">";
+                         content +=        "<a data-toggle = \"modal\" data-target = \"#add-ce-dialog\" data-ce = \"" + data.id + "\" id = \"craft-essence-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
+                         content +=        "<a data-toggle = \"modal\" data-target = \"#edit-ce-dialog\" data-ce = \"" + data.id + "\" id = \"craft-essence-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
+                         content +=    "</td>";
+                         content += "</tr>";
+                     });
+                     $("#craft-essence-table").html(content);
+                     $('#craft-essence-table').paginathing();
+                 },
+                 error: function (xhr, status, error) {
+                      console.log(error);
+                 }
+             });
+         }
 
      // Handle logout event
 
@@ -469,15 +528,9 @@ $(document).ready(function() {
         }
     });
 
-    $('#add-servant-is-has-true').on('change', function() {
-        if ($(this).is(':checked')) {
+    $('#add-servant-np-level').on('change', function() {
+        if ($(this).val() > 0) {
             $('#add-servant-level').prop('disabled', false);
-        }
-    });
-
-    $('#add-servant-is-has-false').on('change', function() {
-        if ($(this).is(':checked')) {
-            $('#add-servant-level').prop('disabled', true);
         }
     });
 
@@ -505,7 +558,7 @@ $(document).ready(function() {
             return false;
         }
         var level = 0;
-        if ($('#add-servant-is-has-true').is(":checked")) {
+        if ($('#add-servant-np-level').val() > 0) {
             level = Math.min($("#add-servant-level").val(), 120);
         } else {
             level = 0;
@@ -518,7 +571,7 @@ $(document).ready(function() {
             name: $('#add-servant-name').val(),
             imageUrl: $('#add-servant-image-url').val(),
             thumbnailUrl: $('#add-servant-thumbnail-url').val(),
-            isHas: $("#add-servant-is-has-true").is(":checked"),
+            npLevel: Math.min(Math.max($("#add-servant-np-level").val(), 0), 5),
             level: level,
             skills: skills,
             commandCards: cards
@@ -635,8 +688,8 @@ $(document).ready(function() {
                 $('#edit-servant-name').val(result.servant.name);
                 $('#edit-servant-image-url').val(result.servant.imageUrl);
                 $('#edit-servant-thumbnail-url').val(result.servant.thumbnailUrl);
-                $('#edit-servant-is-has-true').attr('checked', result.servant.isHas);
-                $('#edit-servant-level').attr('disabled', !result.servant.isHas);
+                $('#edit-servant-np-level').val(result.servant.npLevel);
+                $('#edit-servant-level').attr('disabled', !result.servant.npLevel > 0);
                 $('#edit-servant-level').val(result.servant.level);
                 var commandCards = result.commandCards;
                 var cards = ""
@@ -688,15 +741,9 @@ $(document).ready(function() {
         }
     });
 
-    $('#edit-servant-is-has-true').on('change', function() {
-        if ($(this).is(':checked')) {
+    $('#edit-servant-np-level').on('change', function() {
+        if ($(this).val() > 0) {
             $('#edit-servant-level').prop('disabled', false);
-        }
-    });
-
-    $('#edit-servant-is-has-false').on('change', function() {
-        if ($(this).is(':checked')) {
-            $('#edit-servant-level').prop('disabled', true);
         }
     });
 
@@ -725,7 +772,7 @@ $(document).ready(function() {
         }
         var level = 0;
         console.log(cards);
-        if ($('#edit-servant-is-has-true').is(":checked")) {
+        if ($('#edit-servant-np-level').val() > 0) {
             level = Math.min($("#edit-servant-level").val(), 120);
         } else {
             level = 0;
@@ -738,7 +785,7 @@ $(document).ready(function() {
             name: $('#edit-servant-name').val(),
             imageUrl: $('#edit-servant-image-url').val(),
             thumbnailUrl: $('#edit-servant-thumbnail-url').val(),
-            isHas: $("#edit-servant-is-has-true").is(":checked"),
+            npLevel: Math.min(Math.max($("#edit-servant-np-level").val(), 0), 5),
             level: level,
             skills: skills,
             commandCards: cards
@@ -770,24 +817,6 @@ $(document).ready(function() {
         getAllServantsForPartyMembers();
     });
 
-    $('#_add-member-button').on("click", function(event) {
-        event.preventDefault();
-        $('#add-party-member option:selected').remove().appendTo('#add-party-member-2');
-        $('#_remove-member-button').prop('disabled', false);
-        if ($('#add-party-member-2').children().length >= 6) {
-            $('#_add-member-button').prop('disabled', true);
-        }
-    });
-
-    $('#_remove-member-button').on("click", function(event) {
-        event.preventDefault();
-        $('#add-party-member-2 option:selected').remove().appendTo('#add-party-member');
-        $('#_add-member-button').prop('disabled', false);
-        if ($('#add-party-member-2').children().length <= 0) {
-            $('#_remove-member-button').prop('disabled', true);
-        }
-    });
-
     function getAllServantsForPartyMembers() {
         var url = BASE_URL + "public/servants";
         $.ajax({
@@ -796,22 +825,72 @@ $(document).ready(function() {
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
-                 result.forEach(function(data) {
-                    content += "<option value = \"" + data.servant.id + "\">" + data.servant.name + "</option>";
-                 });
-                 $('#add-party-member').html(content);
-                 if ($('#add-party-member-2').children().length >= 6) {
-                     $('#_add-member-button').prop('disabled', true);
-                 }
-                 if ($('#add-party-member-2').children().length <= 0) {
-                     $('#_remove-member-button').prop('disabled', true);
-                 }
+
              },
              error: function (xhr, status, error) {
                   console.log(error);
              }
         });
     }
+
+    $('#add-party-member-button').on("click", function() {
+        var content = "";
+        var members = $('#add-party-member-main').children().length;
+        if (members > 5) {
+            return;
+        }
+        $('#remove-party-member-' + members).hide();
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/servants",
+             dataType: 'json',
+             success: function (result, status, xhr) {
+
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        }).then(result => {
+            content += "<div id = \"party-member-" + (members + 1) + "\" class = \"row\">";
+            content += "<select id = \"party-servant-select-" + (members + 1) +"\" class = \"col-5\">";
+            result.forEach(function(data) {
+                content += "<option value = \""+ data.servant.id + "\">";
+                content += data.servant.name;
+                content += "</option>";
+            });
+            content +=      "</select>";
+            $.ajax({
+                 type: "GET",
+                 url: BASE_URL + "public/craft-essences",
+                 dataType: 'json',
+                 success: function (result, status, xhr) {
+
+                 },
+                 error: function (xhr, status, error) {
+                      console.log(error);
+                 }
+            }).then(result => {
+                content += "<select id = \"party-ce-select-" + (members + 1) +"\" class = \"col-5\">";
+                result.forEach(function(data) {
+                    content += "<option value = \""+ data.id + "\">";
+                    content += data.name;
+                    content += "</option>";
+                });
+                content +=      "</select>";
+                content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (members + 1) +"\" id = \"remove-party-member-" + (members + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
+                content += "</div>";
+                $('#add-party-member-main').append(content);
+            });
+        });
+    });
+
+    $('#add-party-form').on('click', '[id^=remove-party-member-]', function() {
+        var elementToRemove = '#party-member-' + $(this).data('member');
+        $(elementToRemove).remove();
+        if ($(this).data('member') > 1) {
+            $('#remove-party-member-' + ($(this).data('member') - 1)).show();
+        }
+    });
 
     $('#add-party-accept').on("click", function(event) {
         event.preventDefault();
@@ -822,8 +901,8 @@ $(document).ready(function() {
             });
             return;
         }
-        if ($('#add-party-member-2').children().length <= 0) {
-            $('#add-party-member').notify("Party must have a servant", {
+        if ($('#add-party-member-main').children().length <= 0) {
+            $('#add-party-member-main').notify("Party must have a servant", {
                 position: "right"
             });
             return;
@@ -833,8 +912,8 @@ $(document).ready(function() {
 
     function saveParty() {
         var servants = [];
-        $('#add-party-member-2 option').each(function() {
-            servants.push(parseInt($(this).val()));
+        $('[id^=party-member-]').each(function() {
+            servants.push(parseInt($(this).data('id')));
         });
         var data = {
             name: $('#add-party-name').val(),
@@ -898,16 +977,7 @@ $(document).ready(function() {
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
-                 result.forEach(function(data) {
-                    content += "<option value = \"" + data.servant.id + "\">" + data.servant.name + "</option>";
-                 });
-                 $('#add-party-member').html(content);
-                 if ($('#edit-party-member-2').children().length >= 6) {
-                     $('#_edit-add-member-button').prop('disabled', true);
-                 }
-                 if ($('#edit-party-member-2').children().length <= 0) {
-                     $('#_edit-remove-member-button').prop('disabled', true);
-                 }
+
              },
              error: function (xhr, status, error) {
                   console.log(error);
@@ -924,7 +994,7 @@ $(document).ready(function() {
             });
             return;
         }
-        if ($('#edit-party-member-2').children().length <= 0) {
+        if ($('[id^=party-member-]').children().length <= 0) {
             $('#edit-party-member').notify("Party must have a servant", {
                 position: "right"
             });
@@ -935,8 +1005,8 @@ $(document).ready(function() {
 
     function updateParty(partyId) {
         var servants = [];
-        $('#edit-party-member-2 option').each(function() {
-            servants.push(parseInt($(this).val()));
+        $('[id^=party-member-]').each(function() {
+            servants.push(parseInt($(this).data('id')));
         });
         var data = {
             name: $('#edit-party-name').val(),
@@ -974,42 +1044,6 @@ $(document).ready(function() {
              dataType: 'json',
              success: function (result, status, xhr) {
                  $('#edit-party-name').val(result.name);
-             },
-             error: function (xhr, status, error) {
-                  console.log(error);
-             }
-        });
-        $.ajax({
-             type: "GET",
-             url: BASE_URL + "public/servants-exclude-party/" + $('#edit-party-dialog').data('party'),
-             dataType: 'json',
-             success: function (result, status, xhr) {
-                 content = "";
-                 result.forEach(function(data) {
-                    content += "<option value = \"" + data.id + "\">" + data.name + "</option>";
-                 });
-                 $('#edit-party-member').html(content);
-             },
-             error: function (xhr, status, error) {
-                  console.log(error);
-             }
-        });
-        $.ajax({
-             type: "GET",
-             url: BASE_URL + "public/servants-in-party/" + $('#edit-party-dialog').data('party'),
-             dataType: 'json',
-             success: function (result, status, xhr) {
-                 content = "";
-                 result.forEach(function(data) {
-                    content += "<option value = \"" + data.id + "\">" + data.name + "</option>";
-                 });
-                 $('#edit-party-member-2').html(content);
-                 if ($('#edit-party-member-2').children().length >= 6) {
-                     $('#_edit-add-member-button').prop('disabled', true);
-                 }
-                 if ($('#edit-party-member-2').children().length <= 0) {
-                     $('#_edit-remove-member-button').prop('disabled', true);
-                 }
              },
              error: function (xhr, status, error) {
                   console.log(error);
@@ -1690,5 +1724,101 @@ $(document).ready(function() {
          });
     });
 
+    // Handle the add craft essence dialog
+    $('#add-ce-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#add-ce-name').val())) {
+            $('#add-ce-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        saveCraftEssence();
+        $('#add-ce-dialog #add-ce-cancel').click();
+        $.notify("Craft Essence saved successfully","success");
+    });
+
+    function saveCraftEssence() {
+        var data = {
+            name: $('#add-ce-name').val()
+        }
+        $.ajax({
+             type: "POST",
+             url: BASE_URL + "admin/craft-essences",
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getCraftEssences();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the edit craft essence dialog
+    $('#craft-essence-list').on("click", '[id^=craft-essence-edit-]', function(){
+        $('#edit-ce-dialog').data('ce', $(this).data('ce'));
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/craft-essences/" + $(this).data('ce'),
+             dataType: 'json',
+             success: function (result, status, xhr) {
+                 $('#edit-ce-name').val(result.name);
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        });
+    });
+    $('#edit-ce-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#edit-ce-name').val())) {
+            $('#edit-ce-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        updateCraftEssence();
+        $('#edit-ce-dialog #edit-ce-cancel').click();
+        $.notify("Craft Essence saved successfully","success");
+    });
+
+    function updateCraftEssence() {
+        var ccid = $('#edit-ce-dialog').data('ce');
+        var data = {
+            id: ccid,
+            name: $('#edit-ce-name').val(),
+            imageUrl: $('#edit-cc-image-url').val()
+        }
+        $.ajax({
+             type: "PATCH",
+             url: BASE_URL + "admin/craft-essences/" + ccid,
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getCraftEssences();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
 
 });

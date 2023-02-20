@@ -21,17 +21,23 @@
   "readOnly": false,
   "relationships": [
     {
+      "relationshipType": "one-to-one",
       "otherEntityName": "party",
       "otherEntityRelationshipName": "partyMember",
-      "ownerSide": true,
       "relationshipName": "party",
-      "relationshipType": "one-to-one"
+      "ownerSide": true
     },
     {
+      "relationshipType": "many-to-one",
       "otherEntityName": "servant",
       "otherEntityRelationshipName": "partyMember",
-      "relationshipName": "servant",
-      "relationshipType": "many-to-one"
+      "relationshipName": "servant"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "craftEssence",
+      "otherEntityRelationshipName": "partyMember",
+      "relationshipName": "craftEssence"
     }
   ],
   "service": "serviceImpl"

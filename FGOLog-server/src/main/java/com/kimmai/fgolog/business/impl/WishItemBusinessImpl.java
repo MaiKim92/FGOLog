@@ -58,8 +58,12 @@ public class WishItemBusinessImpl implements WishItemBusiness {
             throw new RuntimeException();
         }
         ServantDTO servant = servantService.findOne(existingItem.get().getServant().getId()).orElseThrow();
-        servant.setIsHas(!servant.getIsHas());
-        if (servant.getIsHas() && servant.getLevel() == null) {
+        if (servant.getNpLevel() > 0) {
+            servant.setNpLevel(0);
+        } else {
+            servant.setNpLevel(1);
+        }
+        if (servant.getNpLevel() > 0 && servant.getLevel() == null) {
             servant.setLevel(1);
         }
         servantService.partialUpdate(servant);

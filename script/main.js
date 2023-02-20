@@ -341,7 +341,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (result, status, xhr) {
                 var level = "";
-                if (result.servant.isHas == true) {
+                if (result.servant.npLevel > 0) {
                     var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
                     let i = 0;
                     elements.forEach(function(element) {
@@ -358,7 +358,7 @@ $(document).ready(function() {
                     $("#section-name-card").html("Command Cards");
                 }
                 $("#servant-name").html(result.servant.name);
-                $("#servant-img").html("<img class = \"servant-img has-" + result.servant.isHas + "\" src = \"" + result.servant.imageUrl + "\">");
+                $("#servant-img").html("<img class = \"servant-img np-" + result.servant.npLevel + "\" src = \"" + result.servant.imageUrl + "\">");
                 $("#card-1").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[0].type + ".png\">");
                 $("#card-2").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[1].type + ".png\">");
                 $("#card-3").html("<img class = \"card-img\" src = \"view/assets/img/" + result.commandCards[2].type + ".png\">");
@@ -392,7 +392,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (result, status, xhr) {
                 var level = "";
-                if (result.servant.isHas == true) {
+                if (result.servant.npLevel > 0) {
                     var elements = [$('#skill-1'), $('#skill-2'), $('#skill-3')];
                     let i = 0;
                     elements.forEach(function(element) {
@@ -409,7 +409,7 @@ $(document).ready(function() {
                     $("#servant-level").html(level);
                 }
                 $("#servant-name").html(result.servant.name);
-                $("#servant-img").html("<img class = \"servant-img has-" + result.servant.isHas + "\" src = \"" + result.servant.imageUrl + "\">");
+                $("#servant-img").html("<img class = \"servant-img np-" + result.servant.npLevel + "\" src = \"" + result.servant.imageUrl + "\">");
             },
             error: function (xhr, status, error) {
                  console.log(error);
@@ -441,7 +441,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (result, status, xhr) {
                 var level = "";
-                if (result.servant.isHas == true) {
+                if (result.servant.npLevel > 0) {
                     $("#servant-level").html(level);
                     $("#section-name-skill").html("Skills");
                     $("#section-name-card").html("Command Cards");
@@ -463,7 +463,7 @@ $(document).ready(function() {
                     });
                 }
                 $("#servant-name").html(result.servant.name);
-                $("#servant-img").html("<img class = \"servant-img has-" + result.servant.isHas + "\" src = \"" + result.servant.imageUrl + "\">");
+                $("#servant-img").html("<img class = \"servant-img np-" + result.servant.npLevel + "\" src = \"" + result.servant.imageUrl + "\">");
             },
             error: function (xhr, status, error) {
                  console.log(error);

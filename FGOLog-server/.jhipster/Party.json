@@ -19,6 +19,13 @@
   "name": "Party",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "mysticCode",
+      "otherEntityRelationshipName": "party",
+      "relationshipName": "mysticCode"
+    }
+  ],
   "service": "serviceImpl"
 }

@@ -2,9 +2,11 @@ package com.kimmai.fgolog.business.impl;
 
 import com.kimmai.fgolog.business.PartyBusiness;
 import com.kimmai.fgolog.business.ServantBusiness;
+import com.kimmai.fgolog.service.MysticCodeService;
 import com.kimmai.fgolog.service.PartyMemberService;
 import com.kimmai.fgolog.service.PartyService;
 import com.kimmai.fgolog.service.ServantService;
+import com.kimmai.fgolog.service.dto.MysticCodeDTO;
 import com.kimmai.fgolog.service.dto.PartyDTO;
 import com.kimmai.fgolog.service.dto.PartyMemberDTO;
 import com.kimmai.fgolog.web.rest.dto.PartyRequestDTO;
@@ -36,11 +38,14 @@ public class PartyBusinessImpl implements PartyBusiness {
 
     private final ServantService servantService;
 
-    public PartyBusinessImpl(PartyService partyService, PartyMemberService partyMemberService, ServantBusiness servantBusiness, ServantService servantService) {
+    private final MysticCodeService mysticCodeService;
+
+    public PartyBusinessImpl(PartyService partyService, PartyMemberService partyMemberService, ServantBusiness servantBusiness, ServantService servantService, MysticCodeService mysticCodeService) {
         this.partyService = partyService;
         this.partyMemberService = partyMemberService;
         this.servantBusiness = servantBusiness;
         this.servantService = servantService;
+        this.mysticCodeService = mysticCodeService;
     }
 
     @Override
@@ -55,10 +60,12 @@ public class PartyBusinessImpl implements PartyBusiness {
                     ServantResponseDTO servant = servantBusiness.findOne(id);
                     servantsInParty.add(servant);
                 });
+                MysticCodeDTO mysticCode = mysticCodeService.findOne(party.getMysticCode().getId()).orElseThrow();
                 PartyResponseDTO resp = new PartyResponseDTO();
                 resp.setId(party.getId());
                 resp.setName(party.getName());
                 resp.setServants(servantsInParty);
+                resp.setMysticCode(mysticCode);
                 result.add(resp);
             });
             return result;

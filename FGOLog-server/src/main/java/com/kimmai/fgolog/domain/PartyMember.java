@@ -1,5 +1,6 @@
 package com.kimmai.fgolog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -20,12 +21,16 @@ public class PartyMember implements Serializable {
     @Column(name = "seq")
     private Integer seq;
 
+    @JsonIgnoreProperties(value = { "mysticCodes" }, allowSetters = true)
     @OneToOne
-    @JoinColumn(unique = false)
+    @JoinColumn(unique = true)
     private Party party;
 
     @ManyToOne
     private Servant servant;
+
+    @ManyToOne
+    private CraftEssence craftEssence;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -78,6 +83,19 @@ public class PartyMember implements Serializable {
 
     public PartyMember servant(Servant servant) {
         this.setServant(servant);
+        return this;
+    }
+
+    public CraftEssence getCraftEssence() {
+        return this.craftEssence;
+    }
+
+    public void setCraftEssence(CraftEssence craftEssence) {
+        this.craftEssence = craftEssence;
+    }
+
+    public PartyMember craftEssence(CraftEssence craftEssence) {
+        this.setCraftEssence(craftEssence);
         return this;
     }
 

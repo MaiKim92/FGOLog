@@ -15,7 +15,7 @@ public class ServantRequestDTO {
 
         private String thumbnailUrl;
 
-        private Boolean isHas;
+        private Integer npLevel;
 
         private List<Long> skills;
 
@@ -53,12 +53,12 @@ public class ServantRequestDTO {
             this.thumbnailUrl = thumbnailUrl;
         }
 
-        public Boolean getIsHas() {
-            return isHas;
+        public Integer getNpLevel() {
+            return npLevel;
         }
 
-        public void setIsHas(Boolean isHas) {
-            this.isHas = isHas;
+        public void setNpLevel(Integer npLevel) {
+            this.npLevel = npLevel;
         }
 
         public List<Long> getSkills() {

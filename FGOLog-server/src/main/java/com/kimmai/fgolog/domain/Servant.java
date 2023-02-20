@@ -29,8 +29,8 @@ public class Servant implements Serializable {
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
-    @Column(name = "is_has")
-    private Boolean isHas;
+    @Column(name = "np_level")
+    private Integer npLevel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -99,17 +99,17 @@ public class Servant implements Serializable {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public Boolean getIsHas() {
-        return this.isHas;
+    public Integer getNpLevel() {
+        return this.npLevel;
     }
 
-    public Servant isHas(Boolean isHas) {
-        this.setIsHas(isHas);
+    public Servant npLevel(Integer npLevel) {
+        this.setNpLevel(npLevel);
         return this;
     }
 
-    public void setIsHas(Boolean isHas) {
-        this.isHas = isHas;
+    public void setNpLevel(Integer npLevel) {
+        this.npLevel = npLevel;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -140,7 +140,7 @@ public class Servant implements Serializable {
             ", level=" + getLevel() +
             ", imageUrl='" + getImageUrl() + "'" +
             ", thumbnailUrl='" + getThumbnailUrl() + "'" +
-            ", isHas='" + getIsHas() + "'" +
+            ", npLevel=" + getNpLevel() +
             "}";
     }
 }

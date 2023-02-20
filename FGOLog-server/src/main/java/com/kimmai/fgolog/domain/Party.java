@@ -1,6 +1,9 @@
 package com.kimmai.fgolog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -20,6 +23,10 @@ public class Party implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "party" }, allowSetters = true)
+    private MysticCode mysticCode;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -33,6 +40,19 @@ public class Party implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public MysticCode getMysticCode() {
+        return this.mysticCode;
+    }
+
+    public void setMysticCode(MysticCode mysticCode) {
+        this.mysticCode = mysticCode;
+    }
+
+    public Party mysticCode(MysticCode mysticCode) {
+        setMysticCode(mysticCode);
+        return this;
     }
 
     public String getName() {

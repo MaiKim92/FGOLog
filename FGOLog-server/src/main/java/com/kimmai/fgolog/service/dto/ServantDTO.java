@@ -2,12 +2,10 @@ package com.kimmai.fgolog.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * A DTO for the {@link com.kimmai.fgolog.domain.Servant} entity.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServantDTO implements Serializable {
 
     private Long id;
@@ -20,7 +18,7 @@ public class ServantDTO implements Serializable {
 
     private String thumbnailUrl;
 
-    private Boolean isHas;
+    private Integer npLevel;
 
     public Long getId() {
         return id;
@@ -62,12 +60,12 @@ public class ServantDTO implements Serializable {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public Boolean getIsHas() {
-        return isHas;
+    public Integer getNpLevel() {
+        return npLevel;
     }
 
-    public void setIsHas(Boolean isHas) {
-        this.isHas = isHas;
+    public void setNpLevel(Integer npLevel) {
+        this.npLevel = npLevel;
     }
 
     @Override
@@ -100,7 +98,7 @@ public class ServantDTO implements Serializable {
             ", level=" + getLevel() +
             ", imageUrl='" + getImageUrl() + "'" +
             ", thumbnailUrl='" + getThumbnailUrl() + "'" +
-            ", isHas='" + getIsHas() + "'" +
+            ", npLevel=" + getNpLevel() +
             "}";
     }
 }

@@ -19,5 +19,11 @@
                                  constraintName="fk_party_member__servant_id"
                                  referencedColumnNames="id"
                                  referencedTableName="servant"/>
+
+        <addForeignKeyConstraint baseColumnNames="craft_essence_id"
+                                 baseTableName="party_member"
+                                 constraintName="fk_party_member__craft_essence_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="craft_essence"/>
     </changeSet>
 </databaseChangeLog>

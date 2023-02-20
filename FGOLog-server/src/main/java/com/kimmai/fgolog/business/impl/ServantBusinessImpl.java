@@ -105,7 +105,7 @@ public class ServantBusinessImpl implements ServantBusiness {
         servant.setLevel(req.getLevel());
         servant.setImageUrl(req.getImageUrl());
         servant.setThumbnailUrl(req.getThumbnailUrl());
-        servant.setIsHas(req.getIsHas());
+        servant.setNpLevel(req.getNpLevel());
         ServantDTO saved = servantService.save(servant);
         List<SkillDTO> skills = skillService.findById(req.getSkills());
         List<CommandCardDTO> cards = new ArrayList<>();
@@ -142,7 +142,7 @@ public class ServantBusinessImpl implements ServantBusiness {
         servant.setLevel(req.getLevel());
         servant.setImageUrl(req.getImageUrl());
         servant.setThumbnailUrl(req.getThumbnailUrl());
-        servant.setIsHas(req.getIsHas());
+        servant.setNpLevel(req.getNpLevel());
         ServantDTO saved = servantService.partialUpdate(servant).orElseThrow();
         List<CommandCardDTO> cards = commandCardService.getAllByServantId(id);
         List<SkillDTO> existingSkills = skillService.getByServantId(saved.getId());

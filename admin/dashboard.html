@@ -33,6 +33,7 @@
                 <a href = "#/"><li id = "menu-item-5" class = "menu-item">Tasks</li></a>
                 <a href = "#/"><li id = "menu-item-6" class = "menu-item">Wishlist</li></a>
                 <a href = "#/"><li id = "menu-item-7" class = "menu-item">Skills</li></a>
+                <a href = "#/"><li id = "menu-item-8" class = "menu-item">Craft Essences</li></a>
             </ul>
             <ul class = "main-menu col-3">
                 <a href = "login.html" id = "login-menu"><li id = "login-menu-item" class = "menu-item">Log in</li></a>
@@ -105,6 +106,13 @@
                     </table>
                 </div>
             </div>
+            <div id = "craft-essence-list">
+                <div class = "table-name"><h2>Craft Essences</h2></div>
+                <div class = "row">
+                    <table id = "craft-essence-table">
+                    </table>
+                </div>
+            </div>
         </div>
         <div class = "col-2 d-none d-xl-block">
             <p></p>
@@ -144,21 +152,12 @@
                                 <button id = "_add-skill-button" class = "btn btn-primary col-12 row m-10">Add</button>
                             </div>
                         </div>
-                        <div class ="row">
-                            <div class = "col-4 p-10">
-                                Owned?
-                            </div>
-                            <div class = "col-4 p-10">
-                                <input id = "add-servant-is-has-true" type = "radio" name = "is-has">
-                                <label for = "add-servant-is-has-true">Yes</label>
-                            </div>
-                            <div class = "col-4 p-10">
-                                <input id = "add-servant-is-has-false" type = "radio" name = "is-has" checked>
-                                <label for = "add-servant-is-has-false">No</label>
-                            </div>
-                        </div>
                         <div class = "row">
-                            <div class = "p-10">
+                            <div class = "col-6 p-10">
+                                <label for = "add-servant-np-level">NP Level</label>
+                                <input id = "add-servant-np-level" type = "number" min = 0 max = 5 name = "np-level">
+                            </div>
+                            <div class ="col-6 p-10">
                                 <label for = "add-servant-level">Level</label>
                                 <input id = "add-servant-level" type = "number" min = 0 max = 120 disabled>
                             </div>
@@ -212,21 +211,12 @@
                                 <button id = "_edit-add-skill-button" class = "btn btn-primary col-12 row m-10">Add</button>
                             </div>
                         </div>
-                        <div class ="row">
-                            <div class = "col-4 p-10">
-                                Owned?
-                            </div>
-                            <div class = "col-4 p-10">
-                                <input id = "edit-servant-is-has-true" type = "radio" name = "is-has">
-                                <label for = "edit-servant-is-has-true">Yes</label>
-                            </div>
-                            <div class = "col-4 p-10">
-                                <input id = "edit-servant-is-has-false" type = "radio" name = "is-has" checked>
-                                <label for = "edit-servant-is-has-false">No</label>
-                            </div>
-                        </div>
                         <div class = "row">
-                            <div class = "p-10">
+                            <div class = "col-6 p-10">
+                                <label for = "edit-servant-np-level">NP Level</label>
+                                <input id = "edit-servant-np-level" type = "number" min = 0 max = 5 name = "np-level">
+                            </div>
+                            <div class ="col-6 p-10">
                                 <label for = "edit-servant-level">Level</label>
                                 <input id = "edit-servant-level" type = "number" min = 0 max = 120 disabled>
                             </div>
@@ -260,16 +250,16 @@
                             <input id = "add-party-name" type = "text">
                         </div>
                         <div class = "row">
-                            <label for = "add-party-member-2">Party members</label>
-                            <div class = "col-6 p-10">
-                                <select multiple id="add-party-member-2" class = "col-12 row m-10"></select>
-                                <button id = "_remove-member-button" class = "btn btn-primary col-12 row m-10" disabled>Remove</button>
-                            </div>
-                            <div class = "col-6 p-10">
-                                <select multiple id="add-party-member" class = "col-12 row m-10">
+                            <label for = "add-party-member">Party members</label>
+                            <div id = "add-party-member">
+                                <div id = "add-party-member-main">
 
-                                </select>
-                                <button id = "_add-member-button" class = "btn btn-primary col-12 row m-10">Add</button>
+                                </div>
+                                <a href = "#/">
+                                    <div id = "add-party-member-button" class = "center p-10">
+                                        <i class="fa-sharp fa-solid fa-plus"></i>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -523,6 +513,48 @@
                 <div class="modal-footer">
                     <button id = "edit-skill-accept" type="button" class="btn btn-primary">Save</button>
                     <button id = "edit-skill-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-ce-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-ce-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new Craft Essence</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-ce-name">Name</label>
+                            <input id = "add-ce-name" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-ce-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-ce-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-ce-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-ce-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit Craft Essence</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-ce-name">Name</label>
+                            <input id = "edit-ce-name" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-ce-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-ce-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

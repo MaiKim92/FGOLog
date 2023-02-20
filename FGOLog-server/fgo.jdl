@@ -32,7 +32,7 @@ entity Servant {
 	level Integer,
 	imageUrl String,
 	thumbnailUrl String,
-	isHas Boolean
+	npLevel Integer
 }
 
 entity Skill {
@@ -65,6 +65,16 @@ entity CommandCard {
     seq Integer
 }
 
+entity MysticCode {
+    id Long,
+    name String
+}
+
+entity CraftEssence {
+    id Long,
+    name String
+}
+
 relationship OneToOne {
  	Task{material} to Material,
  	WishItem{servant} to Servant,
@@ -75,7 +85,9 @@ relationship OneToOne {
 relationship ManyToOne {
 	Skill{Servant} to Servant,
     PartyMember{Servant} to Servant,
-    CommandCard{Servant} to Servant
+    CommandCard{Servant} to Servant,
+    Party{MysticCode} to MysticCode,
+    PartyMember{CraftEssence} to CraftEssence
 }
 
 // Use Data Transfer Objects (DTO)
