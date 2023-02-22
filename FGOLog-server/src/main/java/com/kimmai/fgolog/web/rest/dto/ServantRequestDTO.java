@@ -1,6 +1,7 @@
 package com.kimmai.fgolog.web.rest.dto;
 
 import com.kimmai.fgolog.domain.enumeration.CardType;
+import com.kimmai.fgolog.domain.enumeration.ServantClass;
 import com.kimmai.fgolog.service.dto.SkillDTO;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class ServantRequestDTO {
         private String thumbnailUrl;
 
         private Integer npLevel;
+
+        private ServantClass servantClass;
 
         private List<Long> skills;
 
@@ -75,6 +78,15 @@ public class ServantRequestDTO {
 
         public void setCommandCards(List<String> commandCards) {
             this.commandCards = commandCards;
+        }
+
+
+        public void setServantClass(ServantClass servantClass) {
+            this.servantClass = servantClass;
+        }
+
+        public ServantClass getServantClass() {
+            return this.servantClass;
         }
 
 

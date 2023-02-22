@@ -2,6 +2,7 @@ package com.kimmai.fgolog.service.impl;
 
 import com.kimmai.fgolog.domain.PartyMember;
 import com.kimmai.fgolog.repository.PartyMemberRepository;
+import com.kimmai.fgolog.service.CraftEssenceService;
 import com.kimmai.fgolog.service.PartyMemberService;
 import com.kimmai.fgolog.service.dto.PartyMemberDTO;
 import com.kimmai.fgolog.service.mapper.PartyMemberMapper;
@@ -27,9 +28,12 @@ public class PartyMemberServiceImpl implements PartyMemberService {
 
     private final PartyMemberMapper partyMemberMapper;
 
-    public PartyMemberServiceImpl(PartyMemberRepository partyMemberRepository, PartyMemberMapper partyMemberMapper) {
+    private final CraftEssenceService craftEssenceService;
+
+    public PartyMemberServiceImpl(PartyMemberRepository partyMemberRepository, PartyMemberMapper partyMemberMapper, CraftEssenceService craftEssenceService) {
         this.partyMemberRepository = partyMemberRepository;
         this.partyMemberMapper = partyMemberMapper;
+        this.craftEssenceService = craftEssenceService;
     }
 
     @Override
@@ -80,5 +84,12 @@ public class PartyMemberServiceImpl implements PartyMemberService {
     public List<Long> findAllServantIdsByPartyId(Long partyId) {
         log.debug("Request to get all Servant Ids by Party Id");
         return partyMemberRepository.findAllByPartyId(partyId).stream().map(pm -> pm.getServant().getId()).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PartyMemberDTO> findAllByPartyId(Long partyId) {
+        log.debug("Request to get all party members by Party Id");
+        return partyMemberRepository.findAllByPartyId(partyId).stream().map(partyMemberMapper::toDto).collect(Collectors.toList());
     }
 }

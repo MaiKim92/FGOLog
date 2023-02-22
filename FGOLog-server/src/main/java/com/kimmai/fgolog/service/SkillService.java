@@ -67,4 +67,12 @@ public interface SkillService {
      * @return the list of entities.
      */
     List<SkillDTO> findAllWithoutServantId();
+
+
+    /**
+     * Get all the skills with a servant ID.
+     *
+     * @return the list of entities.
+     */
+    List<SkillDTO> findAllByServantId(Long servantId);
 }

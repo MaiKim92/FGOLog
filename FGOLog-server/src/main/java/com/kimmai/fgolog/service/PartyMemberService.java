@@ -52,4 +52,11 @@ public interface PartyMemberService {
      * @return the list of entities.
      */
     List<Long> findAllServantIdsByPartyId(Long partyId);
+
+    /**
+     * Get all the party members that belong to a party
+     *
+     * @return the list of entities.
+     */
+    List<PartyMemberDTO> findAllByPartyId(Long partyId);
 }

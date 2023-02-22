@@ -1,5 +1,7 @@
 package com.kimmai.fgolog.web.rest.dto;
 
+import com.kimmai.fgolog.domain.enumeration.ServantClass;
+import com.kimmai.fgolog.service.dto.CraftEssenceDTO;
 import com.kimmai.fgolog.service.dto.ServantDTO;
 import com.kimmai.fgolog.service.dto.CommandCardDTO;
 import com.kimmai.fgolog.service.dto.SkillDTO;
@@ -15,6 +17,8 @@ public class ServantResponseDTO {
     private List<CommandCardDTO> commandCards;
 
     private List<SkillDTO> skills;
+
+    private ServantClass servantClass;
 
     public void setServant(ServantDTO servant) {
         this.servant = servant;
@@ -38,6 +42,26 @@ public class ServantResponseDTO {
 
     public List<SkillDTO> getSkills() {
         return this.skills;
+    }
+
+    public void setServantClass(ServantClass servantClass) {
+        this.servantClass = servantClass;
+    }
+
+    public ServantClass getServantClass() {
+        return this.servantClass;
+    }
+
+    public static class PartyMemberResponseDTO extends ServantResponseDTO {
+        private CraftEssenceDTO craftEssence;
+
+        public CraftEssenceDTO getCraftEssence() {
+            return this.craftEssence;
+        }
+
+        public void setCraftEssence(CraftEssenceDTO craftEssence) {
+            this.craftEssence = craftEssence;
+        }
     }
 
 }

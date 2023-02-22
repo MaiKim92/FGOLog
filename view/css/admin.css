@@ -167,13 +167,19 @@ ul.main-menu li {
     text-align: center;
 }
 
-#add-party-member-button {
+#add-party-member-button,
+#edit-party-member-button {
     border: 1px solid rgb(200, 200, 200);
     background-color: rgb(225, 225, 225);
     margin: 10px;
 }
 
 [id^=party-member-] {
+    padding: 10px;
+    margin: 10px;
+}
+
+[id^=edit-party-member-] {
     padding: 10px;
     margin: 10px;
 }

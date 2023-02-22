@@ -1,5 +1,7 @@
 package com.kimmai.fgolog.domain;
 
+import com.kimmai.fgolog.domain.enumeration.ServantClass;
+
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -31,6 +33,10 @@ public class Servant implements Serializable {
 
     @Column(name = "np_level")
     private Integer npLevel;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "servant_class")
+    private ServantClass servantClass;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -110,6 +116,19 @@ public class Servant implements Serializable {
 
     public void setNpLevel(Integer npLevel) {
         this.npLevel = npLevel;
+    }
+
+    public void setServantClass(ServantClass servantClass) {
+        this.servantClass = servantClass;
+    }
+
+    public ServantClass getServantClass() {
+        return this.servantClass;
+    }
+
+    public Servant servantClass(ServantClass servantClass) {
+        this.setServantClass(servantClass);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

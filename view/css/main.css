@@ -95,6 +95,23 @@ body{
     text-align: center;
 }
 
+.sub-title {
+    padding-left: 10px;
+    text-align: left;
+}
+
+.team-subtitle {
+    color: black;
+}
+
+.team-subtitle.team-front {
+    color: red;
+}
+
+.team-back {
+    color: blue;
+}
+
 .servant img,
 .item img,
 .servant .level,
@@ -249,6 +266,79 @@ img.has-false {
     color: black;
 }
 
+[id^=party-servant--] {
+    display: flex;
+    position: relative;
+    height: auto;
+    min-width: 140px;
+    min-height: 300px;
+    background-position: center;
+    background-origin: content-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+
+.party-servant-container {
+    background: linear-gradient(0deg, rgba(200,200,0,1) 0%, rgba(200,200,0,1) 30%, rgba(155, 100, 0, 1) 40%, rgba(200,200,0,1) 50%, rgba(200,200,0,1) 100%);
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.craft-essence {
+    width: 100%;
+    height: 25%;
+    max-height: 64px;
+    background-position-y: 20%;
+    background-origin: content-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: 0%;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.party-servant {
+    padding: 15px;
+}
+
+.skill-levels {
+    font-weight: bold;
+    position: absolute;
+    bottom: 21%;
+    padding-left: 5px;
+    text-shadow: -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
+}
+
+.main-line {
+    width: 50%;
+    display: inline-block;
+    height: 4px;
+    background: linear-gradient(90deg, rgb(250, 100, 100) 0%, rgb(225, 225, 225) 100%);
+    margin-left: 10px;
+}
+
+.sub-line {
+    width: 50%;
+    display: inline-block;
+    height: 4px;
+    background: linear-gradient(90deg, rgb(100, 100, 250) 0%, rgb(225, 225, 225) 100%);
+    margin-left: 10px;
+}
+
+.class-icon {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 50%;
+    max-width: 64px;
+    min-width: 32px;
+}
+
+.np-level.small {
+    font-size: 65% !important;
+}
+
 #servant-name {
     -webkit-text-fill-color: transparent;
     background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(200,200,200,1) 30%, rgba(150, 150, 150, 1) 40%, rgba(200,200,200,1) 50%, rgba(200,200,200,1) 100%);
@@ -281,6 +371,14 @@ img.has-false {
     padding: 15px;
 }
 
+.main-party-container {
+    background-color: rgb(225, 225, 225);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px black;
+    margin: 20px;
+    width: 93.5%;
+}
+
 img.item {
     width: 90%;
     max-width: 96px;
@@ -306,7 +404,7 @@ img.item {
 
 .task-item-container {
     padding: 10px;
-    background-color: rgba(53, 87, 138, 0.5);
+    background-color: rgba(53, 87, 138, 0.8);
     border-radius: 10px;
 }
 

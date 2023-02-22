@@ -140,6 +140,25 @@
                             <input id = "add-servant-thumbnail-url" type = "text">
                         </div>
                         <div class = "row">
+                            <label for = "add-servant-class">Class</label>
+                            <select id = "add-servant-class">
+                                <option value = "SABER">Saber</option>
+                                <option value = "ARCHER">Archer</option>
+                                <option value = "LANCER">Lancer</option>
+                                <option value = "RIDER">Rider</option>
+                                <option value = "ASSASSIN">Assassin</option>
+                                <option value = "CASTER">Caster</option>
+                                <option value = "BERSERKER">Berserker</option>
+                                <option value = "RULER">Ruler</option>
+                                <option value = "AVENGER">Avenger</option>
+                                <option value = "FOREIGNER">Foreigner</option>
+                                <option value = "ALTER_EGO">Alter Ego</option>
+                                <option value = "MOONCANCER">Mooncancer</option>
+                                <option value = "PRETENDER">Pretender</option>
+                                <option value = "SHIELDER">Shielder</option>
+                            </select>
+                        </div>
+                        <div class = "row">
                             <label for = "add-servant-skill-2">Skills</label>
                             <div class = "col-6 p-10">
                                 <select multiple id="add-servant-skill-2" class = "col-12 row m-10"></select>
@@ -199,6 +218,25 @@
                             <input id = "edit-servant-thumbnail-url" type = "text">
                         </div>
                         <div class = "row">
+                            <label for = "edit-servant-class">Class</label>
+                            <select id = "edit-servant-class">
+                                <option value = "SABER">Saber</option>
+                                <option value = "ARCHER">Archer</option>
+                                <option value = "LANCER">Lancer</option>
+                                <option value = "RIDER">Rider</option>
+                                <option value = "ASSASSIN">Assassin</option>
+                                <option value = "CASTER">Caster</option>
+                                <option value = "BERSERKER">Berserker</option>
+                                <option value = "RULER">Ruler</option>
+                                <option value = "AVENGER">Avenger</option>
+                                <option value = "FOREIGNER">Foreigner</option>
+                                <option value = "ALTER_EGO">Alter Ego</option>
+                                <option value = "MOONCANCER">Mooncancer</option>
+                                <option value = "PRETENDER">Pretender</option>
+                                <option value = "SHIELDER">Shielder</option>
+                            </select>
+                        </div>
+                        <div class = "row">
                             <label for = "add-servant-skill-2">Skills</label>
                             <div class = "col-6 p-10">
                                 <select multiple id="edit-servant-skill-2" class = "col-12 row m-10"></select>
@@ -250,6 +288,11 @@
                             <input id = "add-party-name" type = "text">
                         </div>
                         <div class = "row">
+                            <label for = "add-mystic-code">Mystic Code</label>
+                            <select id = "add-mystic-code">
+                            </select>
+                        </div>
+                        <div class = "row">
                             <label for = "add-party-member">Party members</label>
                             <div id = "add-party-member">
                                 <div id = "add-party-member-main">
@@ -277,23 +320,28 @@
                 <div class="modal-body row">
                     <form id = "edit-party-form" class = "form-control input-form">
                         <div class = "row">
-                            <h3>Edit party</h3>
+                            <h3>Add new party</h3>
                         </div>
                         <div class = "row">
                             <label for = "edit-party-name">Name</label>
                             <input id = "edit-party-name" type = "text">
                         </div>
                         <div class = "row">
-                            <label for = "edit-party-member-2">Party members</label>
-                            <div class = "col-6 p-10">
-                                <select multiple id="edit-party-member-2" class = "col-12 row m-10"></select>
-                                <button id = "_edit-remove-member-button" class = "btn btn-primary col-12 row m-10" disabled>Remove</button>
-                            </div>
-                            <div class = "col-6 p-10">
-                                <select multiple id="edit-party-member" class = "col-12 row m-10">
+                            <label for = "edit-mystic-code">Mystic Code</label>
+                            <select id = "edit-mystic-code">
+                            </select>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-party-member">Party members</label>
+                            <div id = "edit-party-member">
+                                <div id = "edit-party-member-main">
 
-                                </select>
-                                <button id = "_edit-add-member-button" class = "btn btn-primary col-12 row m-10">Add</button>
+                                </div>
+                                <a href = "#/">
+                                    <div id = "edit-party-member-button" class = "center p-10">
+                                        <i class="fa-sharp fa-solid fa-plus"></i>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </form>

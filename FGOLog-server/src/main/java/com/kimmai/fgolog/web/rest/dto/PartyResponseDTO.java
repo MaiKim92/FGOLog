@@ -1,7 +1,7 @@
 package com.kimmai.fgolog.web.rest.dto;
 
 import com.kimmai.fgolog.service.dto.MysticCodeDTO;
-import com.kimmai.fgolog.web.rest.dto.ServantResponseDTO;
+import com.kimmai.fgolog.web.rest.dto.ServantResponseDTO.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class PartyResponseDTO {
     private String name;
 
     private MysticCodeDTO mysticCode;
-    private List<ServantResponseDTO> servants;
+    private List<PartyMemberResponseDTO> servants;
 
     public Long getId() {
         return this.id;
@@ -39,11 +39,11 @@ public class PartyResponseDTO {
         this.mysticCode = mysticCode;
     }
 
-    public List<ServantResponseDTO> getServants() {
+    public List<ServantResponseDTO.PartyMemberResponseDTO> getServants() {
         return this.servants;
     }
 
-    public void setServants(List<ServantResponseDTO> servants) {
+    public void setServants(List<PartyMemberResponseDTO> servants) {
         this.servants = servants;
     }
 

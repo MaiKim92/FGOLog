@@ -4,6 +4,7 @@ import com.kimmai.fgolog.web.rest.dto.PartyRequestDTO;
 import com.kimmai.fgolog.web.rest.dto.PartyResponseDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PartyBusiness {
 
@@ -13,4 +14,5 @@ public interface PartyBusiness {
 
     PartyResponseDTO update(Long id, PartyRequestDTO req);
 
+    Optional<PartyResponseDTO> findOne(Long id);
 }

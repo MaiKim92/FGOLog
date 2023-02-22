@@ -1,6 +1,9 @@
 $(document).ready(function() {
     var BASE_URL = "http://localhost:8080/api/";
 
+    var allServants = "";
+    var allCEs = "";
+
     pageLoad();
     $('#party-list').hide();
     $('#material-list').hide();
@@ -434,7 +437,7 @@ $(document).ready(function() {
                      result.forEach(function(data) {
                          content += "<tr id = \"command-code-" + data.id + "\">";
                          content +=    "<td>" + data.id + "</td>";
-                         content +=    "<td><img src = \"../view/assets/img/craft-essences/" + data.name + ".png\" class = \"servant-portrait\"></td>";
+                         content +=    "<td><img src = \"../view/assets/img/craft-essences/thumb/" + data.name + ".png\" class = \"servant-portrait\"></td>";
                          content +=    "<td>" + data.name + "</td>";
                          content +=    "<td id = \"ce-actions-" + data.id + "\">";
                          content +=        "<a data-toggle = \"modal\" data-target = \"#add-ce-dialog\" data-ce = \"" + data.id + "\" id = \"craft-essence-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
@@ -462,6 +465,34 @@ $(document).ready(function() {
             $('#login-menu').hide();
             $('#logout-menu').show();
         }
+        loadServantsForPartyEdit();
+    }
+
+    function loadServantsForPartyEdit() {
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/servants/",
+             dataType: 'json',
+             success: function (result, status, xhr) {
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        }).then(function(servantResult) {
+            allServants = servantResult;
+        });
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/craft-essences/",
+             dataType: 'json',
+             success: function (result, status, xhr) {
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        }).then(function(craftEssenceResult) {
+            allCEs = craftEssenceResult;
+        });
     }
 
     $('#logout-menu-item').on("click", function(event) {
@@ -574,7 +605,8 @@ $(document).ready(function() {
             npLevel: Math.min(Math.max($("#add-servant-np-level").val(), 0), 5),
             level: level,
             skills: skills,
-            commandCards: cards
+            commandCards: cards,
+            servantClass: $("#add-servant-class").find(':selected').val()
         };
         $.ajax({
              type: "POST",
@@ -691,6 +723,7 @@ $(document).ready(function() {
                 $('#edit-servant-np-level').val(result.servant.npLevel);
                 $('#edit-servant-level').attr('disabled', !result.servant.npLevel > 0);
                 $('#edit-servant-level').val(result.servant.level);
+                $('#edit-servant-class').val(result.servant.servantClass);
                 var commandCards = result.commandCards;
                 var cards = ""
                 commandCards.every(function(card) {
@@ -788,7 +821,8 @@ $(document).ready(function() {
             npLevel: Math.min(Math.max($("#edit-servant-np-level").val(), 0), 5),
             level: level,
             skills: skills,
-            commandCards: cards
+            commandCards: cards,
+            servantClass: $("#edit-servant-class").find(':selected').val()
         };
         $.ajax({
              type: "PATCH",
@@ -814,24 +848,26 @@ $(document).ready(function() {
 
     // Handle the add party dialog
     $('#add-party-dialog').on("show.bs.modal", function() {
-        getAllServantsForPartyMembers();
-    });
-
-    function getAllServantsForPartyMembers() {
-        var url = BASE_URL + "public/servants";
+        loadServantsForPartyEdit();
+        var url = BASE_URL + "public/mystic-codes";
         $.ajax({
              type: "GET",
              url: url,
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
-
+                 result.forEach(function(data){
+                    content += "<option value = \""+ data.id + "\">";
+                    content += data.name;
+                    content += "</option>";
+                 });
+                 $('#add-mystic-code').html(content);
              },
              error: function (xhr, status, error) {
                   console.log(error);
              }
         });
-    }
+    });
 
     $('#add-party-member-button').on("click", function() {
         var content = "";
@@ -840,52 +876,30 @@ $(document).ready(function() {
             return;
         }
         $('#remove-party-member-' + members).hide();
-        $.ajax({
-             type: "GET",
-             url: BASE_URL + "public/servants",
-             dataType: 'json',
-             success: function (result, status, xhr) {
-
-             },
-             error: function (xhr, status, error) {
-                  console.log(error);
-             }
-        }).then(result => {
-            content += "<div id = \"party-member-" + (members + 1) + "\" class = \"row\">";
-            content += "<select id = \"party-servant-select-" + (members + 1) +"\" class = \"col-5\">";
-            result.forEach(function(data) {
-                content += "<option value = \""+ data.servant.id + "\">";
-                content += data.servant.name;
-                content += "</option>";
-            });
-            content +=      "</select>";
-            $.ajax({
-                 type: "GET",
-                 url: BASE_URL + "public/craft-essences",
-                 dataType: 'json',
-                 success: function (result, status, xhr) {
-
-                 },
-                 error: function (xhr, status, error) {
-                      console.log(error);
-                 }
-            }).then(result => {
-                content += "<select id = \"party-ce-select-" + (members + 1) +"\" class = \"col-5\">";
-                result.forEach(function(data) {
-                    content += "<option value = \""+ data.id + "\">";
-                    content += data.name;
-                    content += "</option>";
-                });
-                content +=      "</select>";
-                content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (members + 1) +"\" id = \"remove-party-member-" + (members + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
-                content += "</div>";
-                $('#add-party-member-main').append(content);
-            });
+        content += "<div id = \"add-add-party-member-" + (members + 1) + "\" class = \"row\">";
+        content += "<select id = \"party-servant-select-" + (members + 1) +"\" class = \"col-5\">";
+        allServants.forEach(function(data) {
+            content += "<option value = \""+ data.servant.id + "\">";
+            content += data.servant.name;
+            content += "</option>";
         });
+        content +=      "</select>";
+        content += "<select id = \"party-ce-select-" + (members + 1) +"\" class = \"col-5\">";
+        allCEs.forEach(function(ce) {
+            content += "<option value = \""+ ce.id + "\">";
+            content += ce.name;
+            content += "</option>";
+        });
+        content +=      "</select>";
+        content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (members + 1) +"\" id = \"remove-party-member-" + (members + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
+        content += "</div>";
+        $('#add-party-member-main').append(content);
+        $('#party-ce-select-' + (members + 1)).trigger('change');
+        $('#party-servant-select-' + (members + 1)).trigger('change');
     });
 
     $('#add-party-form').on('click', '[id^=remove-party-member-]', function() {
-        var elementToRemove = '#party-member-' + $(this).data('member');
+        var elementToRemove = '#add-party-member-' + $(this).data('member');
         $(elementToRemove).remove();
         if ($(this).data('member') > 1) {
             $('#remove-party-member-' + ($(this).data('member') - 1)).show();
@@ -910,14 +924,29 @@ $(document).ready(function() {
         saveParty();
     });
 
+    $('#add-party-member-main').on('change', '[id^=party-servant-select-]', function(){
+        $(this).parent().data('servant', $(this).find(':selected').val());
+    });
+
+    $('#add-party-member-main').on('change', '[id^=party-ce-select-]', function(){
+        $(this).parent().data('ce', $(this).find(':selected').val());
+    });
+
     function saveParty() {
         var servants = [];
-        $('[id^=party-member-]').each(function() {
-            servants.push(parseInt($(this).data('id')));
+        $('[id^=add-add-party-member-]').each(function() {
+            console.log($(this).data('servant'));
+            console.log($(this).data('ce'));
+            var servant = {
+                servantId: $(this).data('servant'),
+                craftEssenceId: $(this).data('ce')
+            }
+            servants.push(servant);
         });
         var data = {
             name: $('#add-party-name').val(),
-            servantIds: servants
+            mysticCodeId: $('#add-mystic-code').find(':selected').val(),
+            partyMembers: servants
         };
         console.log(JSON.stringify(data));
         $.ajax({
@@ -949,41 +978,146 @@ $(document).ready(function() {
     });
 
     $('#edit-party-dialog').on("show.bs.modal", function() {
-        getAllServantsForEditPartyMembers();
-    });
-
-    $('#_edit-add-member-button').on("click", function(event) {
-        event.preventDefault();
-        $('#edit-party-member option:selected').remove().appendTo('#edit-party-member-2');
-        $('#_edit-remove-member-button').prop('disabled', false);
-        if ($('#edit-party-member-2').children().length >= 6) {
-            $('#_edit-add-member-button').prop('disabled', true);
-        }
-    });
-
-    $('#_edit-remove-member-button').on("click", function(event) {
-        event.preventDefault();
-        $('#edit-party-member-2 option:selected').remove().appendTo('#edit-party-member');
-        $('#_edit-add-member-button').prop('disabled', false);
-        if ($('#edit-party-member-2').children().length <= 0) {
-            $('#_edit-remove-member-button').prop('disabled', true);
-        }
-    });
-
-    function getAllServantsForPartyMembers() {
         $.ajax({
              type: "GET",
-             url: BASE_URL + "public/servants",
+             url: BASE_URL + "public/mystic-codes",
              dataType: 'json',
              success: function (result, status, xhr) {
                  content = "";
-
+                 result.forEach(function(data){
+                    content += "<option value = \""+ data.id + "\">";
+                    content += data.name;
+                    content += "</option>";
+                 });
+                 $('#edit-mystic-code').html(content);
              },
              error: function (xhr, status, error) {
                   console.log(error);
              }
         });
-    }
+        var data = "";
+        var servantData = "";
+        var ceData = "";
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/parties/" + $(this).data('party'),
+             dataType: 'json',
+             success: function (result, status, xhr) {
+                 $('#edit-party-name').val(result.name);
+                 var i = 0;
+                 $('#edit-party-member-main').html("");
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        }).then(function(result) {
+            $.ajax({
+                 type: "GET",
+                 url: BASE_URL + "public/servants/",
+                 dataType: 'json',
+                 success: function (result, status, xhr) {
+                 },
+                 error: function (xhr, status, error) {
+                      console.log(error);
+                 }
+            }).then(function(servantResult) {
+                allServants = servantResult;
+                $.ajax({
+                     type: "GET",
+                     url: BASE_URL + "public/craft-essences/",
+                     dataType: 'json',
+                     success: function (result, status, xhr) {
+                     },
+                     error: function (xhr, status, error) {
+                          console.log(error);
+                     }
+                }).then(function(craftEssenceResult) {
+                    allCEs = craftEssenceResult;
+                    $('#edit-party-dialog').data('party', result.id);
+                    $('#edit-party-name').val(result.name);
+                    var servants = result.servants;
+                    var i = 0;
+                    servants.forEach(function(servant) {
+                        var servantSelect = "";
+                        var ceSelect = "";
+                        $('#edit-remove-party-member-' + i).hide();
+                        servantSelect += "<div id = \"edit-add-party-member-" + (i + 1) + "\" class = \"row\">";
+                        servantSelect += "<select id = \"edit-party-servant-select-" + (i + 1) +"\" class = \"col-5\">";
+                        servantResult.forEach(function(servantChoice) {
+                            servantSelect += "<option value = \""+ servantChoice.servant.id + "\">";
+                            servantSelect += servantChoice.servant.name;
+                            servantSelect += "</option>";
+                        });
+                        servantSelect +=      "</select>";
+                        ceSelect += "<select id = \"edit-party-ce-select-" + (i + 1) +"\" class = \"col-5\">";
+                        craftEssenceResult.forEach(function(ceChoice) {
+                            ceSelect += "<option value = \""+ ceChoice.id + "\">";
+                            ceSelect += ceChoice.name;
+                            ceSelect += "</option>";
+                        });
+                        ceSelect +=      "</select>";
+                        var content = servantSelect + ceSelect;
+                        content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (i + 1) +"\" id = \"remove-party-member-" + (i + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
+                        content += "</div>";
+                        $('#edit-party-member-main').append(content);
+                        console.log(result);
+                        $('#edit-party-servant-select-' + (i + 1) + '>option:eq(' + (servant.servant.id - 1) + ')').attr('selected', true);
+                        $('#edit-party-servant-select-' + (i + 1)).trigger('change');
+                        if (servant.craftEssence != null) {
+                            $('#edit-party-ce-select-' + (i + 1) + '>option:eq(' + (servant.craftEssence.id - 1) + ')').attr('selected', true);
+                        }
+                        $('#edit-party-ce-select-' + (i + 1)).trigger('change');
+                        i++;
+                    });
+                });
+            });
+        });
+    });
+
+    $('#edit-party-member-main').on('change', '[id^=edit-party-servant-select-]', function(){
+        $(this).parent().data('servant', $(this).find(':selected').val());
+    });
+
+    $('#edit-party-member-main').on('change', '[id^=edit-party-ce-select-]', function(){
+        $(this).parent().data('ce', $(this).find(':selected').val());
+    });
+
+    $('#edit-party-member-button').on("click", function() {
+        var content = "";
+        var members = $('#edit-party-member-main').children().length;
+        if (members > 5) {
+            return;
+        }
+        $('#edit-remove-party-member-' + members).hide();
+        content += "<div id = \"edit-add-party-member-" + (members + 1) + "\" class = \"row\">";
+        content += "<select id = \"edit-party-servant-select-" + (members + 1) +"\" class = \"col-5\">";
+        allServants.forEach(function(data) {
+            content += "<option value = \""+ data.servant.id + "\">";
+            content += data.servant.name;
+            content += "</option>";
+        });
+        content +=      "</select>";
+        content += "<select id = \"edit-party-ce-select-" + (members + 1) +"\" class = \"col-5\">";
+        allCEs.forEach(function(ce) {
+            content += "<option value = \""+ ce.id + "\">";
+            content += ce.name;
+            content += "</option>";
+        });
+        content +=      "</select>";
+        content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (members + 1) +"\" id = \"edit-remove-party-member-" + (members + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
+        content += "</div>";
+        $('#edit-party-member-main').append(content);
+        $('#edit-party-ce-select-' + (members + 1)).trigger('change');
+        $('#edit-party-servant-select-' + (members + 1)).trigger('change');
+    });
+
+    $('#edit-party-form').on('click', '[id^=edit-remove-party-member-]', function() {
+        var elementToRemove = '#edit-add-party-member-' + $(this).data('member');
+        $(elementToRemove).remove();
+        if ($(this).data('member') > 1) {
+            $('#edit-remove-party-member-' + ($(this).data('member') - 1)).show();
+        }
+    });
 
     $('#edit-party-accept').on("click", function(event) {
         event.preventDefault();
@@ -994,8 +1128,8 @@ $(document).ready(function() {
             });
             return;
         }
-        if ($('[id^=party-member-]').children().length <= 0) {
-            $('#edit-party-member').notify("Party must have a servant", {
+        if ($('#edit-party-member-main').children().length <= 0) {
+            $('#edit-party-member-main').notify("Party must have a servant", {
                 position: "right"
             });
             return;
@@ -1003,19 +1137,35 @@ $(document).ready(function() {
         updateParty();
     });
 
-    function updateParty(partyId) {
+    $('#edit-party-member-main').on('change', '[id^=edit-party-servant-select-]', function(){
+        $(this).parent().data('servant', $(this).find(':selected').val());
+    });
+
+    $('#edit-party-member-main').on('change', '[id^=edit-party-ce-select-]', function(){
+        $(this).parent().data('ce', $(this).find(':selected').val());
+    });
+
+    function updateParty() {
         var servants = [];
-        $('[id^=party-member-]').each(function() {
-            servants.push(parseInt($(this).data('id')));
+        $('[id^=edit-add-party-member-]').each(function() {
+            console.log($(this).data('servant'));
+            console.log($(this).data('ce'));
+            var servant = {
+                servantId: parseInt($(this).data('servant')),
+                craftEssenceId: parseInt($(this).data('ce'))
+            }
+            servants.push(servant);
         });
         var data = {
+            id: $('#edit-party-dialog').data('party'),
             name: $('#edit-party-name').val(),
-            servantIds: servants
+            mysticCodeId: $('#edit-mystic-code').find(':selected').val(),
+            partyMembers: servants
         };
-        var partyId = $('#edit-party-dialog').data('party');
+        console.log(JSON.stringify(data));
         $.ajax({
              type: "PATCH",
-             url: BASE_URL + "admin/parties/" + partyId,
+             url: BASE_URL + "admin/parties/" + $('#edit-party-dialog').data('party'),
              dataType: 'json',
              data: JSON.stringify(data),
              beforeSend: function (xhr) {
@@ -1027,27 +1177,12 @@ $(document).ready(function() {
                 },
              success: function (result, status, xhr) {
                 $('#edit-party-dialog #edit-party-cancel').click();
-                $.notify("Party updated successfully", "success");
+                $.notify("Party created successfully", "success");
                 getParties();
              },
              error: function (xhr, status, error) {
                  console.log(error);
              },
-        });
-    }
-
-    function getAllServantsForEditPartyMembers() {
-        var partyId = $('#edit-party-dialog').data('party');
-        $.ajax({
-             type: "GET",
-             url: BASE_URL + "public/parties/" + partyId,
-             dataType: 'json',
-             success: function (result, status, xhr) {
-                 $('#edit-party-name').val(result.name);
-             },
-             error: function (xhr, status, error) {
-                  console.log(error);
-             }
         });
     }
 

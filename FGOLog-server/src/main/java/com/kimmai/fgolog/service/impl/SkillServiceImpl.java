@@ -99,4 +99,10 @@ public class SkillServiceImpl implements SkillService {
         log.debug("Request to get all Skills without Servant ID");
         return skillRepository.findAllWithoutServantId().stream().map(skillMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SkillDTO> findAllByServantId(Long servantId) {
+        return skillRepository.findAllByServantId(servantId).stream().map(skillMapper::toDto).collect(Collectors.toList());
+    }
 }

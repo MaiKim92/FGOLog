@@ -237,34 +237,52 @@ $(document).ready(function() {
                 var content = "";
                 var servant;
                 result.forEach(function(data) {
-                    content += "<div class = \"party row\">";
+                    content += "<div class = \"main-party-container\">";
+                    content += "<div class = \"party col-11 row\">";
                     content += "<h3 class = \"party-name\">" + data.name + "</h3>";
+                    content += "<div class = \"d-none d-lg-block col-6 sub-title\">";
+                    content +=      "<span class = \"team-subtitle team-front\">Starting </span><span class =\"team-subtitle\">Member</span><div class = \"main-line\"> </div>"
                     content += "</div>";
-                    content += "<div class = \"party-container row\">";
+                    content += "<div class = \"d-none d-lg-block col-6 sub-title\">";
+                    content +=      "<span class = \"team-subtitle team-back\">Sub </span><span class =\"team-subtitle\">Member</span><div class = \"sub-line\"> </div>"
+                    content += "</div>";
+                    content += "</div>";
+                    content += "<div class = \"party-container col-11 row\">";
                     var servants = data.servants;
-                    var i = 0;
                     servants.forEach(function(ser) {
-                        if (i == 0) {
-                            content += "<div class = \"col-6 team-front row\"><div class = \"container col-12 row\"><h4 class = \"party-name\">Front</h4>";
-                        }
-                        if (i == 3) {
-                            content += "<div class = \"col-6 team-back row\"><div class = \"container col-12 row\"><h4 class = \"party-name\">Back</h4>";
-                        }
                         var data = "data-toggle = \"modal\"";
                         // If servant doesn't have an ID, then disable popup modal on click
                         if (ser.servant.id == null) {
                             data = "";
                         }
-                        content +=      "<div class = \"col-2 servant\">";
-                        content +=          "<div id = \"party-servant--" + ser.servant.id + "\" data-servant = " + ser.servant.id + " " + data + " data-target = \"#servant-dialog\">";
-                        content +=              "<img class = \"portrait\" src=\"" + ser.servant.thumbnailUrl + "\" title = \'" + ser.servant.name + "\'>";
+                        var imageUrl = encodeURI(ser.servant.imageUrl);
+                        var ceImageUrl = encodeURI("view/assets/img/craft-essences/" + ser.craftEssence.name + ".png");
+                        content +=      "<div class = \"col-6 col-sm-4 col-lg-3 col-xl-2 party-servant row\">";
+                        content +=          "<div class = \"party-servant-container\">";
+                        content +=              "<div title = \"" + ser.servant.name + "\" style = \"background-image: url(" + imageUrl + ");\" id = \"party-servant--" + ser.servant.id + "\" class = \"col-12 servant-portrait\" data-servant = " + ser.servant.id + " " + data + " data-target = \"#servant-dialog\">";
+                        content +=                      "<img src =\"view/assets/img/classes/" + ser.servant.servantClass + ".png\" class = \"class-icon\">"
+                        content +=                  "<div class = \"skill-levels\">";
+                        content +=                      "<span class = \"skill-level\">";
+                        ser.skills.forEach(function(skill) {
+                            if (skill.level == null) {
+                                content += "-";
+                            } else {
+                                content +=                  skill.level;
+                            }
+                            if (skill.seq < 3) {
+                                content +=                  "/";
+                            }
+                        });
+                        content +=                      "</span>";
+                        content +=                      "<span class = \"np-level small\"> NP</span><span class = \"np-level\"> " + ser.servant.npLevel + "</span>"
+                        content +=                  "</div>";
+                        content +=                  "<div title = \"" + ser.craftEssence.name + "\"style = \"background-image: url(" + ceImageUrl + ");\" class = \"col-12 craft-essence\">";
+                        content +=                  "</div>";
+                        content +=              "</div>";
                         content +=          "</div>";
                         content +=      "</div>";
-                        if (i == 2 || i == servants.length - 1) {
-                            content += "</div></div>";
-                        }
-                        i++;
                     });
+                    content += "</div>";
                     content += "</div>";
                 });
                 $("#party-list").html(content);

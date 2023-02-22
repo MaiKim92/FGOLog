@@ -104,10 +104,10 @@ public class PartyResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the partyDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/public/parties/{id}")
-    public ResponseEntity<PartyDTO> getParty(@PathVariable Long id) {
+    public ResponseEntity<PartyResponseDTO> getParty(@PathVariable Long id) {
         log.debug("REST request to get Party : {}", id);
-        Optional<PartyDTO> partyDTO = partyService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(partyDTO);
+        Optional<PartyResponseDTO> party = partyBusiness.findOne(id);
+        return ResponseUtil.wrapOrNotFound(party);
     }
 
     /**

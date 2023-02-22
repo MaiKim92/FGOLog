@@ -9,6 +9,23 @@ enum CardType {
     QUICK
 }
 
+enum ServantClass {
+    SABER,
+    ARCHER,
+    LANCER,
+    RIDER,
+    ASSASSIN,
+    CASTER,
+    BERSERKER,
+    RULER,
+    AVENGER,
+    FOREIGNER,
+    ALTER_EGO,
+    MOONCANCER,
+    PRETENDER,
+    SHIELDER
+}
+
 entity Party {
 	id Long,
 	name String
@@ -32,7 +49,8 @@ entity Servant {
 	level Integer,
 	imageUrl String,
 	thumbnailUrl String,
-	npLevel Integer
+	npLevel Integer,
+    servantClass ServantClass
 }
 
 entity Skill {

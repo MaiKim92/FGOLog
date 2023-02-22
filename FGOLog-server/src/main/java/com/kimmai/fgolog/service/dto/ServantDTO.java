@@ -1,5 +1,7 @@
 package com.kimmai.fgolog.service.dto;
 
+import com.kimmai.fgolog.domain.enumeration.ServantClass;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,6 +21,8 @@ public class ServantDTO implements Serializable {
     private String thumbnailUrl;
 
     private Integer npLevel;
+
+    private ServantClass servantClass;
 
     public Long getId() {
         return id;
@@ -68,6 +72,14 @@ public class ServantDTO implements Serializable {
         this.npLevel = npLevel;
     }
 
+    public ServantClass getServantClass() {
+        return servantClass;
+    }
+
+    public void setServantClass(ServantClass servantClass) {
+        this.servantClass = servantClass;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -99,6 +111,7 @@ public class ServantDTO implements Serializable {
             ", imageUrl='" + getImageUrl() + "'" +
             ", thumbnailUrl='" + getThumbnailUrl() + "'" +
             ", npLevel=" + getNpLevel() +
+            ", servantClass='" + getServantClass() + "'" +
             "}";
     }
 }
