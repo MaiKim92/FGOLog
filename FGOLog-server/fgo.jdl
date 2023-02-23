@@ -93,8 +93,12 @@ entity CraftEssence {
     name String
 }
 
+entity TaskGroup {
+    id Long,
+    name String
+}
+
 relationship OneToOne {
- 	Task{material} to Material,
  	WishItem{servant} to Servant,
  	PartyMember{party} to Party,
  	CommandCard{commandCode} to CommandCode
@@ -105,7 +109,9 @@ relationship ManyToOne {
     PartyMember{Servant} to Servant,
     CommandCard{Servant} to Servant,
     Party{MysticCode} to MysticCode,
-    PartyMember{CraftEssence} to CraftEssence
+    PartyMember{CraftEssence} to CraftEssence,
+    Task{taskGroup} to TaskGroup{task},
+    Task{Material} to Material
 }
 
 // Use Data Transfer Objects (DTO)

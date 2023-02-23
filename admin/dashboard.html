@@ -34,6 +34,7 @@
                 <a href = "#/"><li id = "menu-item-6" class = "menu-item">Wishlist</li></a>
                 <a href = "#/"><li id = "menu-item-7" class = "menu-item">Skills</li></a>
                 <a href = "#/"><li id = "menu-item-8" class = "menu-item">Craft Essences</li></a>
+                <a href = "#/"><li id = "menu-item-9" class = "menu-item">Task Groups</li></a>
             </ul>
             <ul class = "main-menu col-3">
                 <a href = "login.html" id = "login-menu"><li id = "login-menu-item" class = "menu-item">Log in</li></a>
@@ -110,6 +111,13 @@
                 <div class = "table-name"><h2>Craft Essences</h2></div>
                 <div class = "row">
                     <table id = "craft-essence-table">
+                    </table>
+                </div>
+            </div>
+            <div id = "task-group-list">
+                <div class = "table-name"><h2>Task Group List</h2></div>
+                <div class = "row">
+                    <table id = "task-group-table">
                     </table>
                 </div>
             </div>
@@ -462,6 +470,12 @@
                             <h3>Add new Task</h3>
                         </div>
                         <div class = "row">
+                            <div class = "col-12">
+                                <label for = "add-task-group">Task Group</label>
+                                <select id = "add-task-group"></select>
+                            </div>
+                        </div>
+                        <div class = "row">
                             <div class = "col-8">
                                 <label for = "add-task-name">Material</label>
                                 <select id = "add-task-name"></select>
@@ -603,6 +617,48 @@
                 <div class="modal-footer">
                     <button id = "edit-ce-accept" type="button" class="btn btn-primary">Save</button>
                     <button id = "edit-ce-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "add-group-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "add-group-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Add new Task Group</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "add-group-name">Name</label>
+                            <input id = "add-group-name" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "add-group-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "add-group-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "edit-group-dialog" class="modal row" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered row" role="document">
+            <div class="modal-content row">
+                <div class="modal-body row">
+                    <form id = "edit-group-form" class = "form-control input-form">
+                        <div class = "row">
+                            <h3>Edit Command Code</h3>
+                        </div>
+                        <div class = "row">
+                            <label for = "edit-group-name">Name</label>
+                            <input id = "edit-group-name" type = "text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id = "edit-group-accept" type="button" class="btn btn-primary">Save</button>
+                    <button id = "edit-group-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

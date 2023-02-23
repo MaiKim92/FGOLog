@@ -1,5 +1,6 @@
 package com.kimmai.fgolog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kimmai.fgolog.domain.enumeration.TaskStatus;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -28,9 +29,12 @@ public class Task implements Serializable {
     @Column(name = "status")
     private TaskStatus status;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Material material;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "tasks" }, allowSetters = true)
+    private TaskGroup taskGroup;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -96,6 +100,19 @@ public class Task implements Serializable {
 
     public Task material(Material material) {
         this.setMaterial(material);
+        return this;
+    }
+
+    public TaskGroup getTaskGroup() {
+        return this.taskGroup;
+    }
+
+    public void setTaskGroup(TaskGroup taskGroup) {
+        this.taskGroup = taskGroup;
+    }
+
+    public Task taskGroup(TaskGroup taskGroup) {
+        this.setTaskGroup(taskGroup);
         return this;
     }
 

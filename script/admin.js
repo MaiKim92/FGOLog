@@ -3,6 +3,8 @@ $(document).ready(function() {
 
     var allServants = "";
     var allCEs = "";
+    var allItems = "";
+    var allTaskGroups = "";
 
     pageLoad();
     $('#party-list').hide();
@@ -12,8 +14,11 @@ $(document).ready(function() {
     $('#wish-list').hide();
     $('#skill-list').hide();
     $('#craft-essence-list').hide();
+    $('#task-group-list').hide();
     $('#_remove-skill-button').prop('disabled', true);
     getServants();
+    getMaterials();
+    getTasks();
 
     $('#menu-item-1').click(function() {
         getServants();
@@ -25,6 +30,7 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').hide();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-2').click(function() {
@@ -37,6 +43,7 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').hide();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-3').click(function() {
@@ -49,6 +56,7 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').hide();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-4').click(function() {
@@ -61,6 +69,7 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').hide();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-5').click(function() {
@@ -73,6 +82,7 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').hide();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-6').click(function() {
@@ -85,6 +95,7 @@ $(document).ready(function() {
         $('#wish-list').show();
         $('#skill-list').hide();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-7').click(function() {
@@ -97,6 +108,7 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').show();
         $('#craft-essence-list').hide();
+        $('#task-group-list').hide();
     });
 
     $('#menu-item-8').click(function() {
@@ -109,6 +121,20 @@ $(document).ready(function() {
         $('#wish-list').hide();
         $('#skill-list').hide();
         $('#craft-essence-list').show();
+        $('#task-group-list').hide();
+    });
+
+    $('#menu-item-9').click(function() {
+        getTaskGroups();
+        $('#servant-list').hide();
+        $('#party-list').hide();
+        $('#material-list').hide();
+        $('#command-code-list').hide();
+        $('#task-list').hide();
+        $('#wish-list').hide();
+        $('#skill-list').hide();
+        $('#craft-essence-list').hide();
+        $('#task-group-list').show();
     });
 
     function getServants() {
@@ -198,8 +224,8 @@ $(document).ready(function() {
                     content +=    "</td>";
                     content +=    "<td><img src = \"../view/assets/img/mystic-codes/" + data.mysticCode.name + ".png\" title = \"" + data.mysticCode.name + "\" class = \"mc-image\"></td>";
                     content +=    "<td id = \"party-actions-" + data.id + "\">";
-                    content +=        "<a data-party = \"" + data.id + "\" id = \"party-edit-" + data.id + "\" data-toggle=\"modal\" data-target = \"#add-party-dialog\" data-party = \"" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
-                    content +=        "<a data-party = \"" + data.id + "\" id = \"party-edit-" + data.id + "\" data-toggle=\"modal\" data-target = \"#edit-party-dialog\" data-party = \"" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
+                    content +=        "<a data-party = \"" + data.id + "\" id = \"party-add-" + data.id + "\" data-toggle=\"modal\" data-target = \"#add-party-dialog\" data-party = \"" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
+                    content +=        "<a data-mysticcode = \"" + data.mysticCode.id + "\" data-party = \"" + data.id + "\" id = \"party-edit-" + data.id + "\" data-toggle=\"modal\" data-target = \"#edit-party-dialog\" data-party = \"" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
                     content +=    "</td>";
                     content += "</tr>";
                 });
@@ -250,6 +276,8 @@ $(document).ready(function() {
             error: function (xhr, status, error) {
                  console.log(error);
             }
+        }).then(function(result) {
+            allItems = result;
         });
     }
 
@@ -293,7 +321,7 @@ $(document).ready(function() {
         $("#task-table").html("");
         $.ajax({
             type: "GET",
-            url: BASE_URL + "public/tasks",
+            url: BASE_URL + "public/all-tasks",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
@@ -315,7 +343,7 @@ $(document).ready(function() {
                     content +=    "<td id = \"task-actions-" + data.id + "\">";
                     content +=        "<a data-task = \"" + data.id + "\" id = \"task-increment-" + data.id + "\" href = \"#/\" title = \"Increment\"><i class=\"fa-solid fa-caret-up\"></i></a>";
                     content +=        "<a data-toggle = \"modal\" data-target = \"#add-task-dialog\" id = \"task-edit-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
-                    content +=        "<a data-toggle = \"modal\" data-target = \"#add-task-dialog\" data-task = \"" + data.id + "\" data-material = \"" + data.material.id + "\" id = \"task-edit-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
+                    content +=        "<a data-material = \"" + data.material.id + "\" data-toggle = \"modal\" data-target = \"#add-task-dialog\" data-taskgroup = \"" + data.taskGroup.id + "\" data-task = \"" + data.id + "\" data-material = \"" + data.material.id + "\" id = \"task-edit-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
                     if (data.status.toLowerCase() == "in_progress") {
                         content +=        "<a data-task = \"" + data.id + "\" id = \"task-mark-as-completed-" + data.id + "\" href = \"#/\" title = \"Mark as completed\"><i class=\"fa-solid fa-check\"></i></a>";
                     } else {
@@ -330,6 +358,8 @@ $(document).ready(function() {
             error: function (xhr, status, error) {
                  console.log(error);
             }
+        }).then(function(result){
+            allTaskGroups = result;
         });
     }
 
@@ -453,6 +483,39 @@ $(document).ready(function() {
                  }
              });
          }
+
+     function getTaskGroups() {
+         $("#task-group-list .pagination-container").remove();
+         $("#task-group-table").html("");
+         $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/task-groups",
+             dataType: 'json',
+             success: function (result, status, xhr) {
+                 content = "";
+                 content += "<tr>"
+                 content +=     "<th>ID</th>";
+                 content +=     "<th>Task Group</th>";
+                 content +=     "<th>Action</th>";
+                 content += "</tr>";
+                 result.forEach(function(data) {
+                     content += "<tr id = \"task-group-" + data.id + "\">";
+                     content +=    "<td>" + data.id + "</td>";
+                     content +=    "<td>" + data.name + "</td>";
+                     content +=    "<td id = \"task-group-actions-" + data.id + "\">";
+                     content +=        "<a data-toggle = \"modal\" data-target = \"#add-group-dialog\" data-group = \"" + data.id + "\" id = \"task-group-add-" + data.id + "\" href = \"#/\" title = \"Add\"><i class=\"fa-sharp fa-solid fa-plus\"></i></a>";
+                     content +=        "<a data-toggle = \"modal\" data-target = \"#edit-group-dialog\" data-group = \"" + data.id + "\" id = \"task-group-edit-" + data.id + "\" href = \"#/\" title = \"Edit\"><i class=\"fa-solid fa-pen-to-square\"></i></a>";
+                     content +=    "</td>";
+                     content += "</tr>";
+                 });
+                 $("#task-group-table").html(content);
+                 $('#task-group-table').paginathing();
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+         });
+     }
 
      // Handle logout event
 
@@ -899,7 +962,7 @@ $(document).ready(function() {
     });
 
     $('#add-party-form').on('click', '[id^=remove-party-member-]', function() {
-        var elementToRemove = '#add-party-member-' + $(this).data('member');
+        var elementToRemove = '#add-add-party-member-' + $(this).data('member');
         $(elementToRemove).remove();
         if ($(this).data('member') > 1) {
             $('#remove-party-member-' + ($(this).data('member') - 1)).show();
@@ -935,8 +998,6 @@ $(document).ready(function() {
     function saveParty() {
         var servants = [];
         $('[id^=add-add-party-member-]').each(function() {
-            console.log($(this).data('servant'));
-            console.log($(this).data('ce'));
             var servant = {
                 servantId: $(this).data('servant'),
                 craftEssenceId: $(this).data('ce')
@@ -948,7 +1009,6 @@ $(document).ready(function() {
             mysticCodeId: $('#add-mystic-code').find(':selected').val(),
             partyMembers: servants
         };
-        console.log(JSON.stringify(data));
         $.ajax({
              type: "POST",
              url: BASE_URL + "admin/parties",
@@ -975,6 +1035,7 @@ $(document).ready(function() {
     // Handle the party edit dialog
     $('#party-list').on("click", '[id^=party-edit-]', function(){
         $('#edit-party-dialog').data('party', $(this).data('party'));
+        $('#edit-party-dialog').data('mysticcode', $(this).data('mysticcode'));
     });
 
     $('#edit-party-dialog').on("show.bs.modal", function() {
@@ -990,6 +1051,7 @@ $(document).ready(function() {
                     content += "</option>";
                  });
                  $('#edit-mystic-code').html(content);
+                 $('#edit-mystic-code>option:eq(' + ($('#edit-party-dialog').data('mysticcode') - 1) + ')').attr('selected', true);
              },
              error: function (xhr, status, error) {
                   console.log(error);
@@ -1057,10 +1119,9 @@ $(document).ready(function() {
                         });
                         ceSelect +=      "</select>";
                         var content = servantSelect + ceSelect;
-                        content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (i + 1) +"\" id = \"remove-party-member-" + (i + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
+                        content += "<div class = \"col-2 center\"><a href = \"#/\" data-member = \"" + (i + 1) +"\" id = \"edit-remove-party-member-" + (i + 1) + "\"><i class=\"fa-solid fa-trash\"></i></a></div>";
                         content += "</div>";
                         $('#edit-party-member-main').append(content);
-                        console.log(result);
                         $('#edit-party-servant-select-' + (i + 1) + '>option:eq(' + (servant.servant.id - 1) + ')').attr('selected', true);
                         $('#edit-party-servant-select-' + (i + 1)).trigger('change');
                         if (servant.craftEssence != null) {
@@ -1148,8 +1209,6 @@ $(document).ready(function() {
     function updateParty() {
         var servants = [];
         $('[id^=edit-add-party-member-]').each(function() {
-            console.log($(this).data('servant'));
-            console.log($(this).data('ce'));
             var servant = {
                 servantId: parseInt($(this).data('servant')),
                 craftEssenceId: parseInt($(this).data('ce'))
@@ -1162,7 +1221,6 @@ $(document).ready(function() {
             mysticCodeId: $('#edit-mystic-code').find(':selected').val(),
             partyMembers: servants
         };
-        console.log(JSON.stringify(data));
         $.ajax({
              type: "PATCH",
              url: BASE_URL + "admin/parties/" + $('#edit-party-dialog').data('party'),
@@ -1177,7 +1235,7 @@ $(document).ready(function() {
                 },
              success: function (result, status, xhr) {
                 $('#edit-party-dialog #edit-party-cancel').click();
-                $.notify("Party created successfully", "success");
+                $.notify("Party updated successfully", "success");
                 getParties();
              },
              error: function (xhr, status, error) {
@@ -1241,6 +1299,7 @@ $(document).ready(function() {
     // Handle the edit material dialog
     $('#material-list').on("click", '[id^=material-edit-]', function(){
         $('#edit-material-dialog').data('material', $(this).data('material'));
+        $('#edit-material-dialog').data('taskgroup', $(this).data('taskgroup'));
     });
     $('#edit-material-dialog').on("show.bs.modal", function() {
         var materialId = $(this).data('material');
@@ -1697,26 +1756,35 @@ $(document).ready(function() {
 
     // Handle the add and edit task dialog
     $('#task-list').on('click', '[id^=task-edit-]', function(event) {
-        $('#add-task-progress').val(0);
-        $('#add-task-goal').val(0);
         var materialId = $(this).data('material');
+        var taskGroupId = $(this).data('taskgroup');
         $('#add-task-dialog').data('task', $(this).data('task'));
         if (materialId != null) {
             $('#add-task-dialog').data('material', materialId);
         }
+        content = "";
+        allItems.forEach(function(data) {
+            content += "<option value = \"" + data.id + "\">" + data.name + "</option>";
+        });
+        $('#add-task-name').html(content);
         $.ajax({
             type: "GET",
-            url: BASE_URL + "public/materials",
+            url: BASE_URL + "public/task-groups",
             dataType: 'json',
             success: function (result, status, xhr) {
                 content = "";
                 result.forEach(function(data) {
                     content += "<option value = \"" + data.id + "\">" + data.name + "</option>";
                 });
-                $('#add-task-name').html(content);
-                if (materialId != null) {
+                $('#add-task-group').html(content);
+                if (taskGroupId != null) {
                     $('#add-task-name').val(materialId);
+                    $('#add-task-group').val(taskGroupId);
                 }
+                else {
+                    $('#add-task-name').val(1);
+                }
+                $('#add-task-name').trigger('change');
             },
             error: function (xhr, status, error) {
                  console.log(error);
@@ -1739,6 +1807,12 @@ $(document).ready(function() {
         }
     });
 
+    $('#add-task-name').on('change', function() {
+        var item = allItems.find(item => item.id == $('#add-task-name').val());
+        var imageUrl = item.imageUrl;
+        $('#add-task-image').prop('src', "../" + imageUrl);
+    });
+
     $('#add-task-accept').on('click', function() {
         event.preventDefault();
         if($('#add-task-dialog').data('material') == null) {
@@ -1758,7 +1832,10 @@ $(document).ready(function() {
             },
             progress: $('#add-task-progress').val(),
             goal: $('#add-task-goal').val(),
-            status: 'IN_PROGRESS'
+            status: 'IN_PROGRESS',
+            taskGroup: {
+             id: parseInt($('#add-task-group').val())
+            }
         }
         $.ajax({
              type: "POST",
@@ -1790,7 +1867,10 @@ $(document).ready(function() {
                 id: $('#add-task-name').val()
             },
             progress: $('#add-task-progress').val(),
-            goal: $('#add-task-goal').val()
+            goal: $('#add-task-goal').val(),
+            taskGroup: {
+                id: parseInt($('#add-task-group').val())
+            }
         }
         $.ajax({
              type: "PUT",
@@ -1956,4 +2036,100 @@ $(document).ready(function() {
          });
     }
 
+    // Handle the add task group dialog
+    $('#add-group-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#add-group-name').val())) {
+            $('#add-group-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        saveTaskGroup();
+        $('#add-group-dialog #add-group-cancel').click();
+        $.notify("Task Group saved successfully","success");
+    });
+
+    function saveTaskGroup() {
+        var data = {
+            name: $('#add-group-name').val()
+        }
+        $.ajax({
+             type: "POST",
+             url: BASE_URL + "admin/task-groups",
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getTaskGroups();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
+
+    // Handle the edit command code dialog
+    $('#task-group-list').on("click", '[id^=task-group-edit-]', function(){
+        $('#edit-group-dialog').data('group', $(this).data('group'));
+        $.ajax({
+             type: "GET",
+             url: BASE_URL + "public/task-groups/" + $(this).data('cc'),
+             dataType: 'json',
+             success: function (result, status, xhr) {
+                 $('#edit-group-name').val(result.name);
+             },
+             error: function (xhr, status, error) {
+                  console.log(error);
+             }
+        });
+    });
+    $('#edit-group-accept').on('click', function() {
+        event.preventDefault();
+        // Validate the material details
+        if (!/\S/.test($('#edit-group-name').val())) {
+            $('#edit-cc-name').notify("Name is invalid", {
+                position: "right"
+            });
+            return;
+        }
+        updateCommandCodes();
+        $('#edit-group-dialog #edit-group-cancel').click();
+        $.notify("Task Group saved successfully","success");
+    });
+
+    function updateCommandCodes() {
+        var groupId = $('#edit-group-dialog').data('group');
+        var data = {
+            id: groupId,
+            name: $('#edit-group-name').val(),
+            imageUrl: $('#edit-group-image-url').val()
+        }
+        $.ajax({
+             type: "PATCH",
+             url: BASE_URL + "admin/task-group/" + groupId,
+             dataType: 'json',
+             data: JSON.stringify(data),
+             beforeSend: function (xhr) {
+                 xhr.setRequestHeader('Authorization', sessionStorage.getItem("token"));
+             },
+             headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             success: function (result, status, xhr) {
+                 getTaskGroups();
+             },
+             error: function (xhr, status, error) {
+                 console.log(error);
+             },
+         });
+    }
 });

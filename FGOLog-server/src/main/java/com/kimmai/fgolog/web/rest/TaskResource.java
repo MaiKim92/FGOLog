@@ -4,10 +4,13 @@ import com.kimmai.fgolog.business.TaskBusiness;
 import com.kimmai.fgolog.repository.TaskRepository;
 import com.kimmai.fgolog.service.TaskService;
 import com.kimmai.fgolog.service.dto.TaskDTO;
+import com.kimmai.fgolog.service.dto.TaskGroupDTO;
+import com.kimmai.fgolog.web.rest.dto.TaskGroupResponseDTO;
 import com.kimmai.fgolog.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -81,7 +84,6 @@ public class TaskResource {
         TaskDTO result = taskBusiness.update(taskDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, taskDTO.getId().toString()))
             .body(result);
     }
 
@@ -162,14 +164,25 @@ public class TaskResource {
     }
 
     /**
-     * {@code GET  /admin/tasks} : get all the tasks.
+     * {@code GET  /public/tasks} : get all the tasks.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
      */
     @GetMapping("/public/tasks")
-    public List<TaskDTO> getAllTasks() {
+    public TaskGroupResponseDTO getAllTasks() {
         log.debug("REST request to get all Tasks");
         return taskBusiness.getAllTasks();
+    }
+
+    /**
+     * {@code GET  /public/all-tasks} : get all the tasks.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
+     */
+    @GetMapping("/public/all-tasks")
+    public List<TaskDTO> getAllTasksForAdmin() {
+        log.debug("REST request to get all Tasks");
+        return taskBusiness.getAllTasksForAdmin();
     }
 
     /**

@@ -21,7 +21,7 @@
   "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
+      "relationshipType": "many-to-one",
       "otherEntityName": "mysticCode",
       "otherEntityRelationshipName": "party",
       "relationshipName": "mysticCode"

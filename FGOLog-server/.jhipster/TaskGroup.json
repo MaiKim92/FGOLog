@@ -1,5 +1,5 @@
 {
-  "name": "MysticCode",
+  "name": "TaskGroup",
   "fields": [
     {
       "fieldName": "id",
@@ -10,8 +10,15 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
-  "entityTableName": "mystic_code",
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "task",
+      "otherEntityRelationshipName": "taskGroup",
+      "relationshipName": "task"
+    }
+  ],
+  "entityTableName": "task_group",
   "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
@@ -20,5 +27,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20230220074507"
+  "changelogDate": "20230222102241"
 }

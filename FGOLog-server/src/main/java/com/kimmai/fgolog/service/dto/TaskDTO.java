@@ -19,6 +19,8 @@ public class TaskDTO implements Serializable {
 
     private MaterialDTO material;
 
+    private TaskGroupDTO taskGroup;
+
     public Long getId() {
         return id;
     }
@@ -59,6 +61,14 @@ public class TaskDTO implements Serializable {
         this.material = material;
     }
 
+    public TaskGroupDTO getTaskGroup() {
+        return taskGroup;
+    }
+
+    public void setTaskGroup(TaskGroupDTO taskGroup) {
+        this.taskGroup = taskGroup;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,6 +99,7 @@ public class TaskDTO implements Serializable {
             ", progress=" + getProgress() +
             ", status='" + getStatus() + "'" +
             ", material=" + getMaterial() +
+            ", taskGroup=" + getTaskGroup() +
             "}";
     }
 }

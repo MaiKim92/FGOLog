@@ -28,6 +28,11 @@
     {
       "fieldName": "npLevel",
       "fieldType": "Integer"
+    },
+    {
+      "fieldName": "servantClass",
+      "fieldType": "ServantClass",
+      "fieldValues": "SABER,ARCHER,LANCER,RIDER,ASSASSIN,CASTER,BERSERKER,RULER,AVENGER,FOREIGNER,ALTER_EGO,MOONCANCER,PRETENDER,SHIELDER"
     }
   ],
   "fluentMethods": true,

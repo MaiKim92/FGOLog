@@ -283,6 +283,9 @@ $(document).ready(function() {
                         content +=      "</div>";
                     });
                     content += "</div>";
+                    content += "<div title = \"" + data.mysticCode.name + "\" class = \"master-equip\">";
+                    content += "<img src = \"view/assets/img/mystic-codes/" + data.mysticCode.name + ".png\" class = \"master-equipment\">"
+                    content += "</div>";
                     content += "</div>";
                 });
                 $("#party-list").html(content);
@@ -300,35 +303,42 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (result, status, xhr) {
                 var content = "";
-                var material;
-                result.forEach(function(data) {
-                    material = data.material;
-                    var percent = (parseInt(data.progress) / parseInt(data.goal)) * 100 + "%";
-                    content +=      "<div id = \"task-" + data.id + "\" class = \" col-12 col-lg-6 row task-item\">";
-                    content +=          "<div class = \"row task-item-container\">";
-                    content +=          "<div class = \"col-3\">";
-                    content +=              "<img src = \"" + material.imageUrl + "\" class = \"item\" title = \"" + material.name +"\">";
-                    content +=          "</div>";
-                    content +=          "<div class = \"col-9 row\">";
-                    content +=              "<div class = \"task-name col-12\">";
-                    content +=                  "<h6>Collect " + data.goal.toLocaleString('en-US') + " " + material.name +"</h6>";
-                    content +=              "</div>";
-                    content +=              "<div class = \"task-progress col-12 row\">";
-                    content +=                  "<div class = \"progress col-8\">";
-                    content +=                      "<div class = \"progress-bar\" role = \"progressbar\" style = \"width: " + percent + "\"></div>";
-                    content +=                  "</div>";
-                    content +=                  "<div class = \"task-name progress-number col-4\">";
-                    content +=                      "<div>" + data.progress.toLocaleString('en-US') + "/" + data.goal.toLocaleString('en-US') + "</div>";
-                    content +=                  "</div>";
-                    content +=              "</div>";
-                    content +=              "<div>";
-                    content +=                  "<div class = \"task-name task-" + data.status.toLowerCase() + " progress-number col-4\">";
-                    content +=                      "<h5>" + data.status.replaceAll("_", " ") + "</h5>";
-                    content +=                  "</div>";
-                    content +=              "</div>";
-                    content +=          "</div>";
-                    content +=          "</div>";
-                    content +=      "</div>";
+                result.tasks.forEach(function(task) {
+                    content += "<div id = \"task-group-" + task.taskGroup.id + "\" class = \"task-group col-12 row\">";
+                    content += "<h4 class = \"task-group-name\">" + task.taskGroup.name + "</h4>"
+                    var material;
+                    task.tasks.forEach(function(data) {
+                        material = data.material;
+                        var percent = (parseInt(data.progress) / parseInt(data.goal)) * 100 + "%";
+                        content +=      "<div id = \"task-" + data.id + "\" class = \" col-12 col-lg-6 row task-item\">";
+                        content +=          "<div class = \"row task-item-container\">";
+                        content +=          "<div class = \"col-3\">";
+                        content +=              "<img src = \"" + material.imageUrl + "\" class = \"item\" title = \"" + material.name +"\">";
+                        content +=          "</div>";
+                        content +=          "<div class = \"col-9 row\">";
+                        content +=              "<div class = \"task-name col-12\">";
+                        content +=                  "<h6>Collect " + data.goal.toLocaleString('en-US') + " " + material.name +"</h6>";
+                        content +=              "</div>";
+                        content +=              "<div class = \"task-progress col-12 row\">";
+                        content +=                  "<div class = \"progress col-8\">";
+                        content +=                      "<div class = \"progress-bar\" role = \"progressbar\" style = \"width: " + percent + "\"></div>";
+                        content +=                  "</div>";
+                        content +=                  "<div class = \"task-name progress-number col-4\">";
+                        content +=                      "<div>" + data.progress.toLocaleString('en-US') + "/" + data.goal.toLocaleString('en-US') + "</div>";
+                        content +=                  "</div>";
+                        content +=              "</div>";
+                        if (data.status.toLowerCase() == 'completed') {
+                            content +=              "<div>";
+                            content +=                  "<div class = \"task-name task-completed progress-number col-9\">";
+                            content +=                      "<h5>" + data.status.replaceAll("_", " ") + "</h5>";
+                            content +=                  "</div>";
+                            content +=              "</div>";
+                        }
+                        content +=          "</div>";
+                        content +=          "</div>";
+                        content +=      "</div>";
+                    });
+                    content += "</div>";
                 });
                 $("#task-list").html(content);
             },

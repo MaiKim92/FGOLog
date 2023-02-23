@@ -237,16 +237,44 @@ img.has-false {
     font-weight: bold;
 }
 
-.task-in_progress {
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 30%, rgba(200, 200, 200, 1) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
-    -webkit-background-clip: text;
+.task-group-name {
+    color: black;
+    text-align: left;
+    font-family: 'EB Garamond', 'serif';
 }
 
-.task-completed {
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(0deg, rgba(255,255,0,1) 0%, rgba(255,255,0,1) 30%, rgba(200, 155, 0, 1) 40%, rgba(255,255,0,1) 50%, rgba(255,255,0,1) 100%);
-    -webkit-background-clip: text;
+.master-equip {
+    margin-top: -64px;
+    margin-left: -32px;
+    position: absolute;
+    background-color: white;
+    border: 2px solid rgb(28,58,108);
+    border-radius: 50%;
+    padding: 5px;
+    width: fit-content;
+    box-shadow: 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white;
+}
+
+.master-equipment {
+    width: 64px;
+    height: auto;
+}
+
+.task-completed h5 {
+    color: rgb(255,240,0);
+    font-weight: normal;
+    text-shadow:
+        -1px -1px 0 #000,
+         0   -1px 0 #000,
+         1px -1px 0 #000,
+         1px  0   0 #000,
+         1px  1px 0 #000,
+         0    1px 0 #000,
+        -1px  1px 0 #000,
+        -1px  0   0 #000;
+    position: absolute;
+    margin-top: -20px;
+    margin-left: 8%;
 }
 
 #servant-dialog .btn {
@@ -371,12 +399,17 @@ img.has-false {
     padding: 15px;
 }
 
-.main-party-container {
+.main-party-container,
+.task-group {
     background-color: rgb(225, 225, 225);
     border-radius: 10px;
     box-shadow: 0px 0px 10px black;
     margin: 20px;
     width: 93.5%;
+}
+
+.task-group {
+    padding: 30px;
 }
 
 img.item {
@@ -395,17 +428,30 @@ img.item {
 }
 
 .task-item .progress-number {
-    transform: translateX(10%);
+    position: absolute;
+    margin-top: 10px;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+         0   -1px 0 #000,
+         1px -1px 0 #000,
+         1px  0   0 #000,
+         1px  1px 0 #000,
+         0    1px 0 #000,
+        -1px  1px 0 #000,
+        -1px  0   0 #000;
 }
 
 .task-item {
-    padding: 10px 50px 10px 10px;
+    padding: 10px;
+    min-width: 450px;
 }
 
 .task-item-container {
     padding: 10px;
-    background-color: rgba(53, 87, 138, 0.8);
+    background-color: rgb(220,230,242);
     border-radius: 10px;
+    box-shadow: 0px 0px 5px rgb(50, 50, 50);
 }
 
 .task-name {
@@ -413,6 +459,14 @@ img.item {
     font-weight: bold;
     text-align: left;
     color: black;
+}
+
+.task-name h6 {
+    background-color: rgb(139,177,216);
+    box-shadow: 5px 5px 5px rgb(220,230,242) inset, -5px -5px 5px rgb(220,230,242) inset;
+    padding: 10px;
+    color: white;
+    text-shadow: -2px 0 1px black, 0 2px 1px black, 2px 0 1px black, 0 -2px 1px black;
 }
 
 #master-details {

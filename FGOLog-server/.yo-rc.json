@@ -30,14 +30,15 @@
       "CommandCode",
       "CommandCard",
       "MysticCode",
-      "CraftEssence"
+      "CraftEssence",
+      "TaskGroup"
     ],
     "entitySuffix": "",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "7.4.1",
     "jwtSecretKey": "OWMwODg4ZWZlNzU3YjQwNGRjOTdhMDA4ZjM1OWQwNmI0Nzk2NmIzYmI0MThmYjg0YmNiNDMwNGQ2MTcyOWZjY2Q2NjczMGU2MDc2ZmFiYmU1YjZiMjcxZGVmNGJkN2MyZGM5MWI5M2FkZjFhOWVjYmE5ODlkNGRkNjlkNGMxYzE=",
     "languages": ["en", "fr"],
-    "lastLiquibaseTimestamp": 1676879108000,
+    "lastLiquibaseTimestamp": 1677061361000,
     "messageBroker": false,
     "nativeLanguage": "en",
     "otherModules": [],
